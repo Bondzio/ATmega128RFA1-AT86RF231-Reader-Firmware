@@ -62,8 +62,7 @@
 #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
 	#define MACHINE_SETUP_NUM_BYTE			12  // number of bytes needed to store washer setup in eeprom 
 	#define DRYER_SETUP_NUM_BYTE			7   //number of additional bytes needed dryer specific setup
-#elif(DEVICE_CONNECTED == MARS_BA)
-	#define MACHINE_SETUP_NUM_BYTE			12  // number of bytes needed to store Bill Acceptor setup in eeprom 
+
 #endif
 
 #define VALIDATION_CODE_NUM_BYTE		8   //number of bytes needed to store validation code

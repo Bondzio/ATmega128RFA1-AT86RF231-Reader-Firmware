@@ -350,12 +350,6 @@
     <Compile Include="Application\system.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Bill_Acceptor\mars_comm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Bill_Acceptor\mars_comm.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Keypad\Keypad.c">
       <SubType>compile</SubType>
     </Compile>
@@ -539,7 +533,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Folder Include="Application" />
-    <Folder Include="Bill_Acceptor\" />
     <Folder Include="Keypad\" />
     <Folder Include="mifare" />
     <Folder Include="SPI" />

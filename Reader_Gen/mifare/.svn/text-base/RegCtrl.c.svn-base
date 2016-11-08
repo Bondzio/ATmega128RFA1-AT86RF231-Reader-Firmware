@@ -1,0 +1,164 @@
+/* /////////////////////////////////////////////////////////////////////////////////////////////////
+//                     Copyright (c) Philips Semiconductors
+//
+//         All rights are reserved. Reproduction in whole or in part is
+//        prohibited without the written consent of the copyright owner.
+//    Philips reserves the right to make changes without notice at any time.
+//   Philips makes no warranty, expressed, implied or statutory, including but
+//   not limited to any implied warranty of merchantability or fitness for any
+//  particular purpose, or that the use will not infringe any third party patent,
+//   copyright or trademark. Philips must not be liable for any loss or damage
+//                            arising from its use.
+///////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/*! \file RegCtrl.c
+*
+* Project: Project: Mifare reader with RC522
+*
+*  Source: RegCtrl.c
+* $Author: mha $
+* $Revision: 1.1 $
+* $Date: Fri Jun 30 14:33:59 2006 $
+* $KeysEnd$
+*
+* Comment:
+*  The hardware dependent code. All hardware dependent code is here.
+*  Write, read, modify the register of RC522.
+*
+*  In this case, the code is for MCS51 processor. If you using other processor,
+*  what you need to do is rewrite the two functions: getchar and putchar.
+*  It is very easy for you to port to other platform. Nothing else needed.
+*
+* Functions:
+*
+*
+* History:
+*  Bob Jiang:    Generated Fri Jul 22 2005 $
+*
+*/
+
+#include "ErrCode.h"
+#include "reg52.h"
+#include "Rc522Reg.h"
+#include "spi.h"
+
+/*************************************************
+Function:       putchar
+Description:
+     write a byte to serial port
+Parameter:
+     ch            the byte to write
+Return:
+     None
+**************************************************/
+void spi_putchar(unsigned char ch)
+{
+  Spi_send_only (ch);
+}
+
+/*************************************************
+Function:       spi_getchar
+Description:
+     get a byte from serial port
+Parameter:
+     ch            the byte to save the received byte
+     WaitTime      the counter for polling, avoid endless loop.
+Return:
+     STATUS_SUCCESS         get a byte data successfully
+     STATUS_IO_TIMEOUT      time out
+**************************************************/
+short spi_getchar(unsigned char *ch, unsigned int WaitTime)
+{
+	// send dummy byte, and receive actual data
+	*ch = Spi_send_and_receive (0xff);
+
+	return STATUS_SUCCESS;
+	// return STATUS_IO_TIMEOUT;
+
+}
+/*************************************************
+Function:       RcSetReg
+Description:
+     Write data to register of RC522
+Parameter:
+     RegAddr       The address of the register
+     RegVal        The value to be written
+Return:
+     None
+**************************************************/
+void RcSetReg(unsigned char RegAddr, unsigned char RegVal)
+{ 
+
+	// shift addr, bits[6:1] defines address
+	RegAddr = RegAddr << 1;
+	
+	//clear bits 7 and 0 for SPI write address
+    RegAddr &= 0x7e;   
+	Spi_ss_low;
+    
+	Spi_send(RegAddr);
+	Spi_send(RegVal);
+
+	Spi_ss_high;
+
+}
+
+/*************************************************
+Function:       RcGetReg
+Description:
+     Read data to register of RC523
+Parameter:
+     RegAddr  The address of the register to be read
+Return:
+     The value of the specify register
+**************************************************/
+unsigned char RcGetReg(unsigned char RegAddr)
+{
+    unsigned char RegVal;
+    short status;	
+	
+	// shift addr, bits[6:1] defines address
+	RegAddr = RegAddr << 1;
+	
+	// for SPI read, clear bit 0 and set bit 
+	RegAddr = (RegAddr & 0xfe) | 0x80; 
+    
+	Spi_ss_low;
+	
+	// send address byte w/ read bit(7) set 
+	Spi_send(RegAddr);
+	
+	// read register value
+	RegVal = Spi_receive();
+	
+	Spi_ss_high;
+		
+    return RegVal;
+}
+
+/*************************************************
+Function:       RcModifyReg
+Description:
+     Change some bits of the register
+Parameter:
+     RegAddr       The address of the register
+     ModifyVal        The value to change to, set or clr?
+     MaskByte      Only the corresponding bit '1' is valid,
+Return:
+     None
+**************************************************/
+void RcModifyReg(unsigned char RegAddr, unsigned char ModifyVal, unsigned char MaskByte)
+{
+    unsigned char RegVal;
+    RegVal = RcGetReg(RegAddr);
+    if(ModifyVal)
+    {
+        RegVal |= MaskByte;
+    }
+    else
+    {
+        RegVal &= (~MaskByte);
+    }
+    RcSetReg(RegAddr, RegVal);
+}
+

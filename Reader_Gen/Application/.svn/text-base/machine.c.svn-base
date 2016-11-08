@@ -1,0 +1,641 @@
+/*#include "timer.h"
+#include "mac.h"
+#include "mac_event.h"
+#include "mac_start.h"
+#include "mac_data.h"
+#include "mac_scan.h"
+#include "mac_associate.h"
+#include "system.h"
+#include "hal.h"
+*/
+
+#include "mac.h"
+
+#ifndef COORNODE
+
+#include "reader.h"
+#include "serial.h"
+#include "machine.h"
+#include "avr_timer.h"
+#include "timer_enddevice.h"
+#include <avr/wdt.h>
+#include <util/delay.h>
+#include "hal_avr.h"
+#include "eeprom_map.h"
+
+#include "mac_event.h"
+
+u16 calcMachineCRC(u8 *msg, u8 len);
+#define MAX_ALLOWED_ARRAY_SIZE  50
+
+#if ( DEVICE_CONNECTED == MDC_MACHINE )
+
+//static structMachineStatus MdcStatus;
+
+//static u8 ucMachineTimerID;
+u8 ucTopOffTime;
+u8 ucCardErrorCode;
+//u8 ucCardStatus;	//location of smartcard, in/out of reader
+
+//static u16 ucMachineVendPrice = 0x0096;
+static u8 ucDryerPricing = 0;
+/*static*/ u16 ucCardBalance;// = 07D0;
+u16 cardId;
+double vendPrice;
+
+static u8 ucTimerCount;
+
+//u8 ucMachineWait; move to machine.h
+
+void WaitForMachine(void)
+{
+    ucMachineWait = MACHINE_TIME_OUT;
+}
+
+u8 SerialSendMachineData (u8 ucCommandType)
+{
+	u8 ucDataBuf[MDC_MAX_PACKET_SIZE] = {0};
+	static u8 BCC = 0;
+  	static u8 i,n,y;
+
+
+
+	switch (ucCommandType)	//Format command
+	{
+		case STATUS_REQUEST:
+			
+			ucDataBuf[0] = STATUS_REQUEST_SIZE;
+			ucDataBuf[1] = STATUS_REQUEST;
+			ucDataBuf[2] = CurrentAccount.CardState;
+			break;
+
+		case VEND_PRICE_PACKET:
+		
+			ucDataBuf[0] = VEND_PRICE_SIZE;
+			ucDataBuf[1] = VEND_PRICE_PACKET;
+			ucDataBuf[2] = MachineSetupData.VendPrice[0];
+			ucDataBuf[3] = MachineSetupData.VendPrice[1];
+			ucDataBuf[4] = ucDryerPricing;
+			break;
+
+		case CASH_CARD_INSERTED:
+		
+			ucDataBuf[0] = CASH_CARD_SIZE;
+			ucDataBuf[1] = CASH_CARD_INSERTED;
+			ucDataBuf[2] = CurrentAccount.Value >> 8;
+			ucDataBuf[3] = CurrentAccount.Value;
+			ucDataBuf[4] = MachineSetupData.VendPrice[0];
+			ucDataBuf[5] = MachineSetupData.VendPrice[1];	
+			break;
+		
+		case PROGRAMMING_DATA:
+		case PROGRAMMING_DATA_TOPLOAD:
+		case PROGRAMMING_DATA_FRONTLOAD:
+		case PROGRAMMING_DATA_WASHER_EXTRACTOR:
+		case PROGRAMMING_DATA_TUMBLER:
+		case PROGRAMMING_DATA_DRYER:
+            
+			ucDataBuf[0] = PROGRAMMING_DATA_SIZE;
+			ucDataBuf[1] = MdcStatus.MachineType;
+			ucDataBuf[2] = MachineSetupData.VendPrice[0];
+			ucDataBuf[3] = MachineSetupData.VendPrice[1];
+			ucDataBuf[4] = MachineSetupData.Coin1[0];
+			ucDataBuf[5] = MachineSetupData.Coin1[1];	
+			ucDataBuf[6] = MachineSetupData.Coin2[0];
+			ucDataBuf[7] = MachineSetupData.Coin2[1];	
+			ucDataBuf[8] = MachineSetupData.StartPulse[0];
+			ucDataBuf[9] = MachineSetupData.StartPulse[1];
+			ucDataBuf[10] = MachineSetupData.CycleLength;
+            if(MdcStatus.MachineType == PROGRAMMING_DATA_DRYER || MdcStatus.MachineType == PROGRAMMING_DATA_TUMBLER)
+            {
+                ucDataBuf[11] = MachineSetupData.CoolDownTime;
+                ucDataBuf[12] = MachineSetupData.Coin1TopoffTime;
+                ucDataBuf[13] = MachineSetupData.Coin2TopoffTime;
+                ucDataBuf[14] = MachineSetupData.HighTempSetting;
+                ucDataBuf[15] = MachineSetupData.MediumTempSetting;
+                ucDataBuf[16] = MachineSetupData.LowTempSetting;
+                ucDataBuf[17] = MachineSetupData.DelicateTempSetting;
+                ucDataBuf[18] = MachineSetupData.ControlConfig;
+			    ucDataBuf[19] = MachineSetupData.DefaultCycle;
+            }
+            else{
+    			ucDataBuf[11] = MachineSetupData.ControlConfig;
+    			ucDataBuf[12] = MachineSetupData.DefaultCycle;
+			}
+
+			break;
+
+		case AUDIT_DATA_REQUEST:
+
+			ucDataBuf[0] = AUDIT_DATA_REQUEST_SIZE;
+			ucDataBuf[1] = AUDIT_DATA_REQUEST;
+			break;
+		
+		case CARD_REMOVED:
+		
+			ucDataBuf[0] = CARD_REMOVED_SIZE;
+			ucDataBuf[1] = CARD_REMOVED;
+			break;
+		
+		case CASH_CARD_REMOVED:
+			ucDataBuf[0] = CASH_CARD_REMOVED_SIZE;
+			ucDataBuf[1] = CARD_REMOVED;
+			ucDataBuf[2] = CurrentAccount.Value >> 8;
+			ucDataBuf[3] = CurrentAccount.Value;
+			ucDataBuf[4] = MachineSetupData.VendPrice[0];
+			ucDataBuf[5] = MachineSetupData.VendPrice[1];	
+			break;
+			
+		case CASH_CARD_TOPOFF:
+
+			ucDataBuf[0] = CASH_CARD_TOPOFF_SIZE;
+			ucDataBuf[1] = CASH_CARD_TOPOFF;
+			ucDataBuf[2] = CurrentAccount.Value >> 8;
+			ucDataBuf[3] = CurrentAccount.Value;
+			ucDataBuf[4] = MachineSetupData.VendPrice[0];
+			ucDataBuf[5] = MachineSetupData.VendPrice[1];
+			ucDataBuf[6] = ucTopOffTime;	//topoff time in minutes	
+			break;
+					
+		
+		
+		case DEDUCT_TOPOFF_COMMAND:
+            break;
+		
+		case MACHINE_START_COMMAND:
+			ucDataBuf[0] = MACHINE_START_PACKET_SIZE;
+			ucDataBuf[1] = MACHINE_START_COMMAND;
+			break;
+		
+		case ADD_TIME_COMMAND:
+			ucDataBuf[0] = ADD_TIME_PACKET_SIZE;
+			ucDataBuf[1] = ADD_TIME_COMMAND;
+			break;
+			
+		case CARD_ERROR_PACKET:
+			ucDataBuf[0] = CARD_ERROR_PACKET_SIZE;
+			ucDataBuf[1] = CARD_ERROR_PACKET;
+			ucDataBuf[2] = ucCardErrorCode;
+			break;
+		
+		case DISPLAY_REQUEST:
+        case DISPLAY_REQUEST_CARD:
+			ucDataBuf[0] = DISPLAY_REQUEST_SIZE;
+			ucDataBuf[1] = DISPLAY_REQUEST;
+            ucDataBuf[2] = 0x72;	//left most character
+			ucDataBuf[3] = 0xee;	//character 2
+			ucDataBuf[4] = 0xa0;	//character 3
+			ucDataBuf[5] = 0xbc;	//right most character
+			ucDataBuf[6] = 3;	//display time in seconds
+			break;
+		case DISPLAY_REQUEST_ERROR:
+			ucDataBuf[0] = DISPLAY_REQUEST_SIZE;
+			ucDataBuf[1] = DISPLAY_REQUEST;
+            ucDataBuf[2] = 0xf2;	//left most character
+			ucDataBuf[3] = 0xa0;	//character 2
+			ucDataBuf[4] = 0xa0;	//character 3
+			ucDataBuf[5] = 0x00;	//right most character
+			ucDataBuf[6] = 3;	//display time in seconds
+			break;
+		
+		case AUDIO_BEEP_REQUEST:
+
+			ucDataBuf[0] = AUDIO_BEEP_REQUEST_SIZE;
+			ucDataBuf[1] = AUDIO_BEEP_REQUEST;
+			ucDataBuf[2] = 8;	//beep lenght value * 0.25 seconds
+            break;
+		
+		case MANUAL_MODE_ENTRY:
+		    break;
+		case PRODUCTION_TEST_CYCLE:
+			break;		
+		default:
+			break;		//should return with error here
+
+	}
+
+	if (ucDataBuf[0] == 0)
+		return 0;
+	
+	for(n = 0; n < NUMRETRIES; n++)
+	{
+		BCC = STX;
+		init_rx_buf();
+		y = (ucDataBuf[0] + 1);	//number of bytes sending
+		serial_putchar(STX);    // Send STX, start byte
+
+
+	    for (i = 0; i < y; i++)
+	    {
+	        serial_putchar(ucDataBuf[i]);
+			BCC = (BCC ^ ucDataBuf[i]);
+		}		
+	
+	    serial_putchar(BCC);    // Send BCC, error checking byte
+		//while(  tx_buf_has_char() )
+		//;
+		//start timer 350ms
+		//wait for response
+
+		ucTimerCount = 0;
+		sei();
+		StartTimerZero();
+		while(ucTimerCount < 70)
+		{
+			if(rx_buf_count())
+				break;
+            else if( mac_event_pending() ){
+                macTask();  //timer has timed out handle timer task.
+            }//to cut down on missed calls while waiting for machine to respond
+		}
+		StopTimerZero();
+
+		if(ucTimerCount < 70)	//a byte has been received.
+		{
+			i = serial_getchar();
+			if(i == ACK)
+				return 1;	//Command received successfully
+			else if(i == INV)
+				return 0;	//Invalid command sent				
+		}//if not time out leave.
+
+	}// Retries
+
+	return 0;
+}
+
+u8 SerialGetMachineData(void)
+{
+	static u8 ucMdcDataBuf[MDC_MAX_PACKET_SIZE];
+	static u8 i,n,BCC;
+
+	
+	//get machine data
+	i = serial_getchar();
+	if( i == STX )//state byte detected
+	{	
+		i = serial_getchar(); // get data field size.
+		BCC = (i ^ STX);
+
+		for(n = 0; n < i; n++)
+		{
+			
+			ucMdcDataBuf[n]= serial_getchar();
+			BCC = (BCC ^ ucMdcDataBuf[n]);
+		}
+		i = serial_getchar();	// get BCC
+		if(BCC == i)
+		{
+			switch( ucMdcDataBuf[0])
+			{
+				case MACHINE_STATUS_PACKET:
+					MdcStatus.MachineType 	= (ucMdcDataBuf[1] + PROGRAMMING_DATA);
+					MdcStatus.KeypadData  	= ucMdcDataBuf[2];
+					MdcStatus.CycleType   	= ucMdcDataBuf[3];
+					MdcStatus.CmdToReader 	= ucMdcDataBuf[4];
+					MdcStatus.MachineStatus[0] 	= ucMdcDataBuf[5];
+					MdcStatus.MachineStatus[1] 	= ucMdcDataBuf[6];
+					MdcStatus.RemainingCycleMinutes		= ucMdcDataBuf[9];
+					MdcStatus.RemainingCycleSeconds		= ucMdcDataBuf[10];
+				
+					break;
+				case AUDIT_DATA_TOPLOAD:									
+				case AUDIT_DATA_FRONTLOAD:				
+				case AUDIT_DATA_WASHER_EXTRACTOR:				
+				case AUDIT_DATA_TUMBLER:				
+				case AUDIT_DATA_DRYER:
+					MdcAuditData.MachineType = ucMdcDataBuf[1];
+					MdcAuditData.ControlSVN = ucMdcDataBuf[2];
+					MdcAuditData.VendPrice[0] = ucMdcDataBuf[3];
+					MdcAuditData.VendPrice[1] = ucMdcDataBuf[4];
+					MdcAuditData.Coin1Value [0] = ucMdcDataBuf[5];
+					MdcAuditData.Coin1Value[1] = ucMdcDataBuf[6];
+					MdcAuditData.Coin2Value [0] = ucMdcDataBuf[7];
+					MdcAuditData.Coin2Value[1] = ucMdcDataBuf[8];
+					MdcAuditData.NumStartPulse[0] = ucMdcDataBuf[9];
+					MdcAuditData.NumStartPulse [1]= ucMdcDataBuf[10];
+					MdcAuditData.CycleConfig = ucMdcDataBuf[11];
+					if (ucMdcDataBuf[0] == AUDIT_DATA_FRONTLOAD || ucMdcDataBuf[0] == AUDIT_DATA_TOPLOAD ||
+						ucMdcDataBuf[0] == AUDIT_DATA_WASHER_EXTRACTOR)
+					{
+						MdcAuditData.ControlConfig = ucMdcDataBuf[12];
+						MdcAuditData.Coin1Counter[0] = ucMdcDataBuf[13];
+						MdcAuditData.Coin1Counter[1] = ucMdcDataBuf[14];
+						MdcAuditData.Coin2Counter[0] = ucMdcDataBuf[15];
+						MdcAuditData.Coin2Counter[1] = ucMdcDataBuf[16];
+						MdcAuditData.NumCycles[0] = ucMdcDataBuf[17];
+						MdcAuditData.NumCycles[1] = ucMdcDataBuf[18];
+						MdcAuditData.NumStartPulse[0] = ucMdcDataBuf[19];
+						MdcAuditData.NumStartPulse[1] = ucMdcDataBuf[20];
+						MdcAuditData.AvgFillTime[0] = ucMdcDataBuf[21];
+						MdcAuditData.AvgFillTime[1] = ucMdcDataBuf[22];
+						MdcAuditData.AvgDrainTime[0] = ucMdcDataBuf[23];
+						MdcAuditData.AvgDrainTime[1] = ucMdcDataBuf[24];
+					}
+					else if (ucMdcDataBuf[0] == AUDIT_DATA_TUMBLER || ucMdcDataBuf[0] == AUDIT_DATA_DRYER)
+					{
+						MdcAuditData.CoolDownTime = ucMdcDataBuf[12];
+						MdcAuditData.Coin1TopoffTime = ucMdcDataBuf[13];
+						MdcAuditData.Coin2TopoffTime = ucMdcDataBuf[14];
+						MdcAuditData.HighTempSetting = ucMdcDataBuf[15];
+						MdcAuditData.MedTempSetting = ucMdcDataBuf[16];
+						MdcAuditData.LowTempSetting = ucMdcDataBuf[17];
+						MdcAuditData.DeliTempSetting = ucMdcDataBuf[18];
+						MdcAuditData.ControlConfig = ucMdcDataBuf[19];
+						MdcAuditData.Coin1Counter[0] = ucMdcDataBuf[20];
+						MdcAuditData.Coin1Counter[1] = ucMdcDataBuf[21];
+						MdcAuditData.Coin2Counter[0] = ucMdcDataBuf[22];
+						MdcAuditData.Coin2Counter[1] = ucMdcDataBuf[23];
+						MdcAuditData.NumCycles[0] = ucMdcDataBuf[24];
+						MdcAuditData.NumCycles[1] = ucMdcDataBuf[25];
+						MdcAuditData.Coin1TopoffCounter[0] = ucMdcDataBuf[26];
+						MdcAuditData.Coin1TopoffCounter[1] = ucMdcDataBuf[27];
+						MdcAuditData.Coin2TopoffCounter[0] = ucMdcDataBuf[28];
+						MdcAuditData.Coin2TopoffCounter[1] = ucMdcDataBuf[29];
+						MdcAuditData.NumStartPulse[0] = ucMdcDataBuf[30];
+						MdcAuditData.NumStartPulse[1] = ucMdcDataBuf[31];
+						MdcAuditData.NumTopoffStartPulses[0] = ucMdcDataBuf[32];
+						MdcAuditData.NumTopoffStartPulses[1] = ucMdcDataBuf[33];
+					}
+					break;
+				default:
+					break;
+			}
+
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+
+void InitTimerZero(void)
+{
+//	TCCR0B = (1<<CS02) | (1<<CS00);	//set prescaler to 1024
+	TIFR0 = 2;//1<<TOV0;					//clear TOV0 / clear interrupt
+	TIMSK0 = 2;//1<<TOIE0;				//enable timer0 overflow interrupt
+	TCNT0 = 0;//16;
+	ucTimerCount = 0;
+}
+
+
+void StopTimerZero(void)
+{
+	TCCR0B = 0;//~(1<<CS02) | ~(1<<CS01) | ~(1<<CS00);	//set prescaler to zero
+}
+
+/* set timer zero to 5 milisecond resolution and start.*/
+void StartTimerZero(void)
+{
+	OCR0A = 78;
+	TCCR0A = 2;
+	TCCR0B = (1<<CS02) | (1<<CS00);	//set prescaler to 1024
+}
+
+ISR(TIMER0_COMPA_vect)
+{
+	ucTimerCount++;
+
+}
+
+void SetMachineSetupData(void)
+{
+	//get setup data from EEPROM
+	halGetEeprom(MACHINE_SETUP_ADDR, MACHINE_SETUP_NUM_BYTE, (u8*)&MachineSetupData);
+	vendPrice = (MachineSetupData.VendPrice[0] * 256 + MachineSetupData.VendPrice[1]) / 100.0;
+	if(MdcStatus.MachineType == TUMBLER  || MdcStatus.MachineType == DRYER)
+		halGetEeprom(MACHINE_SETUP_ADDR_DRYER, DRYER_SETUP_NUM_BYTE, &MachineSetupData.CoolDownTime);//*/
+}
+
+void SaveMachineSetupData(void)
+{
+/*	halPutEeprom((u8*)3, 11, &MachineSetupData)
+	if(MdcStatus.MachineType == TUMBLER  || MdcStatus.MachineType == DRYER)
+		halPutEeprom((u8*)11, 7, &(MachineSetupData + 11))*/
+}
+
+/**	This function should be called only after we've received a data frame from the radio.
+*
+*	Purpose:	This function will parse the received data and perform the required operations.
+*				it will operate using data from the global buffer DataBuffer. It will store or retrieve data from eeprom
+*	Parameters:
+*	Return:
+**/
+/*void ProcessRadioData(puchar pucDataBuf)
+{
+	u8 i;
+
+	switch( pucDataBuf[1] )
+	{
+		case CARD_VALUE_RESPONSE:
+			//copy card value data 
+			break:
+
+		default:
+			break;
+	}
+
+}
+*/
+void SetDefaultMachineSetup(void)
+{
+	//Default settings
+	MachineSetupData.KeyPressWaitTime = 25;
+	MachineSetupData.VendPrice[0] = 0;
+	MachineSetupData.VendPrice[1] = 100;
+	MachineSetupData.Coin1[0] = 0;
+	MachineSetupData.Coin1[1] = 25;
+	MachineSetupData.Coin2[0] = 0;
+	MachineSetupData.Coin2[1] = 100;
+	MachineSetupData.StartPulse[0] = 0;
+	MachineSetupData.StartPulse[1] = 100;
+	MachineSetupData.CycleLength = 1;
+	MachineSetupData.ControlConfig = 8;
+	MachineSetupData.DefaultCycle = 2; //Normal for washer
+
+	//Dryer specific settings
+	MachineSetupData.CoolDownTime = 3;
+	MachineSetupData.Coin1TopoffTime = 15;
+	MachineSetupData.Coin2TopoffTime = 60;
+	MachineSetupData.HighTempSetting = 0;
+	MachineSetupData.MediumTempSetting = 1;
+	MachineSetupData.LowTempSetting = 3;
+	MachineSetupData.DelicateTempSetting = 9;
+}
+
+
+u8 sendMdcPacket(u8 *ucDataBuf)
+{
+	u8 buf_size,i,n;
+	u8 BCC = 0;
+	
+	if (ucDataBuf[0] == 0)
+		return 0;
+	
+	for(n = 0; n < NUMRETRIES; n++)
+	{
+		BCC = STX;
+		init_rx_buf();
+		buf_size = (ucDataBuf[0] + 1);	//number of bytes sending
+		serial_putchar(STX);    // Send STX, start byte
+
+
+	    for (i = 0; i < buf_size; i++)
+	    {
+	        serial_putchar(ucDataBuf[i]);
+			BCC = (BCC ^ ucDataBuf[i]);
+		}		
+	
+	    serial_putchar(BCC);    // Send BCC, error checking byte
+		
+		//start timer 350ms
+		//wait for response
+
+		ucTimerCount = 0;
+		sei();
+		StartTimerZero();
+		while(ucTimerCount < 70)
+		{
+			if(rx_buf_count())
+				break;
+            else if( mac_event_pending() ){
+                macTask();  //timer has timed out handle timer task.
+            }//to cut down on missed calls while waiting for machine to respond
+		}
+		StopTimerZero();
+
+		if(ucTimerCount < 70)	//a byte has been received.
+		{
+			i = serial_getchar();
+			if(i == ACK)
+				return 1;	//Command received successfully
+			else if(i == INV)
+				return 0;	//Invalid command sent				
+		}//if not time out leave.
+
+	}// Retries
+
+	return 0;	
+}
+
+//MDC_MACHINE
+/*#else*/ #elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
+
+//MAYTAG_MACHINE
+void sendMTStartMessage( void )
+{
+
+static u8 i,n, buf[9] = {ENQ,START_MESSAGE,0,0,0,0,0x88,0x55};//*/0x55,0x88};
+static u8 tmp,len;
+static u16 crc;
+/*
+len = 6;
+crc = calcMachineCRC(buf, len);
+
+buf[6] = crc & 0xff;
+buf[7] = crc >> 8;
+
+for(i=0;i<8;i++)
+{
+    serial_putchar(buf[i]);
+}
+/*/
+AVR_ENTER_CRITICAL_REGION();
+
+len = 6;
+crc = calcMachineCRC(buf, len);
+
+buf[6] = crc & 0xff;
+buf[7] = crc >> 8;
+
+PORTD &= ~(1<<PD3);
+_delay_us(834);
+
+for( n=0; n< 8; n++)
+{
+    //start bit
+    PORTD |= (1<<PD3);
+
+
+    tmp = buf[n];
+    
+    _delay_us(834);
+    for( i=0; i< 8; i++)
+    {
+        if((tmp & 0x01))
+            PORTD &= ~(1<<PD3);
+        else
+            PORTD |= (1<<PD3);
+    
+        tmp = (tmp >> 1);    
+       _delay_us(825); 
+    }
+    //stop bit
+    PORTD &= ~(1<<PD3);
+    _delay_us(834);
+}
+
+AVR_LEAVE_CRITICAL_REGION();
+
+}
+#endif // (MACHINE_TYPE)
+
+void MachineStatus(void)
+{
+    #if (DEVICE_CONNECTED == MDC_MACHINE)
+    
+	if( SerialSendMachineData(STATUS_REQUEST) )
+	{		
+		if(SerialGetMachineData())
+		{
+			serial_putchar(ACK);
+			_delay_ms(3);	 //wait for at least 1ms to allow machine time to process
+				
+			if(ReaderStateFlag.ReaderSetup == READER_SETUP_DONE) // reader has been setup, so send cycle vend price.
+				if(SerialSendMachineData(VEND_PRICE_PACKET));
+				//set machine status ok flag;
+			ucDeviceStateFlag = DEVICE_STATUS_ONLINE; //machine status has been done
+            return;
+		}
+		else 
+			serial_putchar(NAK);
+	}
+    #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
+	
+    sendMTStartMessage();
+    #endif
+
+    ucDeviceStateFlag = DEVICE_STATUS_DONE;
+}
+
+
+
+
+u16 calcMachineCRC(u8 *msg, u8 len)
+{
+   u8 i;                            //loop counter 1     
+   u8 j;                            //loop counter 2  
+   u8 flag;                         //flag
+   u16 crc;                         //CRC  
+   u8 tempMsg[MAX_ALLOWED_ARRAY_SIZE];//temp array
+   
+   crc = 0;                            //clear crc  
+
+   for(i=0;i<len; i++)                //save into temp array
+       tempMsg[i] = msg[i];
+   
+   for(i=0;i<len; i++)                 //loop through msg array
+   {  
+      for(j=0;j<8; j++)                //loop through bits
+      {
+         flag = crc & 0x0001;          //set or reset flag
+         crc >>= 1;                    //shift crc
+         if (flag ^ (tempMsg[i] & 0x01)) crc ^= 0xA001;//crc calculation
+         tempMsg[i] >>= 1;                //shift message 
+      }
+   }
+   return (crc);                       //return crc
+} 
+                            //end of calcMachin
+#endif // (NODETYPE == ENDDEVICE)

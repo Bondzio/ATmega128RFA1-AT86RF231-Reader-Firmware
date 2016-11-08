@@ -59,7 +59,7 @@
 #define RETURN_BILL                 0x18
 #define WAIT_FOR_BILL				0x19
 #define BOW_ERROR					0x1A // error message received from BOW
-#define READER_NAME_SETUP			0x1B	//asign name to reader to allow id of physical machine
+#define READER_NAME_SETUP			0x1B	//assign name to reader to allow id of physical machine
 #define READER_NAME_REQUEST			0x1C	//retrieve reader name
 #define READER_LABEL_SETUP			0x1D
 #define READER_LABEL_REQUEST		0x1E
@@ -111,16 +111,10 @@
 // device connected to the reader
 #define MDC_MACHINE       1
 #define MAYTAG_MACHINE    2
-#define MARS_BA           3
 
 #define DEVICE_CONNECTED  MDC_MACHINE
-
-#if(DEVICE_CONNECTED == MARS_BA)
-
-    #define DEVICE_POLL_PERIOD          250 //poll period in msec
-    #define BILL_RETURN_TIMEOUT         60   //60 seconds
  
-#elif(DEVICE_CONNECTED == MDC_MACHINE) 
+#if(DEVICE_CONNECTED == MDC_MACHINE) 
 
     #define DEVICE_POLL_PERIOD          300     //poll period in msec
 
@@ -192,8 +186,6 @@ u8 ucSerialReceiveDataBuffer[SERIAL_RECEIVE_MAX_BUFFER];
 u8 ucSerialReceiveDataIndex;
 u16  ENDNODE_SHORTADDRESS;
 
-
-
 //! Serial Data Parser State.
 serial_data_parse_state_t ucSerialDataParseState;
 u8 ucParseDataStart;
@@ -217,37 +209,34 @@ u8 AppCheckCoordinatorCommand (u8 * ucSerialReceiveDataBuffer);
 
 /* String literal representation of the current application version. */
 
-
-#if(DEVICE_CONNECTED == MARS_BA)
-    #define __APP_VERSION_STRING__ "0.1.8 BA"
-#elif(DEVICE_CONNECTED == MDC_MACHINE)
-    #define __APP_VERSION_STRING__ "0.3.6 MDC"
+#if(DEVICE_CONNECTED == MDC_MACHINE)
+    #define __APP_VERSION_STRING__ "0.4.4 MDC"
 /* app_version
     Numerical representation of the current app version.
 
     In the numerical representation, the major number is multiplied by
     10000, the minor number by 100, and all three parts are then
-    added.  It is intented to provide a monotonically increasing
+    added.  It is intended to provide a monotonically increasing
     numerical value that can easily be used in numerical checks.
  */
-#define __APP_VERSION__        0036UL
+#define __APP_VERSION__        0044UL
 
 //    String literal representation of the release date. */
-#define __APP_DATE_STRING__    "20150129"
+#define __APP_DATE_STRING__    "20161115"
 
 /* YYYYMMDD
     Numerical representation of the release date. */
-#define __APP_DATE_            20150129UL
+#define __APP_DATE_            20161115UL
 
 /* 
     Application major version number. */
 #define __APP_MAJOR__          0
 
 /* Application minor version number. */
-#define __APP_MINOR__          3
+#define __APP_MINOR__          4
 
 /* Application revision number. */
-#define __APP_REVISION__       6
+#define __APP_REVISION__       4
 
 #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
     #define __APP_VERSION_STRING__ "0.0.1 GEN2"

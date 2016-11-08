@@ -1,0 +1,2651 @@
+/* Copyright (c) 2008  ATMEL Corporation
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+   * Neither the name of the copyright holders nor the names of
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
+*/
+/*
+  $Id: application.c,v 1.113.2.1 2009/02/06 21:27:26 bleverett Exp $
+  $Log: application.c,v $
+  Revision 1.113.2.1  2009/02/06 21:27:26  bleverett
+  Changed so that LED blips once at power on.
+
+  Revision 1.113  2009/02/05 20:31:19  bleverett
+  All AVR targets and options build now.
+
+  Revision 1.112  2009/02/05 20:11:07  egnoske
+  Added menu items...
+
+  Revision 1.111  2009/02/05 18:56:30  egnoske
+  Added file handling to 'b' = stop collecting data; 'l' = resume logging data and 'f' = start logging with a new file name.
+
+  Revision 1.110  2009/02/05 18:19:37  bleverett
+  Making AVR targets build again and work as planned.
+
+  Revision 1.109  2009/02/04 21:33:46  mvidales
+  Changed compile flag name to IPV6LOWPAN
+
+  Revision 1.108  2009/02/04 21:04:29  mvidales
+  Added UIPV6 compile flag.
+
+  Revision 1.107  2009/02/04 17:08:03  egnoske
+  Changed a bunch of path problems for Rowley build and replaced "DEBUG" in the uip folder with UIPDEBUG.
+
+  Revision 1.106  2009/02/04 01:12:21  coflynn
+  Support IPv6 on LoWPAN Side
+
+  Revision 1.105  2009/01/30 22:55:15  mvidales
+  Fixed AVR compile problems when merged with utasker.
+
+  Revision 1.104  2009/01/30 20:35:59  egnoske
+  Cleaned up print out...
+
+  Revision 1.103  2009/01/30 00:16:32  egnoske
+  Removed compiler warnings...
+
+  Revision 1.102  2009/01/29 23:24:00  mvidales
+  removed warnings.
+
+  Revision 1.101  2009/01/29 23:11:36  egnoske
+  Buncha' commenting out of code to get ARM to compile. It runs RUM!
+
+  Revision 1.100  2009/01/29 22:29:13  egnoske
+  Merged utasker changes to head.
+
+  Revision 1.99  2009/01/28 01:00:47  mvidales
+  added an empty define.
+
+  Revision 1.98  2009/01/27 22:29:15  bleverett
+  Made auto-writing of EEPROM only work in DEMO mode.
+
+  Revision 1.97  2009/01/27 20:53:55  bleverett
+  Added default setting of EEPROM contents if EEPROM is blank on startup.
+
+  Revision 1.96  2009/01/27 18:05:04  coflynn
+  Added code to send temperature every 4-5 mins
+
+  Revision 1.95  2009/01/27 15:42:26  coflynn
+  Fixed building for ARM...
+
+  Revision 1.94  2009/01/27 14:51:07  coflynn
+  -Added timestamps to 'G' resposne in 6lowpan
+  -Added macGetTime() function
+
+  Revision 1.93  2009/01/21 22:58:59  mvidales
+  Fixed ARM compile problem.
+
+  Revision 1.92  2009/01/21 20:02:55  coflynn
+  Added new sixlowpan application, does lots of UDP stuff...
+
+  Revision 1.91  2009/01/21 01:56:01  coflynn
+  UDP Improvements for 6lowpan on AVR
+
+  Revision 1.90  2009/01/20 22:50:01  bleverett
+  Changed timing of scan for RF212, because it operates at a slower rate.
+
+  Minor tweaks to fix little problems.
+
+  Revision 1.89  2009/01/20 21:26:31  mvidales
+  Removed PHAT use. Added IPv6 back. Removed XML generation. Removed most CGI calls.
+
+  Revision 1.88  2009/01/16 21:19:40  mvidales
+  Fixed serial pause problem.
+
+  Revision 1.87  2009/01/16 17:21:11  bleverett
+  Removed a bunch of CR/LF's to make the terminal display tighter.
+
+  Revision 1.86  2009/01/16 17:07:56  bleverett
+  Prettied up the terminal interface.  Added pause feature (P key) to stop
+  scrolling messages.
+
+  Revision 1.85  2009/01/14 01:46:43  bleverett
+  Added wakeup function so that MAC can wake up a sleeping node.
+
+  Revision 1.84  2008/12/22 23:59:24  bleverett
+  More changes for sleeping.  Store sleep time in EEPROM.
+
+  Revision 1.83  2008/12/20 01:36:42  bleverett
+  Made the sensor node go to sleep when it is sending data at intervals.
+
+  Revision 1.82  2008/12/19 22:48:09  bleverett
+  More doxygen work.
+  Changed the way stuff is stored in EEPROM.
+  More changes to make both RF231 and RF212 work.
+
+  Revision 1.81  2008/12/19 01:23:55  bleverett
+  More support for the SPITFIRE platform and RF212 chip.
+
+  Revision 1.80  2008/12/18 21:55:44  coflynn
+  Changed sics to six
+
+  Revision 1.79  2008/12/17 03:04:12  coflynn
+  LED blinks when echo is rx'd over IPv6
+
+  Revision 1.78  2008/12/16 19:12:05  bleverett
+  Changed some of the commenting in arm .c files
+  Added two new compiler switches - SLEEP and IPV6LOWPAN to
+  allow leaving these features out of the build.
+  Updated the test building script.
+
+  Revision 1.77  2008/12/15 21:57:59  bleverett
+  Added sleep function in new files sleep.c/sleep.h.
+  More doxygen comments.
+
+  Revision 1.76  2008/12/15 02:44:43  coflynn
+  *** empty log message ***
+
+  Revision 1.75  2008/12/12 21:32:03  coflynn
+  Enabling the 'SICSLOWPAN' App makes it send RS when you push the button
+
+  Revision 1.74  2008/12/07 15:58:16  bleverett
+  Added support for the RCB breakout board's serial port.
+  Added RANDOM_DATA flag in sensors.c.  If this flag is set, then the node
+  will generate random data for readings.
+  More documentation.
+
+  Revision 1.73  2008/12/05 01:13:12  mvidales
+  removed xmldata generation.
+
+  Revision 1.72  2008/12/05 00:17:10  coflynn
+  6lowpan compiles in
+
+  Revision 1.71  2008/12/04 23:07:30  bleverett
+  Fixed Makefile.linux to handle the printf function properly, and to only
+  link in floating-point printf and libm when needed.
+
+  Finalized cal routines for single-point thermistor cal.
+
+  Saved cal params into EEPROM.
+
+  Added general-purpose EEPROM read/write functions.
+
+  Revision 1.70  2008/12/04 01:05:38  bleverett
+  Added configuration to make building without the sensors app possible.
+  Changed calibration to happen on the sensor node, not the coordinator.
+
+  Revision 1.69  2008/12/02 17:53:26  bleverett
+  Added APP macro that allows you to leave the SENSOR application out.
+  Added A/D code to read a sensor on a sensor node.
+
+  Revision 1.68  2008/11/26 00:57:28  bleverett
+  Added lots of application code.
+  Fixed a serial_gets error.
+
+  Revision 1.67  2008/11/26 00:33:21  mvidales
+  added more xml file generation.
+
+  Revision 1.66  2008/11/25 00:38:41  mvidales
+  Added __avr__ for eeprom stuff.
+
+  Revision 1.65  2008/11/22 01:22:48  bleverett
+  Added application code, some of which is working.
+
+  Revision 1.64  2008/11/21 01:11:24  bleverett
+  Minor changes.
+
+  Revision 1.63  2008/11/20 20:27:40  bleverett
+  Removed sixlowpan/ipv6/tcp/udp files.
+  Added more doxygen comments.
+
+  Revision 1.62  2008/11/20 01:30:33  bleverett
+  More doxygen comments.
+
+  Revision 1.61  2008/11/19 18:48:45  bleverett
+  Added doxygen comments.
+
+  Revision 1.60  2008/11/18 23:13:59  mvidales
+  replaced ledStart function.
+
+  Revision 1.59  2008/11/18 22:52:40  bleverett
+  Fixed some AVR timer problems.  Tested at 200 pings per second.
+
+  Revision 1.58  2008/11/18 19:27:30  bleverett
+  More doxygen comments.
+  macFindClearChannel() works now.
+  Other small tweaks.
+
+  Revision 1.57  2008/11/18 19:05:02  egnoske
+  Added Atmel license and  Log: to top of file
+
+  Revision 1.56  2008/11/17 22:27:50  bleverett
+  Added macro PARTNUM to allow usage with RF231 or RF230.
+
+  Revision 1.55  2008/11/17 21:42:57  bleverett
+  Added more Doxygen comments.
+
+  Revision 1.54  2008/11/17 18:28:31  egnoske
+  commted out some debug message strings.
+
+  Revision 1.53  2008/11/14 23:52:54  bleverett
+  Fixed problems with AVR.
+
+  Revision 1.52  2008/11/13 22:39:01  bleverett
+  Added some debugging code.
+
+  Revision 1.51  2008/11/13 17:29:58  bleverett
+  Fixed some of the stability problems, mostly by adding critical sections to
+  SPI interface code.
+
+  Revision 1.50  2008/11/11 23:04:14  bleverett
+  Fixed a couple of minor problems.
+
+  Revision 1.49  2008/11/11 21:26:23  bleverett
+  Random number debugging -not fixed yet.
+  Made the code only use one channel - PAN_CHANNEL
+
+  Revision 1.48  2008/11/11 01:38:06  bleverett
+  Added Doxygen comments.
+
+  Revision 1.47  2008/11/11 00:56:38  mvidales
+  Added the HTML ping button.
+
+  Revision 1.46  2008/11/08 01:18:55  bleverett
+  Fixed error with word boundary access.
+  Added (broken) coordinator scan feature.
+
+  Revision 1.45  2008/11/08 00:11:09  egnoske
+  removed function arg
+
+  Revision 1.44  2008/11/07 22:17:43  egnoske
+  added ping from html stuff.
+
+  Revision 1.43  2008/11/06 23:42:59  bleverett
+  Comments.
+
+  Revision 1.42  2008/11/06 21:06:47  bleverett
+  Fixed bug where a router wouldn't notice that that network is unavailable.
+  Added some debug output.
+
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "radio.h"
+#include "timer.h"
+#include "mac.h"
+#include "mac_event.h"
+#include "mac_start.h"
+#include "mac_data.h"
+#include "mac_scan.h"
+#include "mac_associate.h"
+#include "system.h"
+#include "hal.h"
+#include "sixlowpan.h"
+#include "sleep.h"
+#include "application.h"
+#include "system.h"
+#include <avr/boot.h>
+#include <avr/wdt.h>
+
+#include "machine.h"
+#include "eeprom_map.h"
+#include "mars_comm.h"
+#include "reader.h"
+#include "display.h"
+
+// mifare includes
+#include "RegCtrl.h"
+#include "reg52.h"
+#include "Mifare.h"
+#include "Rc522Reg.h"
+#include "OpCtrl.h"
+#include "ErrCode.h"
+#include "spi.h"
+
+#define INIT_READER 				0x01
+#define SCANNING					0x02	
+#define ENABLE_SCAN					0x03
+#define SCAN_ENABLE					0x04
+#define DISABLE_SCAN				0x05
+#define TIME_OUT					0x06
+#define WAIT_FOR_SERVER				0x07
+#define WAIT_FOR_SELECTION  		0x08
+#define SETUP_PACKAGE     			0x09
+#define SETUP_REQUEST       		0x0A
+#define SETUP_RESPONSE				0x0B
+#define CARD_DETECTED				0x0C
+#define SCARD_REMOVED				0x0D
+#define START_CYCLE					0x0F
+#define CYCLE_STARTED				0x10
+#define GET_KEYPAD_INFO             0x11
+#define UPDATE_READER_FIRMWARE      0x12
+#define VALIDATE_READER				0x13
+#define VALIDATE_SETUP				0x14
+#define GET_FIRMWARE_VERSION	    0x15
+#define RESET_EEPROM                0x16
+#define IDLE						0x27
+#define ZONE                        0x04 // start of data zones for mifare Ultra light
+#define ZONE_SIZE                   0x04 // mifare Ultra light
+#define ADD_CARD_VALUE              0x17
+#define RETURN_BILL                 0x18
+#define WAIT_FOR_BILL				0x19
+#define BOW_ERROR					0x1A // error message received from BOW
+	
+// bootloader definitions	
+#define EEPROM_RESET_VALUE 			0xFFFFFFFFFFFFFFFF 
+#define BOOT_INIT_ADDR				0xFF0
+#define CHANNEL_ADDR   				0xFF2 
+#define PANID_ADDR 					0xFF4      
+#define SRCADDR_ADDR				0xFF6 
+#define DESTADDR_ADDR				0xFF8 
+
+
+/* This is the EEPROM address that 
+   contains the actual size of the 
+   loaded application image */
+#define	  APP_IMAGE_SIZE    0x0FFC
+
+/* This is the EEPROM address that 
+   contains the uint16_t CRC of the 
+   application image */
+#define   APP_CRC			0x0FFA 
+
+#define lowNibble 0
+#define highNibble 1
+
+u8 OP = 0; 
+u8 DataBuffer[100];
+u8 swipe = 0;
+u8 TOFlag =0;
+u8 KPTOFlag = 0;
+u8 doItOnce = 1;
+u16 LOOP_IN  =0;
+u16 LOOP_OUT =0;
+bool ADMIN_INIT = false;
+bool ADMIN_CREDIT = false;
+bool SEND_BALANCE = false;
+bool INSUFFCIENT_FUNDS;
+
+//extern u8 OP;
+extern u8 ucGetMachineStatusFlag;
+
+ u8 ucReturnBillTimeout=0;
+//
+bool SETUP_TIMEOUT = true;
+
+#if (DEBUG_BOW)
+  void DetermineState();
+#endif // (DEBUG_BOW)
+
+
+//Only the RUM stack uses these, otherwise undef them
+#if !((IPV6_STACK == STACK_RUM) && IPV6LOWPAN)
+#define sixlowpan_hc01_gen_rs(a)
+#define sixlowpan_init()
+#define sixlowpan_application_init()
+#endif
+
+//void sixlowpan_application_init(void);
+
+
+extern bool Ping1Rx;
+extern bool Ping2Rx;
+extern bool Ping3Rx;
+extern bool HaltValidation;
+#if __AVR__
+#include "serial.h"
+#define euip_init_802154(a, b)
+//#include <avr/eeprom.h>
+// You can program the EEPROM with macaddress this way, using an ELF file
+//u8 EEMEM macaddress[8] = {0xde, 0xed, 0xbe, 0xef, 0x11, 0x22, 0x33, 0x44};
+//u8 EEMEM macaddress[8] = {0x01, 0x23, 0x45, 0x56, 0x78, 0x9a, 0xbc, 0xde};
+//u8 EEMEM macaddress[8] = {0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
+
+static u8 pingTimer;
+
+#endif // __avr__
+
+
+u16 uiFunctionEntered = 1;
+u8 ucLed1State = 0;
+bool VALIDATION_TIMEOUT = false;
+
+/**
+   @addtogroup app
+   @{
+
+   This is a sample application, intended to show how the Route Under
+   MAC can be used to create a simple application.
+
+   @section app_network_start Joining the network
+
+   On startup, this application uses a number of callback functions to
+   bring up the network.  A coordinator node executes this process:
+
+   - Call macFindClearChannel(), which starts a channel scan to find a
+     free channel to use for the new PAN.
+
+   - When the scan is complete, the appClearChanFound() callback is
+     called. This then initializes the MAC/radio using the channel
+     found.
+
+   When a router or end node starts, it connects to the network using
+   these steps:
+
+   - appStartScan() is called, which scans all available channels,
+     issuing a beacon request frame on each channel.
+
+   - When the scan is complete, appScanConfirm() is called with an
+     argument that specifies whether the scan successfully found a
+     network to join.
+
+   - If the scan process found a network, then appAssociate() is
+     called, which causes the node to send an association request
+     packet to the node found in the channel scan.
+
+   - When an association response packet is received, the
+     appAssociateConfirm() function is called by the MAC.  At this
+     point, the node is part of the network and can send data packets
+     to other nodes.
+
+   @section app_data Sending and Receiving Data
+
+   To send data to another node, the application can call the
+   macDataRequest() function.  The application must know the address
+   of the destination node, unless the destination is the coordinator,
+   which always uses the short address 0x0000 (See @ref
+   DEFAULT_COORD_ADDR).
+
+   When a data packet is received, it is routed on to its
+   destination. If the final destination is this node's short
+   address, then the MAC will call the appDataIndication()
+   function, which can then process the incoming data.
+*/
+
+// Set up function pointer to bootloader section.
+void (*bootptr)( void ) = 0x1E000; 
+
+#define TRACKDEMO 0
+
+// Application variables
+static u8 failCount;  ///< Number of transmit-to-parent failures before re-scanning.
+volatile u8 gotPanCoordPing;
+// Function declarations
+void appStartScan(void);
+void ledcallback(void);
+void sixlowpan_button(void);
+void ValidationTimeout(void);
+char * GetParam(char *ptrBuffer, char *tmpstr, char *EndChar);
+char  ParamStr[100];										   
+
+#if __arm__
+/**
+    @brief This will toggle the led of choice on. Used by LED_ON().
+*/
+void ledOn(u8 val)
+{
+    if(1 == val) LED1ON();
+    else if(2 == val) LED2ON();
+    else if(3 == val) LED3ON();
+    else if(4 == val) LED4ON();
+}
+
+/**
+    @brief This will toggle the led of choice off. Used by LED_OFF().
+*/
+void ledOff(u8 val)
+{
+    if(1 == val) LED1OFF();
+    else if(2 == val) LED2OFF();
+    else if(3 == val) LED3OFF();
+    else if(4 == val) LED4OFF();
+}
+#endif // __arm__
+
+
+
+// These LED functions are used to provide address callbacks for macSetAlarm.
+// Cannot use defines directly in callbacks.
+void ledoff1(void)
+{
+    LED_OFF(1);
+}
+
+void ledoff2(void)
+{
+    LED_OFF(2);
+}
+
+void ledoff3(void)
+{
+    LED_OFF(3);
+}
+
+// This function can be used for diagnostic reasons. Not used in RUM application.
+void blink1(void)
+{
+    LED_ON(1);
+    macSetAlarm(25, ledoff1);
+
+    //    macSetAlarm(500, blink1);
+
+    //    macDataRequest(0, 7, (u8*)"Howdy\r\n");
+}
+
+/**
+   Application callback function, called when the MAC receives a ping request
+   packet addressed to this node.
+
+   @param addr The short address of the node that sent the ping request
+*/
+void appPingReq(u16 addr)
+{
+    // We got a ping, send a response
+    // Blip the LED
+    LED_ON(1);
+
+    macSetAlarm(/* LED_PING_DELAY */ 1 ,ledoff1);
+
+    debugMsgStrConst("\r\nPing request from node ");
+    debugMsgInt(addr);
+
+    if (PLATFORM == RAVEN && SERIAL)
+        // Tell 3290p
+        serial_send_frame(REPORT_PING_BEEP, 2, (u8*)&addr);
+
+    macPing(PING_RSP_FRAME, addr);
+}
+/**
+   Application callback function, called when the MAC receives a ping
+   response packet addressed to this node.
+
+   @param addr The short address of the node that send the ping response.
+ */
+
+/**
+   Application callback function, called when the MAC receives a ping
+   response packet addressed to this node.
+
+   @param addr The short address of the node that send the ping response
+ */
+void appPingRsp(u16 addr)
+{
+    debugMsgStrConst("\r\nPing response from ");
+    debugMsgHex(addr);
+    debugMsgStrConst(" LQI=");
+    debugMsgInt(radioGetSavedLqiValue());
+    debugMsgStrConst(" RSSI=");
+    debugMsgInt(radioGetSavedRssiValue());
+    debugMsgCrLf();
+
+    if (PLATFORM == RAVEN && SERIAL)
+        // Tell 3290p
+        serial_send_frame(REPORT_PING_BEEP, 2, (u8*)&addr);
+
+    // turn on the LED
+    LED_ON(1);
+
+    // and make it turn off after a litte bit
+    macSetAlarm(LED_DELAY,ledoff1);
+#if(__arm__)
+    gotPanCoordPing = 1;
+#endif
+}
+
+
+/**
+   Application callback function.  Called when this node receives a
+    ping response via IPv6
+*/
+void appSixlowpanPingResponse(void)
+{
+    if (PLATFORM == RAVEN)
+        // Send the 3290 a frame to show that we got a ping response.
+        serial_send_frame(REPORT_PING_BEEP, 0, NULL);
+}
+
+/**
+   Application callback function.  Called when this node receives a
+   UDP data packet.
+*/
+void appSixlowpanUdpResponse(char *str)
+{
+    if (PLATFORM == RAVEN)
+        // Send the 3290 a frame to show that we got a ping response.
+        serial_send_frame(REPORT_TEXT_MSG, strlen(str), (u8*)str);
+}
+
+/**
+   Application callback function, called when the MAC receives an ACK
+   packet from a node that we sent a packet to.
+*/
+void appPacketSendSucceed(void)
+{
+    // Reset the failure count on a good packet to parent
+    // (could also decrement failCount)
+
+    if (NODETYPE != COORD)
+    {
+        // figure out which way we were sending when the failure occurred
+        if (macConfig.lastDestAddr == macConfig.parentShortAddress)
+            failCount = 0;
+
+        // Tell sensor app
+        if (APP == SENSOR)
+            sensorPacketSendSucceed();
+
+        // Tell IPv6 LOWPAN
+       // if (IPV6LOWPAN)
+        //    sixlowpanSleep_packetSucceed();
+    }
+}
+
+/**
+   Application callback function, called when the MAC fails to send a
+   packet due to a channel access failure (air is too busy).
+*/
+void appPacketSendAccessFail(void)
+{
+    // Tell sensor app
+    if (APP == SENSOR)
+        sensorPacketSendFailed();
+}
+
+/**
+   Application callback function, called when the MAC fails to receive
+   an ACK packet from a node that we sent a packet to.
+*/
+void appPacketSendFailed(void)
+{
+
+    //Tell 6LoWPAN
+    #if IPV6LOWPAN
+        sixlowpanSleep_packetFailed();
+    #endif
+
+    u8 parentFailed;
+    if (NODETYPE != COORD)
+    {
+        // don't mess with assessing failures during scanning
+        if (macIsScanning())
+            return;
+
+        debugMsgStrConst("\r\nFail=");
+        debugMsgInt(failCount+1);
+
+        parentFailed = (macConfig.lastDestAddr == macConfig.parentShortAddress);
+        /* Special code: this prevents a situation where the
+           coordingator goes away, and the nodes take a long time to
+           realize that the network is gone.  Nodes Keep trying to
+           re-associate with each other, but until a router loses a
+           number of packets to its parent, it still thinks it's
+           associated.  This code forces the issue by either verifying
+           that the router is still connected, or forcing a failure.    */
+        // Send an empty data packet
+        if (parentFailed && NODETYPE == ROUTER)
+            macDataRequest(macConfig.parentShortAddress, 0, NULL);
+
+        // Don't have a cow until we have missed a few packets in a row
+        if (++failCount < 2)
+        {
+            // Tell sensor app
+            if (APP == SENSOR)
+                sensorPacketSendFailed();
+            return;
+        }
+
+        // A sent packet failed to reach its destination too many times
+        // figure out which way we were sending when the failure occurred
+        if (parentFailed)
+        {
+            // re-associate if we were sending upstream
+            macConfig.associated = false;
+
+            // It is possible to make the coord/end units re-connect
+            // to the coordinator more quickly by not scanning all
+            // available channels.  To do this, uncomment the following
+            // line.
+            // macSetScanChannel(macConfig.currentChannel);
+
+            if (APP == SENSOR)
+                sensorLostNetwork();
+            else
+            macSetAlarm((radioRandom(8)+5) *10, appStartScan);
+        }
+        if (NODETYPE == ROUTER &&
+            macIsChild(macConfig.lastDestAddr))
+        {
+            // Drop child from table if the failure was downstream
+            macRemoveChild(macConfig.lastDestAddr);
+            debugMsgStrConst("\r\nDropped child bcs packet send failed.");
+        }
+    }
+
+}
+
+#if DEBUG || DOXYGEN
+/**
+    @brief This is an array of radio register names for serial output
+           used when rf2xx_reg_dump() is called.  See the radio
+           datasheet for details.
+*/
+u8 rf2xx_reg_names[][16] =
+    {"TRX_STATUS", "TRX_STATE", "TRX_CTRL_0", "TRX_CTRL_1", "PHY_TX_PWR",
+     "PHY_RSSI", "PHY_ED_LEVEL", "PHY_CC_CCA", "CCA_THRES", "TRX_CTRL_2", "IRQ_MASK",
+     "IRQ_STATUS", "VREG_CTRL", "BATMON", "XOSC_CTRL", "RX_SYN", "RF_CTRL_0", "XAH_CTRL_1",
+     "FTN_CTRL", "RF_CTRL_1", "PLL_CF", "PLL_DCU", "PART_NUM", "VERSION_NUM", "MAN_ID_0",
+     "MAN_ID_1", "SHORT_ADDR_0", "SHORT_ADDR_1", "PAN_ID_0", "PAN_ID_1",
+     "IEEE_ADDR_0", "IEEE_ADDR_1", "IEEE_ADDR_2", "IEEE_ADDR_3", "IEEE_ADDR_4",
+     "IEEE_ADDR_5", "IEEE_ADDR_6", "IEEE_ADDR_7", "XAH_CTRL_0", "CSMA_SEED_0",
+     "CSMA_SEED_1", "CSMA_BE"};
+
+/**
+    @brief This is an array of radio register values to be used when
+           rf2xx_reg_dump() is called.  See the radio datasheet for
+           details.
+*/
+reg_addr_t rf2xx_reg_enum[] =
+    {RG_TRX_STATUS, RG_TRX_STATE, RG_TRX_CTRL_0, RG_TRX_CTRL_1, RG_PHY_TX_PWR,
+     RG_PHY_RSSI, RG_PHY_ED_LEVEL, RG_PHY_CC_CCA, RG_CCA_THRES, RG_TRX_CTRL_2, RG_IRQ_MASK,
+     RG_IRQ_STATUS, RG_VREG_CTRL, RG_BATMON, RG_XOSC_CTRL, RG_RX_SYN, RG_RF_CTRL_0, RG_XAH_CTRL_1,
+     RG_FTN_CTRL, RG_RF_CTRL_0, RG_PLL_CF, RG_PLL_DCU, RG_PART_NUM, RG_VERSION_NUM, RG_MAN_ID_0,
+     RG_MAN_ID_1, RG_SHORT_ADDR_0, RG_SHORT_ADDR_1, RG_PAN_ID_0, RG_PAN_ID_1,
+     RG_IEEE_ADDR_0, RG_IEEE_ADDR_1, RG_IEEE_ADDR_2, RG_IEEE_ADDR_3, RG_IEEE_ADDR_4,
+     RG_IEEE_ADDR_5, RG_IEEE_ADDR_6, RG_IEEE_ADDR_7, RG_XAH_CTRL_0, RG_CSMA_SEED_0,
+     RG_CSMA_SEED_1, RG_CSMA_BE};
+#endif
+
+/**
+    @brief Dumps the RF2xx register contents to serial port.
+
+    Note: The serial output will only be available if the @ref DEBUG
+    macro is defined as non-zero.
+*/
+void rf2xx_reg_dump(void)
+{
+#if DEBUG
+    {
+        u8 i,j,k,val;
+        s8 str[40];
+
+        debugMsgStrConst("\r\n\r\nREG DUMP\r\n");
+
+        k = sizeof(rf2xx_reg_enum)/sizeof(rf2xx_reg_enum[0]);
+
+        for(i=0;i<k;i++)
+        {
+            val =  hal_register_read(rf2xx_reg_enum[i]);
+            sprintf((char*)str,"%-15s - %02X ", (char *)rf2xx_reg_names[i], (uint16_t)val);
+            debugMsgStr((char *)str);
+            for (j=7;j<8;j--)
+                // Print a bit
+                debugMsgChr(((val >> j)&1 ? '1' : '0' ));
+            debugMsgCrLf();
+        }
+
+        debugMsgStrConst("\r\n");
+    }
+#endif
+}
+
+/**
+   Application function, sends a data frame to the coordinator, and
+   schedules another call in two seconds, using the timer function.
+
+   This can be used for testing the network.  To send a real data
+   frame, use macDataRequest().
+ */
+void appSendDataFrame(void)
+{
+    // send data frames once per second
+    if (NODETYPE != COORD)
+        macDataRequest(0x00, 4, (u8*) ((NODETYPE == ENDDEVICE) ? "endd" : "rout"));
+
+    // Send another data frame later
+    macSetAlarm(1000, appSendDataFrame);
+}
+
+/**
+   Callback function, called when the MAC receives a data packet for
+   this node.
+ */
+void appDataIndication(void)
+{
+    // Write app code here -- This node has received a data frame.
+
+    // Example code:
+/* typedef struct { */
+/*     char buf[SAMPLE_COUNT/2];  // two samples/byte */
+/*     short step_index; */
+/*     short predicted_value; */
+/* } tEncodedBuf; */
+    // Find out the type of packet.
+
+
+    u16 i;
+    static u8 ucDataLength;
+
+    // Find out the type of packet
+    ftData *frame = (ftData *)(mac_buffer_rx+1);
+    u8 size = *mac_buffer_rx;
+
+	ucSendDataSize = 0;
+
+     // End_Device Radio ENTRY POINT
+	 // if (!size)
+	if(size ==0)
+        return;
+    
+    if ((frame->type & 0x7f) == DATA_FRAME)
+    {
+
+        // Get the length first.
+        ucDataLength = frame->payload[0];
+		memset(DataBuffer,0,sizeof(DataBuffer));
+
+        for (i = 0; i < ucDataLength; i++)
+        {
+            DataBuffer[i] = frame->payload[i+1];
+        }
+        #if (DEBUG)
+        Led3_on();
+        #endif
+
+		if(strstr((char *)DataBuffer, "SetupPackage") != NULL) 
+		     OP = SETUP_PACKAGE;					   
+
+         else if(strstr((char *)DataBuffer, "SetupRequest") != NULL) 
+		     OP = SETUP_REQUEST;
+
+         else if(strstr((char *)DataBuffer, "ValidationResponse") != NULL) 
+		     OP = VALIDATE_SETUP;
+
+         else if(strstr((char *)DataBuffer, "GetFirmwareVersion") != NULL) 
+		     OP = GET_FIRMWARE_VERSION;
+
+         else if(strstr((char *)DataBuffer, "ResetEEPROM") != NULL) 
+			OP = RESET_EEPROM;
+
+         else if(strstr((char *)DataBuffer, "EnterBootloader") != NULL) 
+		  {
+
+
+               // Store Active CHANNEL to EEPROM Address 0xFF2
+                 // eeprom_write(CHANNEL_ADDR, macConfig.currentChannel[0]);
+				 	halPutEeprom((u16*)CHANNEL_ADDR, 1, &macConfig.currentChannel);
+
+               // Store Active PAN_ID to EEPROM Address 0xFF4
+                  	halPutEeprom((u16*)PANID_ADDR, 2, (u8*)&macConfig.panId);
+
+               // Store Active SHORT SOURCE ADDR to EEPROM Address 0xFF6
+					halPutEeprom((u16*)SRCADDR_ADDR,2, (u8*)&macConfig.shortAddress);
+
+               // Store Active DESTINATION ADDR to EEPROM Address 0xFF8
+			   // halPutEeprom(DESTADDR_ADDR, 2, &MdcStatus.MachineType);
+
+			    i = 0x01;
+				halPutEeprom((u16*)BOOT_INIT_ADDR,1,(u8*)&i);
+               
+			    // zero out CRC and Application size memory location
+				memset(DataBuffer,0,sizeof(DataBuffer));
+			    halPutEeprom((u16*)APP_CRC,6,(u8*)&DataBuffer);
+
+			   
+			   // Initiate watchdog timer
+			     cli();
+			     wdt_enable(WDTO_2S);
+			     while(1);
+
+		 }
+		 else if (strstr((char *)DataBuffer, "Error") != NULL)
+			OP = BOW_ERROR;
+
+	    #if (DEBUG)
+        Led3_off();
+        #endif
+		ucNumberOfRetry = 0;
+
+	
+
+    }
+
+}
+
+/** 
+   \brief Function to send result back to PC through serial.
+   \param ucDataLength is the data size.
+   \param pucDataBuffer is the pointer to the data to be sent.
+ */
+#if (NODETYPE == COORD)
+void Serial_send_data (u8 ucDataLength, u8* pucDataBuffer)
+{
+    u16 i;
+    serial_putchar(SOP);    // Send SOP
+    serial_putchar(ucDataLength);   // Send Length
+    for (i = 0; i < ucDataLength * 2; i++)
+    {
+        serial_putchar(pucDataBuffer[i]);
+    }
+    serial_putchar(EOP);    // Send EOP
+}
+
+
+/** 
+   \brief Convert data from Hexa to String.
+   \param ucDataLength is the data size.
+   \param pucDataBuffer is the pointer to the data to be converted.
+ */
+
+void Hexa_to_string_convert ( u8 ucDataLength, u8* pucDataBuffer )
+{
+    u8 i, ucDataBuffer[ucDataLength];
+    for (i = 0; i < ucDataLength; i++)
+    {
+        ucDataBuffer[i] = pucDataBuffer[i];
+    }
+
+    for (i = 0; i < ucDataLength; i++)
+    {
+        pucDataBuffer[2 * i] = Nible_to_ascii ( ucDataBuffer[i] >> 4 );
+        pucDataBuffer[(2 * i) + 1] = Nible_to_ascii ( ucDataBuffer[i] );
+    }
+}
+#endif // (NODETYPE == COORD)
+
+/**
+   Example function, starts the network by scanning channels for a coordinator.
+
+   This node will either scan all available channels, or just one
+   channel if @ref macSetScanChannel() is called.  @see macScan().
+*/
+void appStartScan(void)
+{
+    if(NODETYPE != COORD)
+    {
+	   #ifdef DEBUG_RADIO
+        debugMsgStrConst("\r\nStart scan ");
+       #endif
+
+        macInit(0xff);
+
+        macScan();
+    }
+
+    if (IPV6LOWPAN)
+        sixlowpan_application_init();
+}
+
+/**
+   Callback function, called when the MAC has associated a child of
+   this node to the network.
+
+   @param shortAddress The short address of the new child node that
+   has been associated.  The MAC stores this address, so the
+   application should not have to.
+*/
+void appChildAssociated(u16 shortAddress)
+{
+    // Blip the LED when we associate a child
+    LED_ON(1);
+    macSetAlarm(LED_DELAY,ledoff1);
+}
+
+/**
+   Callback function, called when the MAC has associated a new node to
+   a network. This is only called for the coordinator.
+
+   @param shortAddress The short address assigned to the new node.  The
+   MAC stores this address, so the application should not have to.
+*/
+void appNodeAssociated(u16 shortAddress)
+{
+}
+
+
+/**
+   Callback function, called when the MAC receives an association
+   confirm packet addressed to this node, or the process timed out.
+
+   @param success True if an association packet was received, or false
+   if the association process timed out.
+*/
+void appAssociateConfirm(u8 success)
+{
+    if(NODETYPE != COORD)
+    {
+        if (success == SUCCESS)
+        {
+            // send data frame after a bit
+			#ifdef DEBUG_RADIO
+             debugMsgStrConst("\r\nAssociated to ");
+             debugMsgHex(macConfig.parentShortAddress);
+             debugMsgStrConst(" as ");
+             debugMsgHex(macConfig.shortAddress);
+			#endif
+
+
+            LED_ON(1);
+            macSetAlarm(LED_DELAY,ledoff1);
+
+            // For raven, notify other processor
+            if (PLATFORM == RAVEN && SERIAL)
+                serial_send_frame(REPORT_ASSOCIATED, 2, (u8*)&macConfig.shortAddress);
+
+            /* 6lowpan association */
+            if (IPV6LOWPAN)
+                sixlowpan_hc01_gen_rs();
+
+            // If we are auto-sending data, start that process.
+            if (APP == SENSOR && NODETYPE != COORD)
+            {
+                sensorInit();
+                sensorAutoSendStart();
+            }
+
+#if TRACKDEMO
+            // Track Demo Application
+            if (NODETYPE == ENDDEVICE)
+            {
+                // Re-associate every second
+                macSetAlarm(1000, appStartScan);
+            }
+#endif
+            if (APP == TRACKER  && PLATFORM == DSK001)
+            {
+                // Sleep for a while
+                nodeSleep(30);
+                // Do the scan over
+                appStartScan();
+            }
+        }
+        else
+        {
+            debugMsgStrConst("\r\nFailed to associate");
+
+            if (VLP)
+            {
+                // Sleep for 10 seconds, try again
+                nodeSleep(100);
+                appStartScan();
+            }
+            else
+                // Try again in one second
+                macSetAlarm(1000, appStartScan);
+        }
+    }
+}
+
+/**
+   Sample application function, associates this node to a network.
+   This function is called after a successful @ref macScan.
+*/
+void appAssociate(void)
+{
+  #ifdef DEBUG_RADIO
+    debugMsgStrConst("\r\nAssociating to ");
+    debugMsgHex(panDescriptor.coordAddr);
+    debugMsgStrConst(" on ch ");
+    debugMsgInt(panDescriptor.logicalChannel);
+    debugMsgStrConst(", hops = ");
+    debugMsgInt(panDescriptor.hopsToCoord);
+  #endif
+
+    macAssociate(panDescriptor.coordAddr, panDescriptor.logicalChannel);
+}
+
+/**
+   Callback function, called when the MAC has completed its channel scan.
+
+   @param success True if @ref macScan found a network to connect to,
+   or false if no networks were found.
+*/
+void appScanConfirm(u8 success)
+{
+    // Write app code here -- This (end or router) node has finished its scan,
+    // and has received some beacons from prospective parents.
+
+    // Example code:
+    if(NODETYPE != COORD)
+    {
+        if (success)
+        {
+            // associate with coordinator
+            macSetAlarm(10,appAssociate);
+
+            #ifdef BEBUG_RADIO
+             debugMsgStrConst("\r\nScan good, select chan ");
+             debugMsgInt(panDescriptor.logicalChannel);
+			#endif
+        }
+        else
+        {
+            // failure to find a network
+            if (VLP)
+            {
+                // Try again after sleeping for 10 seconds
+                if (NODETYPE == ENDDEVICE)
+                    nodeSleep(100);
+                else
+                    // Router node
+                    macSetAlarm(1000, appStartScan);
+            }
+            else
+                macSetAlarm(1000,appStartScan);
+
+                debugMsgStrConst("\r\nScan bad");
+        }
+    }
+}
+
+/**
+   Callback function, called when @ref macFindClearChannel()
+   completes.
+
+   u8 channel The clear channel selected for use by this PAN.
+*/
+void appClearChanFound(u8 channel)
+{
+    if (NODETYPE == COORD)
+    {
+        macInit(channel);
+        macStartCoord();
+#if (__AVR__ || __AVR32__)
+        debugMsgStrConst("\r\nStartup, I am coordinator on ch ");
+#else
+        fnDebugMsg("\r\nStartup, I am coordinator on ch ");
+#endif // __AVR__
+        debugMsgInt(channel);
+        macConfig.associated = true;
+
+#if ((IPV6_STACK == STACK_UIP) && IPV6LOWPAN)
+       //Start uIP stack with 802.15.4 interface
+        huip_init_802154(macConfig.panId, macConfig.shortAddress);
+#endif // IPV6LOWPAN
+    }
+}
+
+#if __AVR__
+/**
+   Verifies that the EEPROM contains valid data for the stored MAC
+   address.  If the EEPROM is unprogrammed, then a random MAC address
+   is written into EEPROM.
+
+   Similarly, the sensor interval time is set to 2 seconds if the
+   EEPROM is unprogrammed.
+ */
+void checkEeprom(void)
+{
+
+  if (DEMO == 1)
+   {
+	    u8 i,bad=1;
+	    u64 addr;
+	    u8 *buf = (u8*)&addr;
+
+	    halGetMacAddr((u8*)&addr);
+	    // ETG
+	    addr = htons_64(addr);
+	    for (i=0;i<8;i++)
+	        if (buf[i] != 0xff)
+	        {
+	            // Valid (non-fffffff) MAC addr
+	            bad = 0;
+	            break;
+	        }
+
+	    if (bad)
+	    {
+	        // create random MAC address and store it
+	        radioInit(0); // Needed for random to work.
+	        radioSetTrxState(RX_ON);
+	        for (i=0;i<8;i++)
+	            buf[i] = radioRandom(8);
+	        halPutMacAddr(buf);
+	    }
+
+	    halGetEeprom((u8*)offsetof(tEepromContents, dataSeconds),
+	                 sizeof(typeof(((tEepromContents*)0)->dataSeconds)),
+	                 buf);
+	    if (*((u16*)buf) == 0xffff)
+	    {
+	        // Bad timeout, set for 2 seconds
+	        *((u16*)buf) = 0x0014;
+	        halPutEeprom((u8*)offsetof(tEepromContents, dataSeconds),
+	                     sizeof(typeof(((tEepromContents*)0)->dataSeconds)),
+	                     buf);
+	    }
+	}
+
+
+	//check for First Run
+	if(PLATFORM == RCBRFA1)
+	{
+	    u64 NodeLongAddress;
+        u32 low;
+		u32 high;
+        u8 regval;
+		u8  i=0;	        
+		
+		u8 temp = READER_NEW;
+
+        
+		
+        // Setup the address of this device by reading a stored address from eeprom.
+        halGetMacAddr((u8*)&(NodeLongAddress));
+      
+        // Partition the long address
+        low = NodeLongAddress & 0xffffffff;
+        high = NodeLongAddress >> 32;
+        
+        // Vigin Board Configuration Found, 
+        // Request Setup Info from Reader
+
+		if((low == 0xFFFFFFFF) && (high == 0xFFFFFFFF)){
+		    // Produce Random Number
+			
+			    u8 buf[8];
+				u8 bits =8;
+
+				memset(&buf,0,sizeof(buf));
+			    // create random MAC address and store it
+	       		radioInit(0); // Needed for random to work.
+	        	radioSetTrxState(RX_ON);
+
+				
+	        	for (u8 x = 0;x < 8;x++){
+
+					      
+				  if(x < 4)
+					buf[x] = 0xFF;			// Load lower 4-bytes w/ 0xFF   
+
+				  else{
+				  
+			        i = radioGetTrxState();
+
+					// Load upper 4-bytes w/ random number (4-bytes)
+			        if(i == RX_ON || i == RX_AACK_ON)
+					     // Must be in rx to get random numbers
+			            // Random number generator on-board
+			            // has two random bits each read
+			            for (i=0;i<bits/2;i++)
+			            {
+			                regval = hal_subregister_read(SR_RND_VALUE);
+			                buf[x]= (buf[x] << 2) | regval;
+			            }
+
+					}
+				}
+
+
+			  halPutMacAddr(buf);
+			  //ReaderStateFlag.FirstRun |= VIRGIN_READER;
+			  
+			  halPutEeprom(READER_STATE_ADDR,READER_STATE_FLAG_SIZE,&temp);
+		}
+
+        else if((low == 0xFFFFFFFF) && (high != 0x00000000)){
+            //ReaderStateFlag.FirstRun |= VIRGIN_READER;
+			halPutEeprom(READER_STATE_ADDR,READER_STATE_FLAG_SIZE,&temp);
+			asm("nop");
+			}
+/*         else{// Valid (non-fffffff) MAC addr
+
+            //a valid reader ID has been detected. check for valid setup
+            if( (ReaderStateFlag.ReaderSetup == READER_SETUP_DONE) ){
+                #if (DEVICE_CONNECTED == MDC_MACHINE)
+                SetMachineSetupData();  
+                #endif 
+				
+				ReaderStateFlag.ValidateSetup = VALIDATE_READER_SETUP;
+				             
+            }
+            
+                    	            
+        }	*/	
+		
+    }
+}
+#endif // __AVR__
+
+
+
+/**
+   Sample application function, which initializes the application.
+   This function is meant to be called on startup only.
+*/
+void appInit(void)
+{
+	
+	#if (DEVICE_CONNECTED == MDC_MACHINE)
+     u8 machineCode;
+	 u8 tmp=0;
+	 u8 machineTimerId;
+	#endif
+  
+    // Init the mac
+    LED_INIT();
+    Leds_on();
+    Buzzer_init();
+    Leds_off();
+
+    // Blip the LED once on powerup
+    Led1_on();
+
+    OP = VALIDATE_READER; 	
+    macSetAlarm(25, ledoff1);
+
+	ucDeviceStateFlag = DEVICE_STATUS_NEEDED;
+    
+
+#if (__AVR__)
+    // If the EEPROM is cleared, init it to something useful
+    checkEeprom();
+#endif // __AVR__
+	
+	InitReader(); 
+	
+    #ifdef MACHINE_CONNECTED
+    
+        #if (DEVICE_CONNECTED == MDC_MACHINE)
+        //wait up to 10 seconds for machine to become active
+         machineTimerId = macSetAlarm(MACHINE_WAIT_TIMEOUT,WaitForMachine);     
+     
+         while(ucMachineWait == MACHINE_WAIT)
+         {
+            if(ucDeviceStateFlag == DEVICE_STATUS_NEEDED)
+            {
+        	    MachineStatus();
+                tmp = macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
+            }
+            else if(ucDeviceStateFlag == DEVICE_STATUS_ONLINE){
+                macTimerEnd(machineTimerId);
+                macTimerEnd(tmp);
+                //SetDefaultMachineSetup(); //load default setup info. these values will be overwritten when reader gets setup from BOW
+                break;
+            }
+            else if( mac_event_pending() ){
+                macTask();  //timer has timed out handle timer task.
+            }
+      
+         }	 
+         macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
+        #elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
+           // sendMTStartMessage();
+           // ucDeviceStateFlag = DEVICE_STATUS_NEEDED;
+
+        #elif (DEVICE_CONNECTED == MARS_BA)
+         //call only when running cash box app
+        
+        mars_init();
+
+        #endif // DEVICE_CONNECTED
+    #else
+	  // FOR DEBUGGING USE ONLY
+	 MdcStatus.MachineType = 0x21; 
+  
+    #endif
+    /*
+    #if (DEBUG == 0)
+    //start heartbeat
+    HeartBeat();
+    #endif
+    */
+    #if (DEVICE_CONNECTED == MDC_MACHINE)
+	// read machine code stored in EEPROM
+	/********can check reader state flag here and update******/
+	halGetEeprom(MACHINE_TYPE_ADDR, 1, &machineCode);
+	
+	//if a valid machine is connected, then store the machine type
+	if((machineCode == 0xFF) && (MdcStatus.MachineType != INVALID_MACHINE)) 
+	{
+		// save the actual machine code 
+		halPutEeprom(MACHINE_TYPE_ADDR, 1, &MdcStatus.MachineType);
+	}
+	else if(MdcStatus.MachineType != machineCode)
+	{
+		// machine has been swapped - trigger setup request
+		halPutEeprom(MACHINE_TYPE_ADDR, 1, &MdcStatus.MachineType);
+        
+        ReaderStateFlag.ReaderSetup = READER_SETUP_NEEDED;//(ReaderStateFlag | READER_SETUP_NEEDED); 
+        halPutEeprom(READER_STATE_ADDR,1, (u8*)&ReaderStateFlag);
+	}
+    #elif (DEVICE_CONNECTED == MARS_BA)
+    {
+        u8 temp = 0xBA;
+
+        halPutEeprom(MACHINE_TYPE_ADDR, 1, (u8*)&temp);
+    }
+    
+    #endif //DEVICE_CONNECTED
+
+    // Init the mac and stuff
+    if (NODETYPE == COORD)
+    {
+        macFindClearChannel();
+    }
+    else
+    {
+	   #ifdef DEBUG_RADIO
+        debugMsgStrConst("\r\nStartup, I am router/end.");
+	   #endif
+
+        // End node or router, start scanning for a coordinator
+        appStartScan();
+        // when scan is finished, appScanConfirm will be called.
+
+        //Call RUM init
+        sixlowpan_init();
+
+        #ifndef COORDNODE
+
+            #if (DEVICE_CONNECTED == MDC_MACHINE)
+			if (ucDeviceStateFlag == DEVICE_STATUS_ONLINE)
+			{
+				//display reader firmware version number
+				mdcDisplayVersion();
+				
+				//Send machine setup at every power up if reader has setup and machine is connected
+				if( (ReaderStateFlag.ReaderSetup == READER_SETUP_DONE) /*&& (ucDeviceStateFlag == DEVICE_STATUS_ONLINE)*/ )
+				{
+					SerialSendMachineData(PROGRAMMING_DATA);
+					ucCardStatus = CARD_OUT;
+					SerialSendMachineData(CARD_REMOVED);
+					//collectMdcAuditData();		
+				}
+			}					
+            #endif //MDC_MACHINE
+
+        #endif
+
+    }
+
+    // Init the button
+    BUTTON_SETUP();
+
+    // Turn the power down depending if button is pressed on powerup
+    if (!BUTTON_PRESSED() && DEMO)
+    {
+		#if !TRACKDEMO
+	        // Reduce power to lowest setting
+	        if(BAND==BAND900)
+	            hal_register_write(RG_PHY_TX_PWR,0x06);
+	        else
+	            radioSetTxPowerLevel(TX_PWR_17_2DBM);
+
+	        // Reduce sensitivity a lot.
+	        hal_subregister_write(SR_RX_PDT_LEVEL, 0x02);
+		#endif
+
+        debugMsgStrConst("\r\nDemo mode");
+    }
+	    
+    else
+      {
+	    #ifdef DEBUG_RADIO
+         debugMsgStrConst("\r\nNormal mode");
+		#endif
+       
+	  }
+
+asm("nop");
+}
+
+/**
+   Sample application function. Sends a ping packet to the network
+   coordinator.
+*/
+void doPing(void)
+{
+    hal_register_write(RG_CSMA_BE,0);
+    //macDataRequest(DEFAULT_COORD_ADDR, 110, dataString);
+    macPing(PING_REQ_FRAME, DEFAULT_COORD_ADDR);
+
+    // Uncomment the next line to make the button unleash a torrent of pings
+#if __AVR__ || __AVR32__
+    //    pingTimer = macSetAlarmMs(5+(23*(BAND == BAND900)), doPing);
+    pingTimer = macSetAlarm(500, doPing);
+#endif
+}
+
+
+/** 
+   \brief Convert data from String to Hexa.
+   \param ucDataLength is the data size.
+   \param pucDataBuffer is pointer to data to be converted.
+ */
+
+void String_to_hexa_convert ( u8 ucDataLength, u8 * pucDataBuffer )
+{
+    u8 i, ucDataBuffer[ucDataLength * 2];
+
+    for (i = 0; i < ucDataLength * 2; i++)
+    {
+        ucDataBuffer[i] = pucDataBuffer[i];
+    }
+    for (i = 0; i < ucDataLength; i++)
+    {
+        ucDataBuffer[2 * i] = Ascii_to_nible ( ucDataBuffer[2 * i] );
+        ucDataBuffer[(2 * i) + 1] = Ascii_to_nible ( ucDataBuffer[(2 * i) + 1] );
+        pucDataBuffer[i] = ((ucDataBuffer[2 * i]) << 4) + ucDataBuffer[(2 * i) + 1];
+    }
+}
+
+
+/**
+   Sample application task loop function.  This function is meant to
+   be called periodically.  It receives data from serial and sends it
+   to end device.
+*/
+void appTask(void)
+{
+	//vars declaration
+	ucSendDataSize = 0;
+	unsigned char tmp[16];
+
+
+	u8 ucTimerID=0xff;
+	char *uctempBuf;
+	char *ptr;
+
+    #if( DEVICE_CONNECTED == MARS_BA )
+	static u8  CustomerID[5] = {0};
+	static u8 ucbillReturnTimerID = 0xff;
+    #endif
+
+	// loop to convert 
+	// decimal to hexadecimal	
+	u8 i =0;
+	u8 Nibble =0;
+	u8 k, l;
+	u8  Setup[30]; 
+	u8 n = 0;
+
+
+	
+  #ifdef MACHINE_CONNECTED
+	#if (DEVICE_CONNECTED == MDC_MACHINE)
+	if(ucDeviceStateFlag == DEVICE_STATUS_NEEDED)	//do machine status communication every 1/2 second
+	{
+        DevicePoll();
+		
+		if (ucDeviceStateFlag == DEVICE_STATUS_ONLINE)
+		{	
+			if (ReaderStateFlag.ReaderSetup == READER_SETUP_NEEDED)
+			{
+				//Display "No Setup" message on machine
+				mdcDisplayCommand(LED_BLANK,LED_S,LED_U,LED_BLANK,5);
+				//_delay_ms(1000);
+			}
+			else if (((macConfig.associated == false) && (ReaderStateFlag.EnableOfflineTransaction == false)) || (ReaderStateFlag.MaxNumTransReached == true))
+			{
+				//Display "Service message" message on machine
+				mdcDisplayCommand(LED_S,LED_E,LED_r,LED_BLANK,5);
+			}
+						
+		}
+		
+	}
+	#endif // MDC_MACHINE
+	
+  #endif
+
+if(macConfig.associated == true || ReaderStateFlag.EnableOfflineTransaction == true) //  Don't bother running the app until the reader has associated
+{
+	#if (DEVICE_CONNECTED == MARS_BA)
+	if(ucDeviceStateFlag == DEVICE_STATUS_NEEDED)	//do machine status communication every 1/4 second
+	{
+        DevicePoll();
+	}
+	#endif //MARS_BA		
+
+	if (ReaderStateFlag.OfflineTransactionExist == true && macConfig.associated == true)
+	{
+	//	TransmitStoredTransaction();
+	}
+	
+	switch(OP){
+		case VALIDATE_READER: 
+				#if(DEVICE_CONNECTED == MDC_MACHINE) 
+				if((ReaderStateFlag.EnableOfflineTransaction == true) && (ReaderStateFlag.ReaderSetup == READER_SETUP_DONE))
+				{	
+					OP = INIT_READER;
+				}
+				else{													
+				#endif //MDC_MACHINE 
+				
+					#if (DEVICE_CONNECTED == MDC_MACHINE)
+					if( ((ReaderStateFlag.ReaderSetup == READER_SETUP_NEEDED) || ( ReaderStateFlag.FirstRun == VIRGIN_READER)) && (MdcStatus.MachineType != INVALID_MACHINE) ){
+					#elif (DEVICE_CONNECTED == MARS_BA)    
+					if( (ReaderStateFlag.ReaderSetup == READER_SETUP_NEEDED) || ( ReaderStateFlag.FirstRun == VIRGIN_READER) ){
+					#endif
+						SETUP_TIMEOUT = true;
+						OP = SETUP_REQUEST;
+					}
+					else if( (ReaderStateFlag.ReaderSetup == READER_SETUP_DONE) && (ReaderStateFlag.ValidateSetup == VALIDATE_READER_SETUP) ){
+                       	
+						VALIDATION_TIMEOUT = false;
+					   
+						// Send Validation Request
+						sprintf((char*)ucSendDataBuffer+1, "<ValidationRequest>");
+						ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+						ucSendDataBuffer[0] = ucSendDataSize;   	// Length
+						ucSendDataSize = ucSendDataSize + 1;    	// data size = data byte + size byte
+						macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+
+						macSetAlarm(15000, ValidationTimeout); 		//check Every 15s
+
+						// Wait for validation package to arrive
+						OP = VALIDATE_SETUP;
+                        
+					}
+					else if( ReaderStateFlag.ReaderSetup == READER_SETUP_DONE){
+						OP = INIT_READER;
+					}
+				#if( DEVICE_CONNECTED == MDC_MACHINE)
+				}					
+				#endif //MDC_MACHINE
+			break;
+
+		case INIT_READER:
+					#if (DEVICE_CONNECTED == MDC_MACHINE)
+					if( MdcStatus.MachineStatus[0] == MACHINE_RUN_MODE )
+					{
+						OP = CYCLE_STARTED;
+					}
+					else
+					{											
+						OP = SCANNING;
+					}
+					#elif (DEVICE_CONNECTED == MARS_BA)
+						OP = WAIT_FOR_BILL;
+					#endif
+					
+			 break;
+
+		case SCANNING: //scan for card swipe
+
+                // Enable Heart beat routine
+                    if (uiFunctionEntered < (20 * (F_CPU/4000000)))
+                    {
+                        uiFunctionEntered++;
+                    }
+                    else
+                    {
+						#if (DEVICE_CONNECTED == MARS_BA)
+							Led2_toggle();
+						#else
+ 							Led1_toggle();
+						#endif
+                        uiFunctionEntered = 0;					
+                    }
+
+	
+					if(!Request(ISO14443_3_REQALL, tmp))
+					{
+						
+						/*anti-collision and select the card*/
+						if(!AnticollSelect(0, tmp)){
+							OP = CARD_DETECTED;	
+							ledoff1();
+						}							
+							
+													
+						#if(DEVICE_CONNECTED == MARS_BA)
+							//end bill return timer once card has been detected
+							macTimerEnd(ucbillReturnTimerID);
+						#endif
+					}
+					
+				#if (DEVICE_CONNECTED == MARS_BA)
+					else if (ucReturnBillTimeout)
+					{
+						ucReturnBillTimeout = 0;
+						OP = RETURN_BILL;
+					}
+				#endif
+				
+                //check to see if reader is associated with a network, if not try to
+				break;
+
+		#if (DEVICE_CONNECTED == MARS_BA)
+		case WAIT_FOR_BILL:
+			// wait for bill to be escrowed
+			if(MarsStatus.BillState == MARS_BILL_ESCROWED)
+			{				
+				ucbillReturnTimerID = macSetLongAlarm(BILL_RETURN_TIMEOUT, SetBillReturn);
+				OP = SCANNING;	//wait for card swipe
+			}			
+			break;
+			
+		#endif
+		
+		#ifdef KEYPAD
+        case GET_KEYPAD_INFO:
+               
+                    OP  = SCANNING;
+                break;
+        #endif //KEYPAD
+		
+		case CARD_DETECTED:
+
+				
+				memset(DataBuffer,0,sizeof(DataBuffer));	// Clear Buffer
+
+				//Read CardID from User Zone 0
+				if(!Read(ZONE, DataBuffer))
+				{
+																		
+                     
+					CurrentAccount.ID = strtoul((const *)DataBuffer,NULL,10);	//save active card's id
+					
+					if(macConfig.associated == true)
+					{					
+						// Send Data Package via Radio						
+						sprintf((char*)ucSendDataBuffer+1, "<sN>%s</sN>",DataBuffer);
+
+						ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+						ucSendDataBuffer[0] = ucSendDataSize;   // Length
+						ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+						macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+									
+						// Clear Rx Buffer
+						memset(DataBuffer,0,sizeof(DataBuffer));
+					
+						OP = WAIT_FOR_SERVER;
+						#if (DEVICE_CONNECTED == MDC_MACHINE)
+						//mdcDisplayCommand(LED_b,LED_U,LED_S,LED_Y, 1);
+						#endif	
+					}
+					#if (DEVICE_CONNECTED == MDC_MACHINE)
+
+
+					else if((macConfig.associated == false) && (ReaderStateFlag.EnableOfflineTransaction == true) && (ReaderStateFlag.MaxNumTransReached == false))
+					{//allow cycle to start when BOW is down
+						CurrentAccount.Value = vendPrice * 100;				 
+    					CurrentAccount.CardState = CARD_IN;
+    					if( SerialSendMachineData(CASH_CARD_INSERTED))
+    					{
+							
+							OP = WAIT_FOR_SELECTION;
+							
+							KPTOFlag = 0;
+							
+							if( (MdcStatus.MachineStatus[0] & MACHINE_READY_MODE) || ((MdcStatus.MachineStatus[0] == MACHINE_RUN_MODE) && 
+							(MdcStatus.MachineType == PROGRAMMING_DATA_DRYER)) || ((MdcStatus.MachineStatus[0] == MACHINE_RUN_MODE) && (MdcStatus.MachineType == PROGRAMMING_DATA_TUMBLER)))
+							{
+    							macSetLongAlarm(MachineSetupData.KeyPressWaitTime,KeypressTimeOut);
+							}
+							else
+								macSetAlarm(500, KeypressTimeOut); // if connected to a washer while cycle is running and a card is swiped, just display the balance and continue scanning.								
+    					
+						}							
+					}
+					else{
+						OP = SCANNING;
+					}
+					#endif	
+											                            
+					#if (DEBUG)
+						Beeps(1);
+					#endif
+
+					//Set Timeout timer
+					TOFlag = 0;
+					ucTimerID = macSetAlarm(SERVER_RESPONSE_TIMEOUT,CommTimeOut);
+					
+				}
+				else
+				{					
+					#if (DEBUG)
+						debugMsgStr("\r\nInvalid CardID\r\n");
+					#endif
+					OP = SCARD_REMOVED;
+				}
+
+			break;
+
+		case WAIT_FOR_SERVER: //wait for response from server
+
+
+		    if(DataBuffer[0] != '\0')
+			{
+			  // Print response
+			
+				#if (DEBUG_BOW)
+				debugMsgStr("\r\n");
+				debugMsgStr(DataBuffer);	
+				debugMsgStr("\r\n");
+				#endif
+
+				OP = SCARD_REMOVED;
+
+                #if (DEVICE_CONNECTED == MARS_BA)
+
+                    //Extract the Card Id				
+    				if( (uctempBuf = strstr((char *)DataBuffer,"sN: ")) )
+                    {				
+    				    //strncpy((char *)CustomerID, (char *)(DataBuffer+9), 4);//(uctempBuf[9]-0x30) * 1000 + (uctempBuf[10]-0x30) * 100 + (uctempBuf[11]-0x30) * 10 + uctempBuf[12]-0x30;
+                        CurrentAccount.ID = strtoul((const *)(DataBuffer+3),NULL,10);	//save active card's id
+					
+						if( (MarsStatus.BillState == MARS_BILL_ESCROWED) && (MarsStatus.BillValue > 0) )
+                        {
+                            //sprintf(ucSendDataBuffer+1, "<cardId>%s</cardId>",DataBuffer+1);
+                            if( mars_store_bill() == BILL_STACKED )
+								OP = ADD_CARD_VALUE;
+                            
+							macTimerEnd(ucTimerID);
+                        }
+
+			        }
+                    else if( (uctempBuf = strstr((char *)DataBuffer,"<ReloadCustomerResult>")) )
+                    {				
+    				    CurrentAccount.Value = (uctempBuf[22]-0x30) * 1000 + (uctempBuf[23]-0x30) * 100 + (uctempBuf[25]-0x30) * 10 + uctempBuf[26]-0x30;
+                        //mars_store_bill();
+                        macTimerEnd(ucTimerID);
+                        LED_ON(1);
+                        macSetAlarm(5000, ledoff1);
+                    }
+                #else
+					
+					
+                    //Extract the Card Id				
+    				if( (uctempBuf = strstr((char *)DataBuffer,"sN: ")) )
+                    {
+						//uctempBuf = strstr((char *)DataBuffer,"serialNumber: ");				
+    					//CurrentAccount.ID = (uctempBuf[9]-0x30) * 1000 + (uctempBuf[10]-0x30) * 100 + (uctempBuf[11]-0x30) * 10 + uctempBuf[12]-0x30;
+						CurrentAccount.ID = strtoul((const*)(DataBuffer+3),NULL,10);	//save active card's id
+					
+			
+    					//Display card balance on machine
+    					double fBalance = 0.0;
+    					uctempBuf = strstr((char *)DataBuffer,"Balance: ");
+    					//ucCardBalance = (uctempBuf[9]-0x30) * 1000 + (uctempBuf[10]-0x30) * 100 + (uctempBuf[12]-0x30) * 10 + uctempBuf[13]-0x30;
+
+    					uctempBuf += 9;
+    					ptr = strchr(uctempBuf,'.');
+						k = ptr - uctempBuf;
+						fBalance = atof(uctempBuf);
+     
+    					// Format the Balance to XX.XX
+						if (k <2)
+						 sprintf(uctempBuf,"0%.2f",fBalance);
+						else if(k == 2)
+						 sprintf(uctempBuf,"%.2f",fBalance);
+						else
+						 strcpy(uctempBuf,"99.99");
+ 
+     					//Format the Display Balance
+    					CurrentAccount.Value = (uctempBuf[0]-0x30) * 1000 + (uctempBuf[1]-0x30) * 100 + (uctempBuf[3]-0x30) * 10 + uctempBuf[4]-0x30;				 
+    					//macTimerEnd(ucTimerID);
+
+    					CurrentAccount.CardState = CARD_IN;
+
+						#if(DEVICE_CONNECTED == MDC_MACHINE)
+    					if( SerialSendMachineData(CASH_CARD_INSERTED))
+    					{
+    						#if(DEBUG_BOW)
+    						debugMsgStr("\r\nSerialSendMachineData(CASH_CARD_INSERTED)\r\n");
+    						#endif
+
+    						//CurrentAccount.CardState = CARD_OUT;
+    						OP = WAIT_FOR_SELECTION;
+	
+    					//Sound Buzzer
+    						#if (DEBUG)
+								Beeps(2);
+							#endif
+
+    						KPTOFlag = 0;
+							
+							if( (MdcStatus.MachineStatus[0] & MACHINE_READY_MODE) || ((MdcStatus.MachineStatus[0] == MACHINE_RUN_MODE) && 
+							(MdcStatus.MachineType == PROGRAMMING_DATA_DRYER)) || ((MdcStatus.MachineStatus[0] == MACHINE_RUN_MODE) && (MdcStatus.MachineType == PROGRAMMING_DATA_TUMBLER)))
+							{
+    							macSetLongAlarm(MachineSetupData.KeyPressWaitTime,KeypressTimeOut);
+							}
+							else
+								macSetAlarm(500, KeypressTimeOut); // if connected to a washer while cycle is running and a card is swiped, just display the balance and continue scanning.								
+    					}
+						#endif
+					}	//serial number found in server database					
+                #endif
+
+			 }
+			 else if(TOFlag == 1) // server fails to respond in time
+			 {
+				#if(DEBUG_BOW)
+			   	debugMsgStr("\r\nTOFlag == 1\r\n");
+				#endif
+
+				// Error Occured
+				// Re-enter SCANNING mode
+
+				#if(DEVICE_CONNECTED == MDC_MACHINE)
+
+				CurrentAccount.CardState = CARD_OUT;
+			    SerialSendMachineData(CASH_CARD_REMOVED);
+
+                	//send error message to machine display
+
+				mdcDisplayCommand(LED_C,LED_A,LED_r,LED_d,4);
+				_delay_ms(2000);
+				mdcDisplayCommand(LED_E,LED_r,LED_r,LED_BLANK,3);
+				_delay_ms(2000);
+				
+				OP = IDLE;
+				//OP = SCANNING;//SCARD_REMOVED;
+				#if (DEBUG_BOW)
+				debugMsgStr("\r\nServer Communication Error\r\n");
+				#endif
+                
+				#elif(DEVICE_CONNECTED == MARS_BA)
+                    //add value failed, return the bill.
+                   OP = RETURN_BILL;
+
+                #endif // DEVICE_CONNECTED
+			             
+			 }
+
+             asm("nop");
+			 break;
+
+		case WAIT_FOR_SELECTION: //wait to see if cycle start has been requested by user
+
+			#if(DEVICE_CONNECTED == MDC_MACHINE)
+            if( (MdcStatus.CmdToReader == DEDUCT_VEND_COMMAND || MdcStatus.CmdToReader == DEDUCT_TOPOFF_COMMAND) )
+			{
+					OP = START_CYCLE; // set only if vend price deduction successful.
+
+			}
+			else if(KPTOFlag == 1)
+			{			
+				CurrentAccount.CardState = CARD_OUT;
+				SerialSendMachineData(CASH_CARD_REMOVED);
+				
+				OP = SCANNING;
+			}
+			#endif
+            			
+			break;
+
+		case START_CYCLE:	// send start cycle command to machine
+
+            #if(DEVICE_CONNECTED == MDC_MACHINE)
+
+			if( SerialSendMachineData(MACHINE_START_COMMAND) )
+			{
+				char tmpCardIdString[10]= {0};
+				
+				
+				LED_ON(1); //indicate cycle is running
+				
+				ultoa(/*(const*)*/CurrentAccount.ID,tmpCardIdString,10);
+				
+				
+				if((macConfig.associated == false) && (ReaderStateFlag.EnableOfflineTransaction == true))
+				{//must be offline transaction, store a record.
+					StoreOfflineTransaction(CurrentAccount.ID);
+				}
+				else{	
+					//send cycle started, deduct vend price to server
+					//must make sure vend price is deducted successfully
+					//must account for failure modes.
+					CurrentAccount.Value -= vendPrice * 100;
+				
+					sprintf((char*)ucSendDataBuffer+1, "<ChargeCustomer>"
+												"<sN>%s</sN>"
+												"<cycPrice>%.2f</cycPrice>"
+	                     						"<locId>%d</locId>"
+	                     						"<manufId>%d</manufId>"
+	                     						"<code>%d</code>",tmpCardIdString, vendPrice,ReaderSetup.LocationId,ReaderSetup.ManufacturerId,MdcStatus.MachineType);
+                     
+					ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+					ucSendDataBuffer[0] = ucSendDataSize;   // Length
+					ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+					macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+				}				
+				OP = CYCLE_STARTED;
+				
+				//let server know machine is in use.
+
+			}
+			CurrentAccount.CardState = CARD_OUT;
+			SerialSendMachineData(CASH_CARD_REMOVED);
+			
+            #endif
+
+		    break;
+
+		case CYCLE_STARTED: // WASH COMPLETED
+			
+            #if(DEVICE_CONNECTED == MDC_MACHINE)
+		/*	if( (MdcStatus.MachineStatus[0] & MACHINE_END_MODE) || (MdcStatus.MachineStatus[0] == MACHINE_ERROR_MODE))
+			{*/
+                //Error mode must be handled
+                //send status to server.
+				OP = SCANNING;
+		/*	}
+			else{   //check for server communication request or cancellation request from service tech
+
+            }*/
+            
+            #endif
+                
+			break;
+
+
+
+		case TIME_OUT: // Server Communication Error Occurred
+
+
+              break;
+		case SETUP_REQUEST:
+		
+			if( SETUP_TIMEOUT == true)
+			{
+			#if(DEVICE_CONNECTED == MDC_MACHINE)
+            
+    		  #ifdef MACHINE_CONNECTED
+    			DevicePoll();
+                /*if( MdcStatus.MachineType == INVALID_MACHINE )
+                {   //Error with machine code; error mode must be handled.
+                    OP = SCANNING;
+                    break;
+                }*/
+              #else
+    			MdcStatus.MachineType = 33;
+    		  #endif
+		  	
+    			// Send Setup Info
+    			sprintf((char*)ucSendDataBuffer+1, "<ReaderSetupInfo>"
+                         					"<locationId>%d</locationId>"
+                         					"<manufacturerId>%d</manufacturerId>"
+                         					"<code>%d</code>",ReaderSetup.LocationId, ReaderSetup.ManufacturerId, MdcStatus.MachineType);
+                     
+    			ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+    			ucSendDataBuffer[0] = ucSendDataSize;   // Length
+    			ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+    			macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+
+            #elif( DEVICE_CONNECTED == MARS_BA) 
+                ReaderStateFlag.FirstRun = NON_VIRGIN_READER;
+                ReaderStateFlag.ReaderSetup = READER_SETUP_DONE; 
+                ReaderStateFlag.ValidateSetup = VALIDATE_READER_SETUP;                                        
+                halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
+
+                	// Send Setup Info
+    			sprintf((char*)ucSendDataBuffer+1, "<ReaderSetupInfo>"
+                         					"<locationId>%d</locationId>"
+                         					"<manufacturerId>%d</manufacturerId>"
+                         					"<code>%d</code>",ReaderSetup.LocationId,ReaderSetup.ManufacturerId,MARS_BA_DEVICE);
+                     
+    			ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+    			ucSendDataBuffer[0] = ucSendDataSize;   // Length
+    			ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+    			macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+	            		
+            #endif //DEVICE_CONNECTED
+							
+				SETUP_TIMEOUT = false;
+				macSetLongAlarm(45, SetupTimeout);
+			}			
+			 break;
+
+		
+		case SETUP_PACKAGE:
+          {
+	   		//Local Variables Declaration
+           	u8 TemplongAddr[8] = {0};
+			u8 MaclongAddr[8]  = {0};
+		    u16 tmp;
+
+           
+			   
+				/*
+				   *******************************************************************
+				   *************  Extract SetupString from INcomming String **********
+				   ******************************************************************* */
+            
+					 if((ptr = GetParam((char *)DataBuffer,"<SetupString>","<")) != NULL)
+					   { //1
+                       
+							n = strlen(ptr);
+							k = 0;
+							l = 0;
+
+							while (k < n)
+							{
+								Setup[l] = (Ascii_to_nible ( *(ptr+k) ) * 16) 
+										 +  Ascii_to_nible ( *(ptr+k+1));
+								k += 2;
+								l++;
+							}
+
+							// copy setup data
+
+							halPutEeprom(MACHINE_SETUP_ADDR, (n/2), Setup);//MachineSetupData.VendPrice);
+                        
+							ReaderStateFlag.ReaderSetup = READER_SETUP_DONE;
+							halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
+					}
+
+				/*
+				   *******************************************************************
+				   *************  Extract ValidationCode from INcomming String ********
+				   ******************************************************************* */
+            
+					 if((ptr = GetParam((char *)DataBuffer,"<ValidationCode>","<")) != NULL)
+					   { //1
+                       
+							n = strlen(ptr);
+							k = 0;
+							l = 1;
+                        
+							// Length
+							Setup[0] = n/2;
+						
+							while (k < n)
+							{
+								Setup[l] = (Ascii_to_nible ( *(ptr+k) ) * 16) 
+										 +  Ascii_to_nible ( *(ptr+k+1));
+								k += 2;
+								l++;
+							}
+
+						
+							// copy setup data
+							halPutEeprom(VALIDATION_CODE_ADDR, ((n/2)+1), Setup);
+
+					}
+
+
+				/*
+				   *******************************************************************
+				   *************  Extract ReaderID from INcomming String *************
+				   ******************************************************************* */
+           
+					if((ptr = GetParam((char *)DataBuffer,"<ReaderId>","<")) != NULL)
+					{ //1
+
+								 tmp = atoi(ptr);         
+	
+								while (tmp> 0)
+								{
+
+									switch(Nibble)
+									{
+			
+										case lowNibble:
+
+											TemplongAddr[i] = (tmp % 16); 
+											Nibble = highNibble;
+										break;
+
+										case highNibble:
+
+											TemplongAddr[i] =  ((tmp % 16)<<4)| TemplongAddr[i]; 
+											i++;
+											Nibble = lowNibble;
+										break;
+
+									}
+			
+									   tmp = tmp / 16;
+								}
+
+								  //Update Reader to eeprom in Hex format
+								  halPutMacAddr(TemplongAddr);
+
+								 // Verifry write opertaion
+								 halGetMacAddr(MaclongAddr);
+
+						}//1
+
+
+
+
+						  // Re-associate with COORD using new ReaderID
+						   if(strcmp((char*)TemplongAddr,(char*)MaclongAddr) == 0 )
+							{
+								  #if (DEBUG)
+									  Beeps(5);// Beeps 5x
+								  #endif
+		                    
+
+								ReaderStateFlag.FirstRun = NON_VIRGIN_READER;                                        
+								halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
+
+								// re-associate with new readerId
+								appInit();
+
+							}
+
+											 
+          }
+			break;
+			
+		case VALIDATE_SETUP: 
+
+		    	if((ptr = GetParam((char *)DataBuffer,"<ValidationResponse>","<")) != NULL){  
+				
+
+					  u8 addr[8];
+                      static u8 Len =0;
+					  n = strlen(ptr);
+				      k = 0;
+					  l = 0;
+					  			
+				    // Get length of Validation code
+				   		halGetEeprom(VALIDATION_CODE_ADDR,1,&Len);
+																    
+				   // 	Get Validation Code from EEPROM
+						halGetEeprom(((u8*)VALIDATION_CODE_ADDR+1),Len,addr);
+ 
+						while (k < n)
+						{
+							Setup[l] = (Ascii_to_nible ( *(ptr+k) ) * 16) 
+									 +  Ascii_to_nible ( *(ptr+k+1));
+							k += 2;
+							l++;
+						}
+
+
+
+				    if(memcmp(addr,Setup,Len) == 0)
+					{
+                        ReaderStateFlag.ValidateSetup = VALID_READER_SETUP; //Don't store this bit in eeprom it allows for validation check on every power cycle.
+			            OP = VALIDATE_READER;
+					}						
+					else{
+					 OP = SETUP_REQUEST; // validation failed, request new setup info
+                     SETUP_TIMEOUT = true;
+					}					 
+				 }
+
+                     // Reposnse TIMEOUT
+			         if(VALIDATION_TIMEOUT){
+
+						VALIDATION_TIMEOUT = false;
+
+						// Re-send Validation Request
+						sprintf((char*)ucSendDataBuffer+1, "<ValidationRequest>");
+						ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+						ucSendDataBuffer[0] = ucSendDataSize;   	// Length
+						ucSendDataSize = ucSendDataSize + 1;    	// data size = data byte + size byte
+						macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+						macSetAlarm(15000, ValidationTimeout); 		//check Every 5s
+					}	
+
+				   
+				    			
+			break;
+
+		case RESET_EEPROM: // RESET READER ADDRESS IN EEPROM TO 0xFFFFFFFFFFFFFFFF  
+				//	halPutEeprom(0,8,(u8*)EEPROM_RESET_VALUE);
+              {
+				 unsigned char reset_eeprom[8] = {255,255,255,255,255,255,255,255};
+				halPutEeprom(0,8,(u8*)reset_eeprom);
+
+
+                    // re-associate
+					appInit();
+			 }
+			break;
+
+
+        case UPDATE_READER_FIRMWARE:
+            //process firmware update request from BOW
+            
+            break;
+
+       case GET_FIRMWARE_VERSION:
+
+			
+
+				sprintf((char*)ucSendDataBuffer+1, "<FirmwareVersion>"
+											"<fw>%s</fw>"
+											"<MachineType>%d<Machinetype>"
+											,__APP_VERSION_STRING__,MdcStatus.MachineType);
+                     
+			
+				ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+				ucSendDataBuffer[0] = ucSendDataSize;   // Length
+				ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+				macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+            
+				OP = IDLE;			   
+            break;
+
+		#if (DEVICE_CONNECTED == MARS_BA)
+        case ADD_CARD_VALUE:
+			
+			{
+				char tmpCardIdString[10] = {0};
+				
+				ultoa(CurrentAccount.ID,tmpCardIdString,10);	
+			          
+				sprintf((char*)ucSendDataBuffer+1, "<ReloadCustomer>"
+										"<sN>%s</sN>"
+                                        "<reloadValue>%d</reloadValue></ReloadCustomer>"
+										,tmpCardIdString, MarsStatus.BillValue);
+                 					
+				ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+				ucSendDataBuffer[0] = ucSendDataSize;   // Length
+				ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
+				macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+        
+				// Clear Rex Buffer
+				memset(DataBuffer,0,sizeof(DataBuffer));
+
+				//Set Timeout timer
+				TOFlag = 0;
+				ucTimerID = macSetAlarm(SERVER_RESPONSE_TIMEOUT,CommTimeOut);
+				OP = WAIT_FOR_SERVER;			   
+			
+			}			
+            break;
+		
+        case RETURN_BILL:
+				
+            if(mars_return_bill() == BILL_RETURNED)
+			{
+				Led1_on();
+				_delay_ms(500);
+				Led1_off();
+				_delay_ms(500);
+				Led1_on();
+				_delay_ms(500);
+				Led1_off();
+			}					
+            OP = WAIT_FOR_BILL;
+            break;
+			
+		#endif	//MARS_BA
+        case IDLE:
+			#if( DEVICE_CONNECTED == MARS_BA )
+				OP = WAIT_FOR_BILL;
+			#else
+				OP = SCANNING;
+			#endif
+			
+			break;
+		case SCARD_REMOVED:
+
+            #if(DEVICE_CONNECTED == MDC_MACHINE)
+			ucCardStatus = CARD_OUT;
+			SerialSendMachineData(CARD_REMOVED);
+			#endif
+
+			#if( DEVICE_CONNECTED == MARS_BA )
+				OP = WAIT_FOR_BILL;
+			#else
+				OP = SCANNING;
+			#endif
+			
+			break;
+		case BOW_ERROR:
+			OP = IDLE;
+			break;
+			
+		default:
+				break;
+} //switch
+
+
+}// macConfig.associated
+
+}
+
+void ValidationTimeout()
+{ VALIDATION_TIMEOUT = true;}
+
+char * GetParam(char *ptrBuffer, char *tmpstr, char *EndChar)
+{
+
+  char *pStr;
+  char *pStr2;
+  u8 tmpstrlen =0;
+
+
+  tmpstrlen = strlen(tmpstr);
+
+   if((pStr = strstr(ptrBuffer,tmpstr)) != NULL){ //1
+       if((pStr2 = strstr(pStr + tmpstrlen,EndChar)) != NULL){ //2 "<"
+             memcpy(ParamStr,pStr + tmpstrlen, pStr2-(pStr+tmpstrlen));
+              ParamStr[pStr2-(pStr + tmpstrlen)]  ='\0';
+
+              return (char *)ParamStr;
+        }//1
+    }//2
+ 
+ return '\0';
+}
+
+/**
+   Callback function, called when the MAC finds no clear channel.
+   This function will send packet again until the maximum retry number is reached.
+ */
+void appResendPacket(void)
+{
+#if (NODETYPE == COORD)
+    associatedNodes_t *node;
+	u64 *ulLongAddress;
+    u8 ucResult[2];
+
+    // Command has not been sent because clear channel was not found, try to re-send.
+	if (ucNumberOfRetry < MAX_RETRY_TO_SEND_DATA)
+	{
+		node = macGetNode(1);
+		ulLongAddress = &(node->nodeLongAddress); // Get node 1 long address
+    	macDataRequest(macGetNodeAddr(ulLongAddress), ucSerialReceiveDataBuffer[0] + 1, (u8*) ucSerialReceiveDataBuffer);
+		ucNumberOfRetry++;
+        debugMsgStr("Send command again\n\r");
+		// Re-start timer to wait for result.
+        Timer2_set ( 0x00, 0x07 );
+	}
+	else
+	{
+        // Can not send command.
+		Timer2_stop ();
+        ucResult[0] = CAN_NOT_SEND_CMD;
+        Hexa_to_string_convert(1, ucResult);
+        // Send error code
+        // When sending data to serial, the total of data must not be multiple 
+        // of 16 bytes otherwise the data will not directly displayed by serial 
+        // terminal.
+        Serial_send_data (1, ucResult);
+		ucSendCmdState = START;
+	}
+
+#elif (NODETYPE == ENDDEVICE)
+    // Command has not been sent because clear channel was not found, try to re-send.
+	if (ucNumberOfRetry < MAX_RETRY_TO_SEND_DATA)
+	{
+    	macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+#if (DEBUG)
+        debugMsgStr("Send result again\n\r");
+#endif
+	}
+    else
+    {
+#if (DEBUG)
+        // Can not send result.
+        debugMsgStr("Can't send result\n\r");
+#endif
+    }
+#endif
+}
+/** @} */
+
+#ifndef COORDNODE 
+
+ void Beeps(u8 nBeeps)
+  {
+	   for(u8 i= 0; i < nBeeps;i++)
+		{
+			for(u16 i= 0; i < 100;i++)
+		{
+			 Buzzer_on();
+			_delay_us(200);
+			Buzzer_off();
+			_delay_us(200);
+		}
+		_delay_ms(25);
+	}
+}
+
+
+void CommTimeOut()
+{	TOFlag = true; }
+
+void KeypressTimeOut()
+{
+	KPTOFlag = true;
+}
+
+void HeartBeat()
+{
+    static u8 ucHeartBeatTimer = 0;
+    if( ucHeartBeatTimer != 0 )
+        macTimerEnd(ucHeartBeatTimer);
+    Led2_toggle();
+   ucHeartBeatTimer = macSetAlarm(HEARTBEAT, HeartBeat);
+}
+
+void SetupTimeout()
+{
+	SETUP_TIMEOUT = true;
+}
+
+#if (DEBUG_BOW)
+
+void DetermineState()
+{
+
+   switch (OP)
+   {
+
+	case SETUP_RESPONSE:
+        debugMsgStr("\n\rSETUP_RESPONSE:\n\r");
+		break;	
+
+	case SETUP_REQUEST:
+        debugMsgStr("\n\rSETUP_REQUEST:\n\r");
+		break;
+
+	case SETUP_PACKAGE:
+        debugMsgStr("\n\rUPDATE_READERID:\n\r");
+		break;
+
+	case INIT_READER:
+	    debugMsgStr("\n\rINIT_READER:\n\r");
+		break;
+		
+	case SCANNING:
+		debugMsgStr("\n\rSCANNING:\n\r");
+		break;		
+
+	case CARD_DETECTED:
+	    debugMsgStr("\n\rCARD_DETECTED:\n\r");
+		break;	
+
+	case CYCLE_STARTED:
+	    debugMsgStr("\n\rCYCLE_STARTED:\n\r");
+		break;		
+
+	case SCAN_ENABLE:
+	    debugMsgStr("\n\rSCAN_ENABLE:\n\r");
+		break;			
+
+	case DISABLE_SCAN:
+	    debugMsgStr("\n\rDISABLE_SCAN:\n\r");
+		break;			
+
+	case WAIT_FOR_RESPONSE:
+	    debugMsgStr("\n\rWAIT_FOR_RESPONSE:\n\r");
+		break;		
+
+	case TIME_OUT:
+	    debugMsgStr("\n\rTIME_OUT:\n\r");
+		break;				
+
+	case WAIT_FOR_SELECTION: 
+	    debugMsgStr("\n\rWAIT_FOR_SELECTION:\n\r");
+		break;	 
+
+	case ENABLE_SCAN:
+	    debugMsgStr("\n\rENABLE_SCAN:\n\r");
+		break;					
+
+	case SCARD_REMOVED:	
+	    debugMsgStr("\n\rSCARD_REMOVED:\n\r");
+		break;		
+
+	case START_CYCLE:			
+	    debugMsgStr("\n\rSTART_CYCLE:\n\r");
+		break;
+
+     default:
+    break;
+	 
+	}
+
+}
+#endif // (DEBUG_BOW)
+
+void ProcessServerResponse(void)
+{
+
+}
+
+
+void SetDeviceState(void)
+{
+	ucDeviceStateFlag = DEVICE_STATUS_NEEDED;
+}
+
+void DevicePoll(void) 
+{
+    #if (DEVICE_CONNECTED == MDC_MACHINE || DEVICE_CONNECTED == MAYTAG_MACHINE)
+
+        MachineStatus();
+		macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
+		//ucDeviceStateFlag = DEVICE_STATUS_DONE;
+		
+    #elif (DEVICE_CONNECTED == MARS_BA)
+       
+        mars_poll();
+      /*  if(((MarsStatus.BillState == MARS_BILL_ESCROWED) && (MarsStatus.BillValue > 0)) && (ucReturnBillTimeout == 0))
+        {
+            ucReturnBillTimeout = 1;
+            macSetAlarm(BILL_RETURN_TIMEOUT, SetBillReturn);
+        }
+        else if(((MarsStatus.BillState == MARS_BILL_ESCROWED) && (MarsStatus.BillValue > 0)) && (ucReturnBillTimeout == 2) && (OP != WAIT_FOR_SERVER) )
+        {
+            OP = RETURN_BILL;
+            ucReturnBillTimeout = 0;
+        }*/
+    #endif
+
+}
+
+void SetBillReturn(void)
+{
+    ucReturnBillTimeout = 2;
+}
+#endif // ifndef COORDNODE
+
+

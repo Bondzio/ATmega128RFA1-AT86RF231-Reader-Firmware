@@ -1,0 +1,69 @@
+/*
+ * reader.h
+ *
+ * Created: 6/15/2011 9:56:05 PM
+ *  Author: Paul
+ */ 
+
+
+#ifndef READER_H_
+#define READER_H_
+
+#include "rum_types.h"
+
+
+typedef struct{
+    bool FirstRun       : 1;
+    bool ReaderSetup    : 1;
+    bool ValidateSetup  : 1;
+	bool EnableOfflineTransaction	:1;
+	bool MaxNumTransReached			:1;
+	bool OfflineTransactionExist	:1;
+    u8                  : 2;      
+} __attribute__((packed)) structReaderFlag;
+
+
+structReaderFlag ReaderStateFlag;
+
+typedef struct {
+	
+	u32 CustomerId;
+    u16 ManufacturerId;
+	u16 LocationId;
+	u8	MaxOfflineTransaction;
+	u8  MaxTransactionColl;
+	bool  EnableTransactionColl;		//Allow transactions to be collected
+//	bool	MaxNumTransReached;
+	
+}	__attribute__((packed)) structReaderSetup;
+
+structReaderSetup ReaderSetup;
+
+typedef struct{
+    u8  Type;
+	unsigned long	ID;
+    u16 Pin;
+	u16	Value;
+	u8 	CardState;
+}	__attribute__((packed)) structCurrentAccount;
+
+structCurrentAccount CurrentAccount;
+
+
+typedef struct {
+	u8 LocationId[2];		//location of machine
+	u8 MachineId;		//machine type involved in transaction, i.e. washer, dryer
+	u8 ManufactureId[2];	//gen2, MDC, etc.
+	u8 CycleType;		//machine cycle type
+	u8 VendPrice[2];		//machine cycle price
+	u8 CardId[4];			//serial number of card involved in transaction
+	u8 Date[4];			//date of transaction based on time received from server.
+	u8 Time[4];			//number of seconds from 12AM; 12:00:00AM == 0 seconds, 11:59:59PM == 86399 seconds.
+}  __attribute__((packed)) structOfflineTransaction;
+
+structOfflineTransaction OfflineTransaction;
+
+void InitReader(void);
+u8 StoreOfflineTransaction(u32 cardNum);
+
+#endif /* READER_H_ */

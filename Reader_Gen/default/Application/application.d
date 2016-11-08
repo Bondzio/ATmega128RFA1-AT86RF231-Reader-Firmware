@@ -36,9 +36,8 @@ Application/application.d Application/application.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
  ../Application/machine.h ../Application/SpeedQueen.h \
  ../Application/display.h ../Application/eeprom_map.h \
- ../Bill_Acceptor/mars_comm.h ../Application/reader.h \
- ../Application/BowComm.h ../Radio/hal_avr.h ../UART/serial.h \
- ../Application/application.h \
+ ../Application/reader.h ../Application/BowComm.h ../Radio/hal_avr.h \
+ ../UART/serial.h ../Application/application.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  ../Timer/avr_timer.h ../KeyPad/Keypad.h ../Keypad/Keypad.h \
  ../mifare/RegCtrl.h ../mifare/reg52.h ../mifare/Mifare.h \
@@ -148,8 +147,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../Application/display.h:
 
 ../Application/eeprom_map.h:
-
-../Bill_Acceptor/mars_comm.h:
 
 ../Application/reader.h:
 

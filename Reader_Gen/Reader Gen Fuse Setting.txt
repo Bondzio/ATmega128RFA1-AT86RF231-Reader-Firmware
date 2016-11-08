@@ -1,0 +1,2 @@
+Fuse Setting for LOW to EXTENDED (Address 0 to 2)
+0xDE 0x99 0xFE

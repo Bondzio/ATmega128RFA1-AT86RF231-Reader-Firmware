@@ -1,0 +1,26 @@
+/*
+ * mdc.c
+ *
+ * Created: 7/30/2011 10:16:47 PM
+ *  Author: Paul
+ */ 
+
+#include "machine.h"
+
+void collectMdcAuditData(void)
+{
+	u8 commandPacket[3]={0};
+		
+	commandPacket[0] = AUDIT_DATA_PACKET_SIZE;	//Number of actual data bytes to be transferred to the MDC including command data exclude bbc byte
+	commandPacket[1] = AUDIT_DATA_REQUEST;		//MDC command to be requested 
+
+	if(sendMdcPacket(commandPacket))	//Send request command to MDC.
+		if(SerialGetMachineData())								
+			serial_putchar(ACK);
+	
+	commandPacket[0] = CARD_REMOVED_SIZE;
+	commandPacket[1] = CARD_REMOVED;					
+	sendMdcPacket(commandPacket);
+	
+	return;
+}

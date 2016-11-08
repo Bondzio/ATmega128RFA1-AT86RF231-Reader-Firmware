@@ -53,7 +53,6 @@
 
 #include "machine.h"
 #include "eeprom_map.h"
-#include "mars_comm.h"
 #include "reader.h"
 #include "display.h"
 #include "BowComm.h"
@@ -1020,12 +1019,7 @@ void appInit(void)
          macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
         #elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
            // sendMTStartMessage();
-           // ucDeviceStateFlag = DEVICE_STATUS_NEEDED;
-
-        #elif (DEVICE_CONNECTED == MARS_BA)
-         //call only when running cash box app
-        
-        initMars();
+           // ucDeviceStateFlag = DEVICE_STATUS_NEEDED;        
 
         #endif // DEVICE_CONNECTED
     #else
@@ -1060,13 +1054,7 @@ void appInit(void)
 		
         ReaderStateFlag.ReaderSetup = READER_SETUP_NEEDED;//(ReaderStateFlag | READER_SETUP_NEEDED); 
         halPutEeprom(READER_STATE_ADDR,1, (u8*)&ReaderStateFlag);
-	}
-    #elif (DEVICE_CONNECTED == MARS_BA)
-    {
-        u8 temp = 0xBA;
-
-        halPutEeprom(MACHINE_TYPE_ADDR, 1, (u8*)&temp);
-    }
+	}    
     
     #endif //DEVICE_CONNECTED
 
@@ -1177,12 +1165,7 @@ void APP_TaskHandler(void)
 
 	u8 ucTimerID=0xff;
 	char *uctempBuf;
-	char *ptr;
-
-    #if( DEVICE_CONNECTED == MARS_BA )
-	static u8  CustomerID[5] = {0};
-	static u8 ucbillReturnTimerID = 0xff;
-    #endif
+	char *ptr;    
 
 	// loop to convert 
 	// decimal to hexadecimal	
@@ -1240,16 +1223,7 @@ void APP_TaskHandler(void)
   #endif
 
 if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransaction == true) //  Don't bother running the app until the reader has associated
-{
-	#if (DEVICE_CONNECTED == MARS_BA)
-	if(ucDeviceStateFlag == DEVICE_STATUS_NEEDED)	//do machine status communication every 1/4 second
-	{
-        DevicePoll();
-	}
-	#endif //MARS_BA		
-
-	
-	
+{		
 	switch(OP){
 		case VALIDATE_READER:
 		//TODO: fix machine type switch
@@ -1266,20 +1240,8 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 					if( ((ReaderStateFlag.ReaderSetup == READER_SETUP_NEEDED) || ( ReaderStateFlag.FirstRun == VIRGIN_READER)) && (MdcStatus.MachineType[0] != INVALID_MACHINE) ){
 						
 						SETUP_TIMEOUT = true;
-						OP = SETUP_REQUEST; //enable when setup supported by server
-					
-					#elif (DEVICE_CONNECTED == MARS_BA || DEVICE_CONNECTED == MAYTAG_MACHINE)    
-					if( (ReaderStateFlag.ReaderSetup == READER_SETUP_NEEDED) || ( ReaderStateFlag.FirstRun == VIRGIN_READER) ){
-						//****to be removed once setup from server is enabled*****//
-						u8 validationCodeSize = 0;
-						 ReaderStateFlag.FirstRun = NON_VIRGIN_READER;
-						ReaderStateFlag.ReaderSetup = READER_SETUP_DONE; 
-						ReaderStateFlag.ValidateSetup = VALIDATE_READER_SETUP;                                        
-						halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
-						
-						halPutEeprom(VALIDATION_CODE_ADDR, 1, &validationCodeSize); 
-						//-------------------------------------------
-						
+						OP = SETUP_REQUEST; //enable when setup supported by server				
+											
 					#endif
 	
 					}
@@ -1315,8 +1277,7 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 			{											
 				OP = SCANNING;
 			}
-			#elif (DEVICE_CONNECTED == MARS_BA)
-				OP = WAIT_FOR_BILL;
+			
 			#endif
 			
 			#if ENABLE_KEYPAD
@@ -1332,15 +1293,9 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
                         uiFunctionEntered++;
                     }
                     else
-                    {
-						#if (DEVICE_CONNECTED == MARS_BA)
-							Led2_toggle();
-						#else
- 							Led1_toggle();
-						#endif
+                    {						
                         uiFunctionEntered = 0;					
                     }
-
 	
 					if(!Request(ISO14443_3_REQALL, tmp))
 					{
@@ -1362,22 +1317,11 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 							}								
 							OP = CARD_DETECTED;	
 							ledoff1();
-						}							
-							
-													
-						#if(DEVICE_CONNECTED == MARS_BA)
-							//end bill return timer once card has been detected
-							macTimerEnd(ucbillReturnTimerID);
-						#endif
-					}
-					
-				#if (DEVICE_CONNECTED == MARS_BA)
-					else if (ucReturnBillTimeout)
-					{
-						ucReturnBillTimeout = 0;
-						OP = RETURN_BILL;
-					}
-				#endif
+						}		
+																	
+						
+					}				
+				
 				
                 #if ENABLE_KEYPAD
 				
@@ -1392,17 +1336,7 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 				#endif
 				break;
 
-		#if (DEVICE_CONNECTED == MARS_BA)
-		case WAIT_FOR_BILL:
-			// wait for bill to be escrowed
-			if(MarsStatus.billState == MARS_BILL_ESCROWED)
-			{				
-				ucbillReturnTimerID = macSetLongAlarm(BILL_RETURN_TIMEOUT, SetBillReturn);
-				OP = SCANNING;	//wait for card swipe
-			}			
-			break;
-			
-		#endif
+		
 		
 		#if ENABLE_KEYPAD
         case KEYPAD_ENTRY_DETECTED:
@@ -1536,35 +1470,8 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 
 				OP = SCARD_REMOVED;
 
-                #if (DEVICE_CONNECTED == MARS_BA)
-
-                    //Extract the Card Id				
-    				if( (uctempBuf = strstr((char *)DataBuffer,"sN: ")) )
-                    {				
-    				    //strncpy((char *)CustomerID, (char *)(DataBuffer+9), 4);//(uctempBuf[9]-0x30) * 1000 + (uctempBuf[10]-0x30) * 100 + (uctempBuf[11]-0x30) * 10 + uctempBuf[12]-0x30;
-                        CurrentAccount.ID = strtoul((const *)(DataBuffer+3),NULL,10);	//save active card's id
-					
-						if( (MarsStatus.billState == MARS_BILL_ESCROWED) && (MarsStatus.billValue > 0) )
-                        {
-                            //sprintf(ucSendDataBuffer+1, "<cardId>%s</cardId>",DataBuffer+1);
-                            if( storeMarsBill() == BILL_STACKED )
-								OP = ADD_CARD_VALUE;
-                            
-							macTimerEnd(ucTimerID);
-                        }
-
-			        }
-                    else if( (uctempBuf = strstr((char *)DataBuffer,"<ReloadCustomerResult>")) )
-                    {				
-    				    CurrentAccount.Value = (uctempBuf[22]-0x30) * 1000 + (uctempBuf[23]-0x30) * 100 + (uctempBuf[25]-0x30) * 10 + uctempBuf[26]-0x30;
-                        //storeMarsBill();
-                        macTimerEnd(ucTimerID);
-                        LED_ON(1);
-                        macSetAlarm(5000, ledoff1);
-                    }
-                #else
-					
-					
+                #if (DEVICE_CONNECTED == MDC_MACHINE)
+                    
                     //Extract the Card Id				
     				if( (uctempBuf = strstr((char *)DataBuffer,"sN: ")) )
                     {						
@@ -1653,12 +1560,8 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 				
 				#if (DEBUG_BOW)
 				debugMsgStr("\r\nServer Communication Error\r\n");
-				#endif
-                
-				#elif(DEVICE_CONNECTED == MARS_BA)
-                    //add value failed, return the bill.
-                   OP = RETURN_BILL;
-
+				#endif                
+				
                 #endif // DEVICE_CONNECTED
 			             
 			 }
@@ -1844,66 +1747,8 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
             break;
 
   
-
-		#if (DEVICE_CONNECTED == MARS_BA)
-        case ADD_CARD_VALUE:
-			
-			if(ReaderStateFlag.ReaderSetup == READER_SETUP_DONE)
-			{
-				structBATransaction addValue;
-				/*
-				char tmpCardIdString[10] = {0};
-				
-				padLeft(&tmpCardIdString[0],9,"0");
-				
-				ultoa(CurrentAccount.ID,tmpCardIdString,10);	
-			          
-				sprintf((char*)ucSendDataBuffer+1, "<ReloadCustomer>"
-										"<sN>%s</sN>"
-                                        "<reloadValue>%d</reloadValue></ReloadCustomer>"
-										,tmpCardIdString, MarsStatus.billValue);
-                 					
-				ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
-				ucSendDataBuffer[0] = ucSendDataSize;   // Length
-				ucSendDataSize = ucSendDataSize + 1;    // data size = data byte + size byte
-				macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
-        */
-				addValue.cardId = CurrentAccount.ID;
-				addValue.cashValue = MarsStatus.billValue;
-				getDate(&addValue.date);
-				getTime(&addValue.time);
-				sendRelaodCustomerTransaction(&addValue);
-				// Clear Rex Buffer
-				//memset(DataBuffer,0,sizeof(DataBuffer));
-
-				//Set Timeout timer
-				TOFlag = 0;
-				ucTimerID = macSetAlarm(SERVER_RESPONSE_TIMEOUT,CommTimeOut);
-				OP = WAIT_FOR_SERVER;			   
-			
-			}			
-            break;
-		
-        case RETURN_BILL:
-				
-            if(returnMarsBill() == BILL_RETURNED)
-			{
-				Led1_on();
-				_delay_ms(500);
-				Led1_off();
-				_delay_ms(500);
-				Led1_on();
-				_delay_ms(500);
-				Led1_off();
-			}					
-            OP = WAIT_FOR_BILL;
-            break;
-			
-		#endif	//MARS_BA
         case IDLE:
-			#if( DEVICE_CONNECTED == MARS_BA )
-				OP = WAIT_FOR_BILL;
-			#else
+			#if( DEVICE_CONNECTED == MDC_MACHINE )				
 				OP = SCANNING;
 			#endif
 			
@@ -1916,9 +1761,7 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 			//SerialSendMachineData(CARD_REMOVED);
 			#endif
 
-			#if( DEVICE_CONNECTED == MARS_BA )
-				OP = WAIT_FOR_BILL;
-			#else
+			#if( DEVICE_CONNECTED == MDC_MACHINE )				
 				OP = SCANNING;
 			#endif
 			
@@ -2157,21 +2000,8 @@ void DevicePoll(void)
 
         MachineStatus();
 		macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
-		//ucDeviceStateFlag = DEVICE_STATUS_DONE;
-		
-    #elif (DEVICE_CONNECTED == MARS_BA)
-       
-        pollMars();
-      /*  if(((MarsStatus.BillState == MARS_BILL_ESCROWED) && (MarsStatus.BillValue > 0)) && (ucReturnBillTimeout == 0))
-        {
-            ucReturnBillTimeout = 1;
-            macSetAlarm(BILL_RETURN_TIMEOUT, SetBillReturn);
-        }
-        else if(((MarsStatus.BillState == MARS_BILL_ESCROWED) && (MarsStatus.BillValue > 0)) && (ucReturnBillTimeout == 2) && (OP != WAIT_FOR_SERVER) )
-        {
-            OP = RETURN_BILL;
-            ucReturnBillTimeout = 0;
-        }*/
+		//ucDeviceStateFlag = DEVICE_STATUS_DONE;	
+    
     #endif
 
 }

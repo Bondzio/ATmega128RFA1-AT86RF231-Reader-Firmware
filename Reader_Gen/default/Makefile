@@ -34,7 +34,6 @@ LINKER_SCRIPT_DEP:=
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
 ../Application \
-../Bill_Acceptor/ \
 ../Keypad/ \
 ../mifare \
 ../SPI \
@@ -51,7 +50,6 @@ C_SRCS +=  \
 ../Application/display.c \
 ../Application/reader.c \
 ../Application/SpeedQueen.c \
-../Bill_Acceptor/mars_comm.c \
 ../Keypad/Keypad.c \
 ../mifare/Mifare.c \
 ../mifare/RegCtrl.c \
@@ -90,7 +88,6 @@ Application/BowComm.o \
 Application/display.o \
 Application/reader.o \
 Application/SpeedQueen.o \
-Bill_Acceptor/mars_comm.o \
 Keypad/Keypad.o \
 mifare/Mifare.o \
 mifare/RegCtrl.o \
@@ -122,7 +119,6 @@ Application/BowComm.o \
 Application/display.o \
 Application/reader.o \
 Application/SpeedQueen.o \
-Bill_Acceptor/mars_comm.o \
 Keypad/Keypad.o \
 mifare/Mifare.o \
 mifare/RegCtrl.o \
@@ -154,7 +150,6 @@ Application/BowComm.d \
 Application/display.d \
 Application/reader.d \
 Application/SpeedQueen.d \
-Bill_Acceptor/mars_comm.d \
 Keypad/Keypad.d \
 mifare/Mifare.d \
 mifare/RegCtrl.d \
@@ -186,7 +181,6 @@ Application/BowComm.d \
 Application/display.d \
 Application/reader.d \
 Application/SpeedQueen.d \
-Bill_Acceptor/mars_comm.d \
 Keypad/Keypad.d \
 mifare/Mifare.d \
 mifare/RegCtrl.d \
@@ -286,16 +280,7 @@ LINKER_SCRIPT_DEP+=
 
 
 
-
-
 Application/%.o: ../Application/%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DAVRGCC -DVLP=1 -DOTA_DEBUG=0 -DPLATFORM=RCBRFA1 -DAPP=0 -DSERIAL=1 -DRUMSLEEP=0 -D_QMATRIX_=1 -DQT_NUM_CHANNELS=16 -DNUM_X_LINES=4 -DNUM_X_PORTS=1 -DPORT_X_1=B -DPORT_NUM_1=1 -DPORT_YA=D -DPORT_YB=F -DPORT_SMP=F -DPORT_SMP_PIN=3 -DQT_MAX_NUM_ROTORS_SLIDERS=0 -DNUM_Y_LINES=4 -DIPV6LOWPAN=0 -DDEBUG=0 -DSPI -DROUTERNODE -DDEMO=0 -DF_CPU=16000000UL -DMACHINE_CONNECTED=1  -I"../Radio" -I"../Touch/debug" -I"../RUM" -I"../Timer" -I"../TWI" -I"../Application" -I"../UART" -I".." -I"../mifare" -I"../SPI" -I"../Bill_Acceptor" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g3 -Wall -mmcu=atmega128rfa1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega128rfa1" -c -gdwarf-2 -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-Bill_Acceptor/%.o: ../Bill_Acceptor/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DAVRGCC -DVLP=1 -DOTA_DEBUG=0 -DPLATFORM=RCBRFA1 -DAPP=0 -DSERIAL=1 -DRUMSLEEP=0 -D_QMATRIX_=1 -DQT_NUM_CHANNELS=16 -DNUM_X_LINES=4 -DNUM_X_PORTS=1 -DPORT_X_1=B -DPORT_NUM_1=1 -DPORT_YA=D -DPORT_YB=F -DPORT_SMP=F -DPORT_SMP_PIN=3 -DQT_MAX_NUM_ROTORS_SLIDERS=0 -DNUM_Y_LINES=4 -DIPV6LOWPAN=0 -DDEBUG=0 -DSPI -DROUTERNODE -DDEMO=0 -DF_CPU=16000000UL -DMACHINE_CONNECTED=1  -I"../Radio" -I"../Touch/debug" -I"../RUM" -I"../Timer" -I"../TWI" -I"../Application" -I"../UART" -I".." -I"../mifare" -I"../SPI" -I"../Bill_Acceptor" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g3 -Wall -mmcu=atmega128rfa1 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega128rfa1" -c -gdwarf-2 -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

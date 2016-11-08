@@ -1,11 +1,11 @@
 /*
- * BowComm.h
- *
- * This file contains the interface to the BOW.
- *
- * Created: 11/22/2013 6:42:46 AM
- *  Author: Paul
- */ 
+* BowComm.h
+*
+* This file contains the interface to the BOW.
+*
+* Created: 11/22/2013 6:42:46 AM
+*  Author: Paul
+*/
 
 
 #ifndef BOWCOMM_H_
@@ -66,10 +66,5 @@ bool getKeypadAccountInfo(void);
 
 u8 extractIncomingMessage(char *dataBuffer);
 bool constructOutgoingString(u8 strType, char *tempStr);
-
-#if(DEVICE_CONNECTED == MARS_BA)
-
-bool sendRelaodCustomerTransaction(structBATransaction *transRecord);
-#endif
 
 #endif /* BOWCOMM_H_ */

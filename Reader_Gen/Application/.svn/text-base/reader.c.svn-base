@@ -1,0 +1,194 @@
+/*
+ * reader.c
+ *
+ *	This file contains GenReader related functionality, to be used across applications.
+ * Created: 5/28/2011 3:10:54 PM
+ *  Author: Paul
+ */ 
+#include "mac.h"
+#include "reader.h"
+#include "application.h"
+#include "machine.h"
+#include "hal_avr.h"
+#include "eeprom_map.h"
+#include "system.h"
+/*
+*
+*	storeTranactionRecord()
+*
+*/
+
+
+
+/*
+*
+*	getTransactionRecord()
+*
+*/
+
+
+void InitReader(void)
+{
+
+halGetEeprom(READER_STATE_ADDR, READER_STATE_FLAG_SIZE, (u8*)&ReaderStateFlag); 
+	
+ReaderSetup.CustomerId = 0;
+ReaderSetup.ManufacturerId = 1;
+ReaderSetup.LocationId = 1;
+ReaderSetup.MaxOfflineTransaction = 5;//MAX_NUM_OFFLINE_TRANS; // to become variable once setup is done.
+
+//check setup status then set reader state flag
+	
+#if(DEVICE_CONNECTED == MDC_MACHINE)
+	//Init machine variables
+
+	if ((ReaderStateFlag.ReaderSetup == READER_SETUP_DONE))
+	{
+        //a valid reader ID has been detected. check for valid setup
+        SetMachineSetupData();  
+		ReaderStateFlag.ValidateSetup = VALIDATE_READER_SETUP;
+		//----------------to be removed, for testing -----------------------
+		ReaderStateFlag.EnableOfflineTransaction = true;
+//		ReaderStateFlag.MaxNumTransReached = false;
+		//-----------------------------------------------------
+	}
+	else{
+		SetDefaultMachineSetup();
+	}
+	
+#elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
+    DDRD = (DDRD | 0x08);
+    PORTD &= ~(1<<PD3);
+    UCSR1B &= ~(1 << TXEN1 );
+#endif
+}
+
+/*
+Store transactions,that occur when server is off line, in EEPROM.
+*/
+u8 StoreOfflineTransaction(u32 cardNum)
+{
+	u8 return_code = 1;
+	u8 num_of_trans; //number of off line transaction records stored in EEPROM
+	u8 addr[2];
+	u16 temp;
+	
+	temp  = OFFLINE_TRANSACTION_ADDR_START;
+	addr[0] = temp >> 8;
+	addr[1] = temp;
+	
+	OfflineTransaction.CardId[0] = cardNum >> 24;
+	OfflineTransaction.CardId[1] = cardNum >> 16;
+	OfflineTransaction.CardId[2] = cardNum >> 8;
+	OfflineTransaction.CardId[3] = cardNum;
+	
+	OfflineTransaction.LocationId[0] = ReaderSetup.LocationId >> 8;
+	OfflineTransaction.LocationId[1] = ReaderSetup.LocationId;
+	
+	OfflineTransaction.MachineId = MdcStatus.MachineType;
+	OfflineTransaction.CycleType = MdcStatus.CycleType;
+	
+	OfflineTransaction.ManufactureId[0] = ReaderSetup.ManufacturerId >> 8;
+	OfflineTransaction.ManufactureId[1] = ReaderSetup.ManufacturerId;
+	
+	OfflineTransaction.VendPrice[0] = MachineSetupData.VendPrice[0];
+	OfflineTransaction.VendPrice[1] = MachineSetupData.VendPrice[1];
+	
+	OfflineTransaction.Date[0] = 0x00;
+	OfflineTransaction.Date[1] = 0x00;
+	OfflineTransaction.Date[2] = 0x00;
+	OfflineTransaction.Date[3] = 0x00;
+	
+	OfflineTransaction.Time[0] = 0x00;	
+	OfflineTransaction.Time[1] = 0x00;	
+	OfflineTransaction.Time[2] = 0x00;	
+	OfflineTransaction.Time[3] = 0x00;	
+	
+	//get number of stored records
+	halGetEeprom(OFFLINE_TRANSACTION_RECORD_ADDR, 1, &num_of_trans);
+	//store structure in the next EEPROM record address
+	if ((num_of_trans == 0xff) || (num_of_trans < ReaderSetup.MaxOfflineTransaction))
+	{	
+		if (num_of_trans == 0xff)
+		{
+			num_of_trans = 0;
+			halPutEeprom(OFFLINE_TRANSACTION_RECORD_ADDR,1, &num_of_trans);
+			//store first transaction records address.
+			halPutEeprom(OFFLINE_TRANSACTION_RECORD_START,2,&addr);
+		}
+		else{
+			//start at end of existing records
+			halGetEeprom(OFFLINE_TRANSACTION_RECORD_START,2,&addr);  
+		}			
+					
+		halPutEeprom((u8*)(OFFLINE_TRANSACTION_ADDR_START + (num_of_trans * OFFLINE_TRANSACTION_NUM_BYTE)), OFFLINE_TRANSACTION_NUM_BYTE, (u8*)&OfflineTransaction);
+		num_of_trans++;
+		halPutEeprom((u8*)OFFLINE_TRANSACTION_RECORD_ADDR,1,&num_of_trans);
+		if(ReaderStateFlag.OfflineTransactionExist == false)
+		{
+			ReaderStateFlag.OfflineTransactionExist = true;
+			halPutEeprom(READER_STATE_ADDR,READER_STATE_FLAG_SIZE,&ReaderStateFlag);	
+		}
+		
+	}
+	else if(num_of_trans >= ReaderSetup.MaxOfflineTransaction){
+		halGetEeprom(READER_STATE_ADDR, 1, (u8*)&ReaderStateFlag);
+		ReaderStateFlag.EnableOfflineTransaction = false; // stop conducting off line transaction, EEPROM is full.
+		ReaderStateFlag.MaxNumTransReached = true;
+		halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
+		return_code = 0;
+	}
+	return return_code;	
+}
+
+u8 TransmitStoredTransaction(void)
+{
+	static u8 num_of_records,count =0;
+	static u8 addr[2];	//address of record being read from EEPROM.
+	u8 record[OFFLINE_TRANSACTION_NUM_BYTE]; // temp storage for record.
+	
+	
+	//get total number of stored off line transactions from EEPROM.
+	halGetEeprom(OFFLINE_TRANSACTION_RECORD_ADDR, 1, &num_of_records);
+	
+	//build buffer of transactions to be transmitted.
+	if (num_of_records > 0 && num_of_records < 0xFF) // valid number of transactions stored, prepare to send to BOW
+	{
+		static u16 tmp;//[2] = {0};
+		//send data to BOW 
+	
+		sprintf((char*)ucSendDataBuffer+1, "<OfflineTransaction>");
+		ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
+		ucSendDataBuffer[0] = ucSendDataSize;   	// Length
+		ucSendDataSize = ucSendDataSize + 1;    	// data size = data byte + size byte
+		macDataRequest(DEFAULT_COORD_ADDR, ucSendDataSize, ucSendDataBuffer);
+		
+		halGetEeprom(OFFLINE_TRANSACTION_RECORD_START,2,&addr);
+		while( num_of_records > 0 )
+		{
+			num_of_records--;
+			tmp = addr[0];
+			tmp = tmp << 8;
+			tmp = tmp + addr[1];
+			halGetEeprom(tmp,OFFLINE_TRANSACTION_NUM_BYTE,&record); // getr record
+			macDataRequest(DEFAULT_COORD_ADDR,OFFLINE_TRANSACTION_NUM_BYTE,&record); //send record via radio
+			//update current record address
+			//addr = addr+OFFLINE_TRANSACTION_NUM_BYTE;
+			tmp = addr[0];// = tmp >> 8;
+			tmp = tmp << 8;
+			tmp = tmp + addr[1];// = tmp;
+			tmp = tmp + OFFLINE_TRANSACTION_NUM_BYTE;
+			addr[0] = tmp >> 8;
+			addr[1] = tmp;
+			halPutEeprom(OFFLINE_TRANSACTION_RECORD_START,2,&addr);
+			halPutEeprom(OFFLINE_TRANSACTION_RECORD_ADDR, 1, &num_of_records);
+		}
+	}
+	if (num_of_records == 0)
+	{
+		ReaderStateFlag.OfflineTransactionExist = false;
+		ReaderStateFlag.MaxNumTransReached = false;
+	}		
+	//ultoa(/*(const*)*/CurrentAccount.ID,tmpCardIdString,10);
+	return count;
+}

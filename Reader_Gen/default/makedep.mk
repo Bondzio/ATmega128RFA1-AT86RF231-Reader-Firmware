@@ -10,8 +10,6 @@ Application\reader.c
 
 Application\SpeedQueen.c
 
-Bill_Acceptor\mars_comm.c
-
 Keypad\Keypad.c
 
 mifare\Mifare.c

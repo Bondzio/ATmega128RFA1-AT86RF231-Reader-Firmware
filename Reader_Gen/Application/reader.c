@@ -82,11 +82,6 @@ ReaderStateFlag.Busy = false;
     DDRD = (DDRD | 0x08);
     PORTD &= ~(1<<PD3);
     UCSR1B &= ~(1 << TXEN1 );
-	
-#elif (DEVICE_CONNECTED == MARS_BA)
-
-	deviceStatus.deviceType[0] = 0xBA;
-	deviceStatus.deviceType[1] = 0x1;
 
 #endif
 }
@@ -169,71 +164,6 @@ u8 storeOfflineTransaction(u32 cardNum)
 	return return_code;	
 }
 
-/*u8 transmitStoredTransaction(void)
-{
-	u8 num_of_records,count = 0;
-	u8 addr[2];	//address of record being read from EEPROM.
-	
-	structTransaction record;
-	
-	//get total number of stored off line transactions from EEPROM.
-	halGetEeprom(OFFLINE_TRANSACTION_RECORD_ADDR, 1, &num_of_records);
-	
-	//build buffer of transactions to be transmitted.
-	if (num_of_records > 0 && num_of_records < 0xFF) // valid number of transactions stored, prepare to send to BOW
-	{
-		static u16 tmp;
-		char tmpCardIdString[10]= {0};
-		//send data to BOW 
-
-		halGetEeprom(OFFLINE_TRANSACTION_RECORD_START,2,addr);
-		
-		while( num_of_records > 0 )
-		{
-			halGetEeprom(*((u16*)addr),OFFLINE_TRANSACTION_NUM_BYTE,(u8*)&record); // get transaction record
-			
-			ultoa(record.CardId,tmpCardIdString,10);
-			sprintf((char*)ucSendDataBuffer+1, "<CC>"
-											"<sN>%s</sN>"
-											"<cP>%.2f</cP>"
-											"<locId>%d</locId>"
-											"<manufId>%d</manufId>"
-											"<code>%d%d</code>"
-											"<isOL>%d</isOL>"
-											,tmpCardIdString, (double)(record.vendPrice / 100.0), record.LocationId, record.ManufactureId, record.MachineId[0] , record.MachineId[1], 1);
-											
-			ucSendDataSize = strlen((char*)ucSendDataBuffer+1);
-			ucSendDataBuffer[0] = ucSendDataSize;   	// Length
-			ucSendDataSize = ucSendDataSize + 1;    	// data size = data byte + size byte
-			
-			macDataRequest(DEFAULT_COORD_ADDR,ucSendDataSize,ucSendDataBuffer); //send record via radio
-			//update current record address
-			tmp = addr[1];
-			tmp = tmp << 8;
-			tmp = tmp + addr[0];
-			tmp = tmp + OFFLINE_TRANSACTION_NUM_BYTE;
-			addr[1] = tmp >> 8;
-			addr[0] = tmp;
-			halPutEeprom(OFFLINE_TRANSACTION_RECORD_START,2,addr);
-			halPutEeprom(OFFLINE_TRANSACTION_RECORD_ADDR, 1, &num_of_records);
-			
-			num_of_records--;
-			count++;
-			
-			//wait for BOW to reply, if account is successfully charged continue otherwise if 
-			_delay_ms(200);
-		}
-	}
-	if (num_of_records == 0)
-	{
-		ReaderStateFlag.OfflineTransactionExist = false;
-		ReaderStateFlag.MaxNumTransReached = false;
-		halPutEeprom(READER_STATE_ADDR,1,(u8*)&ReaderStateFlag);
-	}		
-	
-	return count;
-}
-*/
 u8 sendStoredTransaction(void)
 {	
 	//get total number of stored off line transactions from EEPROM.
@@ -268,7 +198,6 @@ u8 sendStoredTransaction(void)
 	
 	return ReaderSetup.numOfSavedTransactions;
 }
-
 
 #else
 u8 sendStoredTransaction(void)
