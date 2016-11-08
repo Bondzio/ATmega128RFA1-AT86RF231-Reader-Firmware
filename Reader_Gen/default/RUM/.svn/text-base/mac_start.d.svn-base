@@ -1,0 +1,19 @@
+RUM/mac_start.d RUM/mac_start.o: ../RUM/mac_start.c ../rum_types.h \
+ ../RUM/mac.h ../stdboolrum.h ../Radio/hal.h ../Radio/hal_avr.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../Radio/radio.h
+
+../rum_types.h:
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../Radio/radio.h:

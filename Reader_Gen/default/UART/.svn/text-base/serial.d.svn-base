@@ -1,0 +1,31 @@
+UART/serial.d UART/serial.o: ../UART/serial.c ../Radio/hal.h \
+ ../Radio/hal_avr.h ../stdboolrum.h ../rum_types.h \
+ ../Radio/atmega128rfa1.h ../UART/serial.h ../Application/application.h \
+ ../RUM/mac.h ../RUM/sensors.h ../RUM/mac.h ../RUM/mac_event.h \
+ ../RUM/mac_route.h ../Application/system.h
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/atmega128rfa1.h:
+
+../UART/serial.h:
+
+../Application/application.h:
+
+../RUM/mac.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac_route.h:
+
+../Application/system.h:

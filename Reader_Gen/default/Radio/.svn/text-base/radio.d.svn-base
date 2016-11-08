@@ -1,0 +1,33 @@
+Radio/radio.d Radio/radio.o: ../Radio/radio.c ../RUM/mac.h \
+ ../stdboolrum.h ../rum_types.h ../Radio/hal.h ../Radio/hal_avr.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../RUM/mac.h ../Radio/radio.h \
+ ../RUM/mac_event.h ../RUM/mac_route.h ../RUM/mac_scan.h \
+ ../Application/system.h ../Radio/hal.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../Radio/radio.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac_route.h:
+
+../RUM/mac_scan.h:
+
+../Application/system.h:
+
+../Radio/hal.h:

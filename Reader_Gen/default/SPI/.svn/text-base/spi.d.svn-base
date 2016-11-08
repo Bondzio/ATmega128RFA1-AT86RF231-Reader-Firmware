@@ -1,0 +1,3 @@
+SPI/spi.d SPI/spi.o: ../SPI/spi.c ../SPI/spi.h
+
+../SPI/spi.h:

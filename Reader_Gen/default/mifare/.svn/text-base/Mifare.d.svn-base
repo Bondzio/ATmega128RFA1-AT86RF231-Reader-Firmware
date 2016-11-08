@@ -1,0 +1,13 @@
+mifare/Mifare.d mifare/Mifare.o: ../mifare/Mifare.c ../mifare/RegCtrl.h \
+ ../mifare/Rc522Reg.h ../mifare/OpCtrl.h ../mifare/ErrCode.h \
+ ../mifare/Mifare.h
+
+../mifare/RegCtrl.h:
+
+../mifare/Rc522Reg.h:
+
+../mifare/OpCtrl.h:
+
+../mifare/ErrCode.h:
+
+../mifare/Mifare.h:

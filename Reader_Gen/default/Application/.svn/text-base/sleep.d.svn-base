@@ -1,0 +1,31 @@
+Application/sleep.d Application/sleep.o: ../Application/sleep.c \
+ ../RUM/mac.h ../stdboolrum.h ../rum_types.h ../Radio/hal.h \
+ ../Radio/hal_avr.h ../Radio/atmega128rfa1.h ../RUM/sensors.h \
+ ../RUM/mac.h ../Application/system.h ../Application/sleep.h \
+ ../Radio/radio.h ../UART/serial.h ../Application/application.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../Application/system.h:
+
+../Application/sleep.h:
+
+../Radio/radio.h:
+
+../UART/serial.h:
+
+../Application/application.h:

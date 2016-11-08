@@ -1,0 +1,22 @@
+RUM/sixlowpan_wake.d RUM/sixlowpan_wake.o: ../RUM/sixlowpan_wake.c \
+ ../RUM/mac.h ../stdboolrum.h ../rum_types.h ../Radio/hal.h \
+ ../Radio/hal_avr.h ../Radio/atmega128rfa1.h ../RUM/sensors.h \
+ ../Application/system.h ../RUM/mac.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../Application/system.h:
+
+../RUM/mac.h:

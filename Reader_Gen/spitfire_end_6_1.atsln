@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# AvrStudio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "spitfire_end", "spitfire_end_6_1.cproj", "{E459ABB6-BC4A-4E2A-B29D-606B719895CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|AVR = debug|AVR
+		default|AVR = default|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.debug|AVR.ActiveCfg = debug|AVR
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.debug|AVR.Build.0 = debug|AVR
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.default|AVR.ActiveCfg = default|AVR
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.default|AVR.Build.0 = default|AVR
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.Release|AVR.ActiveCfg = Release|AVR
+		{E459ABB6-BC4A-4E2A-B29D-606B719895CE}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

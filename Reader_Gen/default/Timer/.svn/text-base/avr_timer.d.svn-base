@@ -1,0 +1,33 @@
+Timer/avr_timer.d Timer/avr_timer.o: ../Timer/avr_timer.c ../rum_types.h \
+ ../RUM/mac_event.h ../RUM/mac.h ../stdboolrum.h ../Radio/hal.h \
+ ../Radio/hal_avr.h ../Radio/atmega128rfa1.h ../RUM/sensors.h \
+ ../RUM/mac_route.h ../Radio/radio.h ../Timer/timer.h \
+ ../Timer/avr_timer.h ../Application/system.h ../RUM/mac.h
+
+../rum_types.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac_route.h:
+
+../Radio/radio.h:
+
+../Timer/timer.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../RUM/mac.h:

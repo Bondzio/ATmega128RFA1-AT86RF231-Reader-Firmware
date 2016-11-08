@@ -1,0 +1,33 @@
+RUM/mac_beacon.d RUM/mac_beacon.o: ../RUM/mac_beacon.c ../RUM/mac.h \
+ ../stdboolrum.h ../rum_types.h ../Radio/hal.h ../Radio/hal_avr.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../RUM/mac_beacon.h \
+ ../RUM/mac_route.h ../Radio/radio.h ../Timer/timer.h \
+ ../Timer/avr_timer.h ../Application/system.h ../RUM/mac.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac_beacon.h:
+
+../RUM/mac_route.h:
+
+../Radio/radio.h:
+
+../Timer/timer.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../RUM/mac.h:

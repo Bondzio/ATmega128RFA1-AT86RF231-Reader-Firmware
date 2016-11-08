@@ -1,0 +1,20 @@
+Timer/timer_enddevice.d Timer/timer_enddevice.o: \
+ ../Timer/timer_enddevice.c ../RUM/mac.h ../stdboolrum.h ../rum_types.h \
+ ../Radio/hal.h ../Radio/hal_avr.h ../Radio/atmega128rfa1.h \
+ ../RUM/sensors.h ../RUM/mac.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:

@@ -1,0 +1,21 @@
+Radio/hal_avr.d Radio/hal_avr.o: ../Radio/hal_avr.c ../RUM/mac.h \
+ ../stdboolrum.h ../rum_types.h ../Radio/hal.h ../Radio/hal_avr.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../RUM/mac.h ../Radio/radio.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../Radio/radio.h:

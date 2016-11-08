@@ -1,0 +1,48 @@
+Bill_Acceptor/mars_comm.d Bill_Acceptor/mars_comm.o: \
+ ../Bill_Acceptor/mars_comm.c ../Radio/atmega128rfa1.h ../UART/serial.h \
+ ../rum_types.h ../Application/application.h ../Timer/avr_timer.h \
+ ../Application/system.h ../RUM/mac.h ../stdboolrum.h ../Radio/hal.h \
+ ../Radio/hal_avr.h ../Radio/atmega128rfa1.h ../RUM/sensors.h \
+ ../RUM/mac.h ../Timer/timer_enddevice.h ../Radio/hal_avr.h \
+ ../Application/eeprom_map.h ../RUM/mac_event.h ../RUM/mac_route.h \
+ ../Bill_Acceptor/mars_comm.h ../Application/machine.h
+
+../Radio/atmega128rfa1.h:
+
+../UART/serial.h:
+
+../rum_types.h:
+
+../Application/application.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../Timer/timer_enddevice.h:
+
+../Radio/hal_avr.h:
+
+../Application/eeprom_map.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac_route.h:
+
+../Bill_Acceptor/mars_comm.h:
+
+../Application/machine.h:

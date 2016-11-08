@@ -1,0 +1,140 @@
+main.d main.o: .././main.c \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdlib.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stddef.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdio.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/inttypes.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdint.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdint.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdarg.h \
+ .././stdboolrum.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdbool.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/interrupt.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/sfr_defs.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/iom128rfa1.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/portpins.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/common.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/version.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/fuse.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/lock.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/string.h \
+ ../Radio/radio.h ../stdboolrum.h ../rum_types.h ../RUM/mac.h \
+ ../Radio/hal.h ../Radio/hal_avr.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/crc16.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay_basic.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/eeprom.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../RUM/mac.h \
+ ../RUM/mac_event.h ../RUM/mac_route.h ../Timer/timer.h \
+ ../Timer/avr_timer.h ../Application/system.h ../UART/serial.h \
+ ../Application/application.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/pgmspace.h \
+ ../RUM/mac_start.h ../RUM/mac_data.h ../RUM/mac_associate.h \
+ l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/wdt.h \
+ ../mifare/RegCtrl.h ../mifare/reg52.h ../mifare/Mifare.h \
+ ../mifare/Rc522Reg.h ../mifare/OpCtrl.h ../mifare/ErrCode.h ../SPI/spi.h \
+ ../Application/machine.h
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdlib.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stddef.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdio.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/inttypes.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdint.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdint.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdarg.h:
+
+.././stdboolrum.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stdbool.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/interrupt.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/sfr_defs.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/iom128rfa1.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/portpins.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/common.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/version.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/fuse.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/lock.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/string.h:
+
+../Radio/radio.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../RUM/mac.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/crc16.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay_basic.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/eeprom.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac_route.h:
+
+../Timer/timer.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../UART/serial.h:
+
+../Application/application.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/pgmspace.h:
+
+../RUM/mac_start.h:
+
+../RUM/mac_data.h:
+
+../RUM/mac_associate.h:
+
+l:\program\ files\atmel\avr\ studio\ 5.0\extensions\application\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/wdt.h:
+
+../mifare/RegCtrl.h:
+
+../mifare/reg52.h:
+
+../mifare/Mifare.h:
+
+../mifare/Rc522Reg.h:
+
+../mifare/OpCtrl.h:
+
+../mifare/ErrCode.h:
+
+../SPI/spi.h:
+
+../Application/machine.h:

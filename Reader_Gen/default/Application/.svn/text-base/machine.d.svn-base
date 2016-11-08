@@ -1,0 +1,43 @@
+Application/machine.d Application/machine.o: ../Application/machine.c \
+ ../RUM/mac.h ../stdboolrum.h ../rum_types.h ../Radio/hal.h \
+ ../Radio/hal_avr.h ../Radio/atmega128rfa1.h ../RUM/sensors.h \
+ ../RUM/mac.h ../UART/serial.h ../Application/application.h \
+ ../Application/machine.h ../Timer/avr_timer.h ../Application/system.h \
+ ../Timer/timer_enddevice.h ../Radio/hal_avr.h \
+ ../Application/eeprom_map.h ../RUM/mac_event.h ../RUM/mac_route.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac.h:
+
+../UART/serial.h:
+
+../Application/application.h:
+
+../Application/machine.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../Timer/timer_enddevice.h:
+
+../Radio/hal_avr.h:
+
+../Application/eeprom_map.h:
+
+../RUM/mac_event.h:
+
+../RUM/mac_route.h:

@@ -1,0 +1,10 @@
+mifare/RegCtrl.d mifare/RegCtrl.o: ../mifare/RegCtrl.c \
+ ../mifare/ErrCode.h ../mifare/reg52.h ../mifare/Rc522Reg.h ../SPI/spi.h
+
+../mifare/ErrCode.h:
+
+../mifare/reg52.h:
+
+../mifare/Rc522Reg.h:
+
+../SPI/spi.h:

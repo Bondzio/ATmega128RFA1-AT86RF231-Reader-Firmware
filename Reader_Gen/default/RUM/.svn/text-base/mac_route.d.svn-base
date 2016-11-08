@@ -1,0 +1,35 @@
+RUM/mac_route.d RUM/mac_route.o: ../RUM/mac_route.c ../RUM/mac.h \
+ ../stdboolrum.h ../rum_types.h ../Radio/hal.h ../Radio/hal_avr.h \
+ ../Radio/atmega128rfa1.h ../RUM/sensors.h ../RUM/mac_associate.h \
+ ../RUM/mac_data.h ../Timer/timer.h ../Timer/avr_timer.h \
+ ../Application/system.h ../RUM/mac.h ../Radio/radio.h ../RUM/mac_route.h
+
+../RUM/mac.h:
+
+../stdboolrum.h:
+
+../rum_types.h:
+
+../Radio/hal.h:
+
+../Radio/hal_avr.h:
+
+../Radio/atmega128rfa1.h:
+
+../RUM/sensors.h:
+
+../RUM/mac_associate.h:
+
+../RUM/mac_data.h:
+
+../Timer/timer.h:
+
+../Timer/avr_timer.h:
+
+../Application/system.h:
+
+../RUM/mac.h:
+
+../Radio/radio.h:
+
+../RUM/mac_route.h:
