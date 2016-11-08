@@ -18,7 +18,7 @@
 #include "system.h"
 #include "UART/serial.h"
 #include "avr_timer.h"
-#include "KeyPad/Keypad.h"
+
 #include <stdlib.h>
 #include <avr/wdt.h>
 
@@ -30,7 +30,6 @@
 #define REQUEST_MACHINE_LABEL	4
 #define REQUEST_MACHINE_DESCRIPTION		5
 #define REQUEST_NUMBER_OF_OLT			6
-#define REQUEST_KEYPAD_ACCOUNT      7
 
 //BOW error codes
 #define TRANSACTION_SUCCESSFUL	6
@@ -62,7 +61,6 @@ bool sendMachineDescription(void);
 bool sendMachineLabel(void);
 bool sendNumberOfOLT(void);
 bool getReaderSetupInfo(void);
-bool getKeypadAccountInfo(void);
 
 u8 extractIncomingMessage(char *dataBuffer);
 bool constructOutgoingString(u8 strType, char *tempStr);

@@ -239,8 +239,8 @@ bool getSQStatusData(void)
 			MdcStatus.MachineStatus[1] 	= buf[6];
 			MdcStatus.RemainingCycleMinutes		= buf[9];
 			MdcStatus.RemainingCycleSeconds		= buf[10];
-			MdcStatus.KeypadData[0]	  			= buf[13];
-			MdcStatus.KeypadData[1]  			= buf[14];
+			//MdcStatus.KeypadData[0]	  			= buf[13];
+			//MdcStatus.KeypadData[1]  			= buf[14];
 			MdcStatus.CurrentKey[0]				= buf[15];
 			MdcStatus.CurrentKey[1]				= buf[16];
 			MdcStatus.CycleModifier[0]			= buf[17];
@@ -256,7 +256,7 @@ bool getSQStatusData(void)
 		if( getSQData(buf) && buf[0] == MDC_STATUS_RESPONSE )
 		{
 			MdcStatus.MachineType[0] 	= (buf[1] + PROGRAMMING_DATA);			
-			MdcStatus.KeypadData[0]		= buf[2];
+			//MdcStatus.KeypadData[0]		= buf[2];
 			MdcStatus.CycleType   		= buf[3];
 			MdcStatus.CmdToReader 		= buf[4];
 			MdcStatus.MachineStatus[0] 	= buf[5];

@@ -56,7 +56,6 @@
 #include "reader.h"
 #include "display.h"
 #include "BowComm.h"
-#include "Keypad/Keypad.h"
 
 // mifare includes
 #include "RegCtrl.h"
@@ -66,7 +65,6 @@
 #include "OpCtrl.h"
 #include "ErrCode.h"
 #include "spi.h"
-
 
 u8 DataBuffer[128];
 u8 swipe = 0;
@@ -91,7 +89,6 @@ bool SETUP_TIMEOUT = true;
   void DetermineState();
 #endif // (DEBUG_BOW)
 
-
 //Only the RUM stack uses these, otherwise undef them
 #if !((IPV6_STACK == STACK_RUM) && IPV6LOWPAN)
 #define sixlowpan_hc01_gen_rs(a)
@@ -100,7 +97,6 @@ bool SETUP_TIMEOUT = true;
 #endif
 
 //void sixlowpan_application_init(void);
-
 
 extern bool Ping1Rx;
 extern bool Ping2Rx;
@@ -403,7 +399,7 @@ void appPacketSendFailed(void)
 
         parentFailed = (macConfig.lastDestAddr == macConfig.parentShortAddress);
         /* Special code: this prevents a situation where the
-           coordingator goes away, and the nodes take a long time to
+           coordinator goes away, and the nodes take a long time to
            realize that the network is gone.  Nodes Keep trying to
            re-associate with each other, but until a router loses a
            number of packets to its parent, it still thinks it's
@@ -1280,9 +1276,7 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 			
 			#endif
 			
-			#if ENABLE_KEYPAD
-				initKeypad();
-			#endif		
+			
 			 break;
 
 		case SCANNING: //scan for card swipe
@@ -1323,47 +1317,12 @@ if(macConfig.associated == true/*/false*/ || ReaderStateFlag.EnableOfflineTransa
 					}				
 				
 				
-                #if ENABLE_KEYPAD
-				
-					else if (isKeyPressed())
-					{
-						OP = KEYPAD_ENTRY_DETECTED;
-						//set account number entry timer
-						keypadEntryTimeoutTimerID = macSetLongAlarm(KEYPAD_TIMEOUT, setKeypadEntryTimeout);
-                  clearKeypadEntry();
-					}
-
-				#endif
+                
 				break;
 
 		
 		
-		#if ENABLE_KEYPAD
-        case KEYPAD_ENTRY_DETECTED:
-			if (keypad.flags.keypadEntryTimedout == false)
-			{//reset timer after each successful key press
-            //uint8_t tmpNum[10] = {0};
-           // uint8_t tmpcode[10] = {0};
-                			
-				if(accountNumberEntry()) 
-				{//account number was entered successfully					
-				 //send account info to server for processing
-					if (passcodeEntry())
-					{					
-                  getKeypadAccountInfo();
-                  OP  = SCANNING;
-				      clearKeypadEntryTimeout();
-               }                  
-				}			
-			}
-			else
-			{
-				OP  = SCANNING;
-				clearKeypadEntryTimeout();
-			}
-			
-            break;
-        #endif //KEYPAD
+		
 		
 		case CARD_DETECTED:		
 			{			

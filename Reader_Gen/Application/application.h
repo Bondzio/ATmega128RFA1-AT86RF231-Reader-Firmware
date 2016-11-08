@@ -49,7 +49,7 @@
 #define SCARD_REMOVED				0x0D
 #define START_CYCLE					0x0F
 #define CYCLE_STARTED				0x10
-#define KEYPAD_ENTRY_DETECTED     0x11
+
 #define UPDATE_READER_FIRMWARE      0x12
 #define VALIDATE_READER				0x13
 #define VALIDATE_SETUP				0x14

@@ -10,8 +10,6 @@ Application\reader.c
 
 Application\SpeedQueen.c
 
-Keypad\Keypad.c
-
 mifare\Mifare.c
 
 mifare\RegCtrl.c

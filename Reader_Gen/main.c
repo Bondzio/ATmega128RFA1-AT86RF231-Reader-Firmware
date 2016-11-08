@@ -71,8 +71,6 @@ Debug Compile switches
 #include "ErrCode.h"
 #include "spi.h"
 
-//#include "Keypad/Keypad.h"
-
 // Make the compiler accept these unused function names
 #define usb_task_init()
 #define cdc_task_init()
@@ -115,13 +113,7 @@ int main(void){
 	#endif
 
 	sei();
-
-	/*resetKeypad();
-	while (1)
-	{
-	getPressedKey();
-	_delay_ms(1000);
-	}*/
+	
 	// Init the (sample) application
 	appInit();
 

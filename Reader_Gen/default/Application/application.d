@@ -39,10 +39,9 @@ Application/application.d Application/application.o: \
  ../Application/reader.h ../Application/BowComm.h ../Radio/hal_avr.h \
  ../UART/serial.h ../Application/application.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../Timer/avr_timer.h ../KeyPad/Keypad.h ../Keypad/Keypad.h \
- ../mifare/RegCtrl.h ../mifare/reg52.h ../mifare/Mifare.h \
- ../mifare/Rc522Reg.h ../mifare/OpCtrl.h ../mifare/ErrCode.h ../SPI/spi.h \
- ../UART/serial.h
+ ../Timer/avr_timer.h ../mifare/RegCtrl.h ../mifare/reg52.h \
+ ../mifare/Mifare.h ../mifare/Rc522Reg.h ../mifare/OpCtrl.h \
+ ../mifare/ErrCode.h ../SPI/spi.h ../UART/serial.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -161,10 +160,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
 
 ../Timer/avr_timer.h:
-
-../KeyPad/Keypad.h:
-
-../Keypad/Keypad.h:
 
 ../mifare/RegCtrl.h:
 

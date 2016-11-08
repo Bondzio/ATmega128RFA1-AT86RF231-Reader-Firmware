@@ -30,7 +30,7 @@ Application/BowComm.d Application/BowComm.o: ../Application/BowComm.c \
  ../Application/eeprom_map.h ../Application/system.h ../UART/serial.h \
  ../Application/application.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../Timer/avr_timer.h ../Application/system.h ../KeyPad/Keypad.h \
+ ../Timer/avr_timer.h ../Application/system.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h
 
@@ -115,8 +115,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../Timer/avr_timer.h:
 
 ../Application/system.h:
-
-../KeyPad/Keypad.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 

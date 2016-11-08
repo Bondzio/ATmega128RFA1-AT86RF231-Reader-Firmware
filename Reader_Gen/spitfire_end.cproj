@@ -350,12 +350,6 @@
     <Compile Include="Application\system.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Keypad\Keypad.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Keypad\Keypad.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="mifare\ErrCode.h">
       <SubType>compile</SubType>
     </Compile>
@@ -533,7 +527,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Folder Include="Application" />
-    <Folder Include="Keypad\" />
     <Folder Include="mifare" />
     <Folder Include="SPI" />
     <Folder Include="Radio" />

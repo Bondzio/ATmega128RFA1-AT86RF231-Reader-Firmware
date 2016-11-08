@@ -292,7 +292,7 @@ u8 SerialGetMachineData(void)
 				case MACHINE_STATUS_PACKET:
 					MdcStatus.MachineType[0] 	= (ucMdcDataBuf[1] + PROGRAMMING_DATA);
 					MdcStatus.MachineType[1] = 1;///temp. fix later, differentiate between MDC and Quantum
-					MdcStatus.KeypadData[0]	= ucMdcDataBuf[2];
+					//MdcStatus.KeypadData[0]	= ucMdcDataBuf[2];
 					MdcStatus.CycleType   	= ucMdcDataBuf[3];
 					MdcStatus.CmdToReader 	= ucMdcDataBuf[4];
 					MdcStatus.MachineStatus[0] 	= ucMdcDataBuf[5];

@@ -78,15 +78,7 @@ bool getReaderSetupInfo()
 	
 	return true;
 }
-bool getKeypadAccountInfo()
-{
-   char tmp[60] = {0};
-   
-   constructOutgoingString(REQUEST_KEYPAD_ACCOUNT, tmp);
-   macDataRequest(DEFAULT_COORD_ADDR, (u8)tmp[0], (u8*)tmp+1);
-   
-   return true;
-}
+
 //returns number of characters received.
 u8 asciiStringToNibble( char *inStr, char *outStr)
 {
@@ -164,16 +156,7 @@ bool constructOutgoingString(u8 strType, char *tempStr)
 			,ReaderSetup.numOfSavedTransactions);
 			
 			break;
-         #if ENABLE_KEYPAD	
-      case REQUEST_KEYPAD_ACCOUNT:
          
-         sprintf(tempStr+1, "<KeypadInfo>"
-         "<aCC>%s</aCC>"
-         "<pC>%s</pC>"
-         ,keypad.accountNumber,keypad.passcode);
-         
-         break;
-         #endif
 		default:
 		
 			break;

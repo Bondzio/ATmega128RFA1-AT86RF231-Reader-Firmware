@@ -163,7 +163,7 @@ u8 ucMachineWait;
 typedef struct{
 
 	u8 	MachineType[2];	
-	u8 	KeypadData[2];
+	//u8 	KeypadData[2];
 	u8 	CycleType;
 	u8 	CmdToReader;
 	u8 	MachineStatus[2];
