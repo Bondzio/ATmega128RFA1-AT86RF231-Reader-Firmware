@@ -169,6 +169,7 @@ void getSQSetupData(void)
 	}
 	
 }
+
 void getSQAuditData(void)
 {
 	u8 temp[3]={0};
@@ -188,7 +189,6 @@ void getSQAuditData(void)
 	}	
 	return;
 }
-
 
 bool getSQMachineStatus(void)
 {
@@ -270,7 +270,6 @@ bool getSQStatusData(void)
 	return false;	
 }
 
-
 bool sendSQVendPrice(void)
 {
 	u8 temp[8];
@@ -314,6 +313,7 @@ bool sendSQVendPrice(void)
 	}
 	return (sendSQData(temp) );	
 }	
+
 bool isQuantum(void)
 {
 	u8 temp[8] = {0x07, 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10};
@@ -353,7 +353,6 @@ bool getSQInitData()
 	}
 	return false;
 }
-
 	
 bool sendSQData(u8 *buf)
 {
@@ -619,7 +618,6 @@ bool sendSQDisplayCommand( u8 led1, u8 led2,u8 led3, u8 led4, u8 duration)
 /*****************************************************************
 This function will display the current version of reader firmware
 on the MDC display for a minimum of 2 seconds.
-
 */
 
 bool displaySQReaderVersion(void)
@@ -667,6 +665,7 @@ bool cardRemoved(u8 cardType)
 	}		
 	return false;
 }			
+
 bool cardInserted(u8 cardType)
 {
 	if( (cardType == REGULAR_VEND) && sendSQCashCardInserted() )
@@ -681,6 +680,7 @@ bool cardInserted(u8 cardType)
 	}
 	return false;
 }
+
 void initMachine(void)
 {
 	if( isQuantum() )
@@ -706,6 +706,7 @@ bool isMachineCycleRunning()
 {
 	return (isSQCycleRunning() );
 }
+
 bool waitForMachineStartKey()
 {
 	

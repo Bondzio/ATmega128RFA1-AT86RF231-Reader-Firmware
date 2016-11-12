@@ -15,21 +15,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000b20  00000000  00000000  00006e68  2**3
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00010fea  00000000  00000000  00007988  2**0
+  6 .debug_info   00010fad  00000000  00000000  00007988  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000048e2  00000000  00000000  00018972  2**0
+  7 .debug_abbrev 00004801  00000000  00000000  00018935  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000ad5d  00000000  00000000  0001d254  2**0
+  8 .debug_line   0000ad5b  00000000  00000000  0001d136  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00001e04  00000000  00000000  00027fb4  2**2
+  9 .debug_frame  00001e04  00000000  00000000  00027e94  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00021b39  00000000  00000000  00029db8  2**0
+ 10 .debug_str    00021b28  00000000  00000000  00029c98  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000067f1  00000000  00000000  0004b8f1  2**0
+ 11 .debug_loc    000067f1  00000000  00000000  0004b7c0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000990  00000000  00000000  000520e2  2**0
+ 12 .debug_ranges 00000990  00000000  00000000  00051fb1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  0000c199  00000000  00000000  00052a72  2**0
+ 13 .debug_macro  0000c188  00000000  00000000  00052941  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3366,8 +3366,8 @@ bool sendSQDisplayCommand( u8 led1, u8 led2,u8 led3, u8 led4, u8 duration)
     1848:	08 95       	ret
 
 0000184a <displaySQReaderVersion>:
+This function will display the current version of reader firmware
 on the MDC display for a minimum of 2 seconds.
-
 */
 
 bool displaySQReaderVersion(void)
@@ -3503,9 +3503,9 @@ bool cardRemoved(u8 cardType)
     18ec:	f5 cf       	rjmp	.-22     	; 0x18d8 <cardRemoved+0x8>
 
 000018ee <cardInserted>:
-	}		
 	return false;
 }			
+
 bool cardInserted(u8 cardType)
 {
 	if( (cardType == REGULAR_VEND) && sendSQCashCardInserted() )
@@ -3522,7 +3522,7 @@ bool cardInserted(u8 cardType)
 	return false;
     18fa:	80 e0       	ldi	r24, 0x00	; 0
     18fc:	08 95       	ret
-}			
+
 bool cardInserted(u8 cardType)
 {
 	if( (cardType == REGULAR_VEND) && sendSQCashCardInserted() )
@@ -3551,6 +3551,7 @@ bool isMachineCycleRunning()
 
 00001916 <waitForMachineStartKey>:
 }
+
 bool waitForMachineStartKey()
 {
 	
@@ -3575,9 +3576,9 @@ void MachineStatus(void)
     1928:	08 95       	ret
 
 0000192a <initMachine>:
-	}
 	return false;
 }
+
 void initMachine(void)
 {
 	if( isQuantum() )
@@ -7804,7 +7805,7 @@ void macTask(void)
     3670:	0e 94 50 1c 	call	0x38a0	; 0x38a0 <macRouteAssociateRequest>
     3674:	b2 cf       	rjmp	.-156    	; 0x35da <macTask+0x4>
         case MAC_EVENT_ASSOCIATION_RESPONSE:
-            // End device has recieved this response.
+            // End device has received this response.
             if (NODETYPE != COORD)
             {
                 //   if (*((u16*)(mac_buffer_rx+1)) == FCF_ASSOC_RESP_DIRECT) // Direct to MAC Addr?
@@ -9310,8 +9311,8 @@ ISR ( WDT_vect )
     3fae:	18 95       	reti
 
 00003fb0 <WaitForMachine>:
-		if(MdcStatus.MachineType[1] == QUANTUM_SERIES)
-		halGetEeprom(MACHINE_SETUP_ADDR_QUANTUM, QUANTUM_SETUP_NUM_BYTE, &MachineSetupData.CoolDownTime);
+	if(MdcStatus.MachineType[1] == QUANTUM_SERIES)
+	halGetEeprom(MACHINE_SETUP_ADDR_QUANTUM, QUANTUM_SETUP_NUM_BYTE, &MachineSetupData.CoolDownTime);
 }
 
 void SaveMachineSetupData(void)
@@ -9360,7 +9361,7 @@ void SaveMachineSetupData(void)
 
 00003ffc <SetDefaultMachineSetup>:
 }
-*/
+
 void SetDefaultMachineSetup(void)
 {
 	//Default settings
@@ -10432,7 +10433,7 @@ void APP_TaskHandler(void)
 	//vars declaration
 	ucSendDataSize = 0;
     47f8:	10 92 a3 09 	sts	0x09A3, r1	; 0x8009a3 <ucSendDataSize>
- 
+	u8 n = 0;
 
 	
   #ifdef MACHINE_CONNECTED
@@ -10442,9 +10443,8 @@ void APP_TaskHandler(void)
     4800:	81 30       	cpi	r24, 0x01	; 1
     4802:	41 f5       	brne	.+80     	; 0x4854 <APP_TaskHandler+0x7e>
 	{
-        DevicePoll();
+        DevicePoll();	
     4804:	0e 94 8b 23 	call	0x4716	; 0x4716 <DevicePoll>
-		
 		
 		
 		if (ucDeviceStateFlag == DEVICE_STATUS_ONLINE)

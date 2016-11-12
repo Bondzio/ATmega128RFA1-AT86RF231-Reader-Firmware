@@ -110,18 +110,18 @@
 
 // device connected to the reader
 #define MDC_MACHINE       1
-#define MAYTAG_MACHINE    2
+//#define MAYTAG_MACHINE    2
 
 #define DEVICE_CONNECTED  MDC_MACHINE
  
 #if(DEVICE_CONNECTED == MDC_MACHINE) 
 
     #define DEVICE_POLL_PERIOD          300     //poll period in msec
-
+/*
 #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
 
     #define DEVICE_POLL_PERIOD          250     //poll period in msec
-
+*/
 #endif
 
 u8 ucDeviceStateFlag;
@@ -140,8 +140,6 @@ void appStartScan(void);
 void doPing(void);
 
 void String_to_hexa_convert ( u8 ucDataLength, u8 * pucDataBuffer );
-
-
 
 void Beeps(u8 nBeeps);
 //void Led1_toggle (void);
@@ -237,18 +235,13 @@ u8 AppCheckCoordinatorCommand (u8 * ucSerialReceiveDataBuffer);
 
 /* Application revision number. */
 #define __APP_REVISION__       4
-
+/*
 #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
     #define __APP_VERSION_STRING__ "0.0.1 GEN2"
+*/
 #endif
 
-
-
-
 #endif // (NODETYPE == COORD)
-
-
-
 
 #endif // _APPLICATION_H_
 

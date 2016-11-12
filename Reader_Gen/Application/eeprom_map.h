@@ -59,10 +59,11 @@
 	#define MACHINE_SETUP_NUM_BYTE			12  // number of bytes needed to store washer setup in eeprom 
 	#define DRYER_SETUP_NUM_BYTE			7   //number of additional bytes needed dryer specific setup
 	#define QUANTUM_SETUP_NUM_BYTE			5   //number of additional bytes needed Quantum specific setup
+/*
 #elif(DEVICE_CONNECTED == MAYTAG_MACHINE)
 	#define MACHINE_SETUP_NUM_BYTE			12  // number of bytes needed to store washer setup in eeprom 
 	#define DRYER_SETUP_NUM_BYTE			7   //number of additional bytes needed dryer specific setup
-
+*/
 #endif
 
 #define VALIDATION_CODE_NUM_BYTE		8   //number of bytes needed to store validation code

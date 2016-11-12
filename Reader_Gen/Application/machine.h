@@ -12,21 +12,16 @@ void WaitForMachine(void);
 #define MACHINE_TIME_OUT        0x01
 #define MACHINE_WAIT_TIMEOUT    10000   //In ms, the time period to wait for a machine to power up
 
-
-
-
-
 #if (DEVICE_CONNECTED == MDC_MACHINE)
 
 #include "SpeedQueen.h"
-
 
 void getSQAuditData(void);
 
 //Machine status
 
 #define STX 	0x02
-#define ACK		0x06	
+#define ACK		0x06
 #define INV		0x09
 #define NAK		0x15
 
@@ -47,14 +42,14 @@ void getSQAuditData(void);
 #define AUDIT_DATA_FRONTLOAD		0x32
 #define AUDIT_DATA_WASHER_EXTRACTOR	0x34
 #define AUDIT_DATA_TUMBLER			0x38
-#define AUDIT_DATA_DRYER			0x39	
+#define AUDIT_DATA_DRYER			0x39
 
 #define CASH_CARD_INSERTED			0x40
 #define CARD_REMOVED				0x41
 #define	CASH_CARD_TOPOFF			0x42
 
 #define DEDUCT_VEND_COMMAND			0x46
-#define DEDUCT_TOPOFF_COMMAND		0x47	//Deduct TopOff cammand
+#define DEDUCT_TOPOFF_COMMAND		0x47	//Deduct TopOff command
 #define MACHINE_START_COMMAND		0x48
 #define ADD_TIME_COMMAND			0x49
 #define CARD_ERROR_PACKET			0x50
@@ -70,8 +65,6 @@ void getSQAuditData(void);
 #define DISPLAY_REQUEST_OUT         0x73
 
 #define CASH_CARD_REMOVED			0x99
-//extern U8 OP;
-//#endif 
 
 //MDC packet data length
 #define MACHINE_START_PACKET_SIZE	1
@@ -143,14 +136,11 @@ void getSQAuditData(void);
 #define MACHINE_ERROR_MODE		0x40
 #define MACHINE_MANUAL_MODE		0x80
 
-
-
 //Card Status
 #define CARD_OUT				0x00
 #define CARD_IN					0x80
 
 #define NUMRETRIES				8
-
 
 extern u16 ucCardBalance;
 extern u16 cardId;
@@ -162,7 +152,7 @@ u8 ucMachineWait;
 
 typedef struct{
 
-	u8 	MachineType[2];	
+	u8 	MachineType[2];
 	//u8 	KeypadData[2];
 	u8 	CycleType;
 	u8 	CmdToReader;
@@ -194,7 +184,7 @@ typedef struct{
 	u8 HeavyCycle_extraWashTime;
 	u8 HeavyCycle_extraRiseTime;
 	u8 MediumCycle_vendPrice[2];
-	u8 MediumCycle_option;	
+	u8 MediumCycle_option;
 	u8 NormalCycle_washAgitateTime;
 	u8 NormalCycle_rinseAgitateTime;
 	u8 NormalCycle_extraRinseAgitateTime;
@@ -265,7 +255,7 @@ structMachineAudit MdcAuditData;
 
 u8 sendMdcPacket(u8 *ucDataBuf);
 
-
+/*
 #elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
 
 u8 ucCardStatus;
@@ -307,9 +297,8 @@ void sendMTStartMessage( void );
 #define CARD_REMOVED				0x41
 
 extern u8 startMsg[];
-
-#endif //Machine type 
-
+*/
+#endif //Machine type
 
 u8 SerialSendMachineData(u8 ucCommandType);
 u8 SerialGetMachineData(void);
@@ -321,7 +310,5 @@ void SetMachineSetupData(void);
 void SaveMachineSetupData(void);
 
 void ProcessRadioData(void);
-
-
 
 #endif // MACHINE_H

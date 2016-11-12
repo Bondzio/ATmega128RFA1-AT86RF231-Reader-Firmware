@@ -308,7 +308,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x43 Application/display.o
  .debug_macro   0x00000000       0x83 Application/display.o
  .debug_macro   0x00000000      0x10e Application/display.o
- .debug_macro   0x00000000      0x194 Application/display.o
+ .debug_macro   0x00000000      0x18e Application/display.o
  .group         0x00000000        0x8 Application/reader.o
  .group         0x00000000        0x8 Application/reader.o
  .group         0x00000000        0x8 Application/reader.o
@@ -385,12 +385,12 @@ Discarded input sections
  .debug_macro   0x00000000       0x43 Application/reader.o
  .debug_macro   0x00000000       0x83 Application/reader.o
  .debug_macro   0x00000000      0x10e Application/reader.o
- .debug_macro   0x00000000      0x194 Application/reader.o
+ .debug_macro   0x00000000      0x18e Application/reader.o
  .debug_macro   0x00000000       0xdc Application/reader.o
  .debug_macro   0x00000000       0x1c Application/reader.o
  .debug_macro   0x00000000      0x112 Application/reader.o
  .debug_macro   0x00000000       0x4c Application/reader.o
- .debug_macro   0x00000000      0x22f Application/reader.o
+ .debug_macro   0x00000000      0x22a Application/reader.o
  .debug_macro   0x00000000       0x4a Application/reader.o
  .group         0x00000000        0x8 Application/SpeedQueen.o
  .group         0x00000000        0x8 Application/SpeedQueen.o
@@ -480,11 +480,11 @@ Discarded input sections
  .debug_macro   0x00000000       0x43 Application/SpeedQueen.o
  .debug_macro   0x00000000       0x83 Application/SpeedQueen.o
  .debug_macro   0x00000000      0x10e Application/SpeedQueen.o
- .debug_macro   0x00000000      0x194 Application/SpeedQueen.o
+ .debug_macro   0x00000000      0x18e Application/SpeedQueen.o
  .debug_macro   0x00000000       0x1c Application/SpeedQueen.o
  .debug_macro   0x00000000      0x112 Application/SpeedQueen.o
  .debug_macro   0x00000000       0x4c Application/SpeedQueen.o
- .debug_macro   0x00000000      0x22f Application/SpeedQueen.o
+ .debug_macro   0x00000000      0x22a Application/SpeedQueen.o
  .debug_macro   0x00000000       0x87 Application/SpeedQueen.o
  .debug_macro   0x00000000       0x10 Application/SpeedQueen.o
  .debug_macro   0x00000000      0x175 Application/SpeedQueen.o
@@ -724,7 +724,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x10e main.o
  .debug_macro   0x00000000       0x4a main.o
  .debug_macro   0x00000000       0x28 main.o
- .debug_macro   0x00000000      0x194 main.o
+ .debug_macro   0x00000000      0x18e main.o
  .debug_macro   0x00000000       0x87 main.o
  .debug_macro   0x00000000       0x10 main.o
  .debug_macro   0x00000000       0x35 main.o
@@ -738,7 +738,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x1c main.o
  .debug_macro   0x00000000      0x112 main.o
  .debug_macro   0x00000000       0x4c main.o
- .debug_macro   0x00000000      0x22f main.o
+ .debug_macro   0x00000000      0x22a main.o
  .group         0x00000000        0x8 Application/sleep.o
  .group         0x00000000        0x8 Application/sleep.o
  .group         0x00000000        0x8 Application/sleep.o
@@ -816,7 +816,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x83 Application/sleep.o
  .debug_macro   0x00000000      0x10e Application/sleep.o
  .debug_macro   0x00000000       0x4a Application/sleep.o
- .debug_macro   0x00000000      0x194 Application/sleep.o
+ .debug_macro   0x00000000      0x18e Application/sleep.o
  .debug_macro   0x00000000       0x87 Application/sleep.o
  .debug_macro   0x00000000       0x10 Application/sleep.o
  .debug_macro   0x00000000      0x175 Application/sleep.o
@@ -1910,7 +1910,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x43 Application/machine.o
  .debug_macro   0x00000000       0x83 Application/machine.o
  .debug_macro   0x00000000      0x10e Application/machine.o
- .debug_macro   0x00000000      0x194 Application/machine.o
+ .debug_macro   0x00000000      0x18e Application/machine.o
  .debug_macro   0x00000000       0xdc Application/machine.o
  .debug_macro   0x00000000       0x87 Application/machine.o
  .debug_macro   0x00000000       0x10 Application/machine.o
@@ -1919,7 +1919,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x1c Application/machine.o
  .debug_macro   0x00000000      0x112 Application/machine.o
  .debug_macro   0x00000000       0x4c Application/machine.o
- .debug_macro   0x00000000      0x22f Application/machine.o
+ .debug_macro   0x00000000      0x22a Application/machine.o
  .debug_macro   0x00000000       0x4a Application/machine.o
  .debug_macro   0x00000000       0x28 Application/machine.o
  .debug_macro   0x00000000       0x34 Application/machine.o
@@ -2178,12 +2178,12 @@ Discarded input sections
  .debug_macro   0x00000000       0x28 Application/application.o
  .debug_macro   0x00000000       0x10 Application/application.o
  .debug_macro   0x00000000       0x10 Application/application.o
- .debug_macro   0x00000000      0x194 Application/application.o
+ .debug_macro   0x00000000      0x18e Application/application.o
  .debug_macro   0x00000000       0x68 Application/application.o
  .debug_macro   0x00000000       0x1c Application/application.o
  .debug_macro   0x00000000      0x112 Application/application.o
  .debug_macro   0x00000000       0x4c Application/application.o
- .debug_macro   0x00000000      0x22f Application/application.o
+ .debug_macro   0x00000000      0x22a Application/application.o
  .debug_macro   0x00000000       0xdc Application/application.o
  .debug_macro   0x00000000       0x87 Application/application.o
  .debug_macro   0x00000000       0x10 Application/application.o
@@ -2296,14 +2296,14 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 RUM/sensors.o
  .debug_macro   0x00000000       0x1c RUM/sensors.o
  .debug_macro   0x00000000       0x5a RUM/sensors.o
- .debug_macro   0x00000000      0x194 RUM/sensors.o
+ .debug_macro   0x00000000      0x18e RUM/sensors.o
  .debug_macro   0x00000000       0x87 RUM/sensors.o
  .debug_macro   0x00000000       0x10 RUM/sensors.o
  .debug_macro   0x00000000      0x175 RUM/sensors.o
  .debug_macro   0x00000000       0x4a RUM/sensors.o
  .debug_macro   0x00000000       0xdd RUM/sensors.o
  .debug_line    0x00000000      0x491 RUM/sensors.o
- .debug_str     0x00000000    0x193e0 RUM/sensors.o
+ .debug_str     0x00000000    0x193cf RUM/sensors.o
  .comment       0x00000000       0x31 RUM/sensors.o
  .debug_frame   0x00000000       0x54 RUM/sensors.o
  COMMON         0x00000000        0x4 RUM/sensors.o
@@ -4037,69 +4037,69 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x10fea
+.debug_info     0x00000000    0x10fad
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x1160 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51/crtatmega128rfa1.o
  .debug_info    0x00001160     0x168f Application/BowComm.o
- .debug_info    0x000027ef      0x735 Application/display.o
- .debug_info    0x00002f24      0xf7e Application/reader.o
- .debug_info    0x00003ea2     0x15fc Application/SpeedQueen.o
- .debug_info    0x0000549e     0x12ab mifare/Mifare.o
- .debug_info    0x00006749      0x28d mifare/RegCtrl.o
- .debug_info    0x000069d6      0x1aa SPI/spi.o
- .debug_info    0x00006b80      0x7ac main.o
- .debug_info    0x0000732c      0x143 Application/sleep.o
- .debug_info    0x0000746f      0xfb8 Radio/radio.o
- .debug_info    0x00008427      0x515 Radio/hal_avr.o
- .debug_info    0x0000893c      0x534 RUM/mac.o
- .debug_info    0x00008e70      0xd3b RUM/mac_associate.o
- .debug_info    0x00009bab      0x339 RUM/mac_beacon.o
- .debug_info    0x00009ee4      0xa04 RUM/mac_data.o
- .debug_info    0x0000a8e8      0x88d RUM/mac_event.o
- .debug_info    0x0000b175      0x8d9 RUM/mac_route.o
- .debug_info    0x0000ba4e      0x8c8 RUM/mac_scan.o
- .debug_info    0x0000c316      0x4aa Timer/avr_timer.o
- .debug_info    0x0000c7c0      0x29d Timer/timer_enddevice.o
- .debug_info    0x0000ca5d      0xddd Application/machine.o
- .debug_info    0x0000d83a      0xaf0 UART/serial.o
- .debug_info    0x0000e32a     0x29fd Application/application.o
- .debug_info    0x00010d27       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
- .debug_info    0x00010dd8       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
- .debug_info    0x00010e89       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
- .debug_info    0x00010f3a       0xb0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
+ .debug_info    0x000027ef      0x72e Application/display.o
+ .debug_info    0x00002f1d      0xf77 Application/reader.o
+ .debug_info    0x00003e94     0x15f5 Application/SpeedQueen.o
+ .debug_info    0x00005489     0x12ab mifare/Mifare.o
+ .debug_info    0x00006734      0x28d mifare/RegCtrl.o
+ .debug_info    0x000069c1      0x1aa SPI/spi.o
+ .debug_info    0x00006b6b      0x7a5 main.o
+ .debug_info    0x00007310      0x143 Application/sleep.o
+ .debug_info    0x00007453      0xfb8 Radio/radio.o
+ .debug_info    0x0000840b      0x515 Radio/hal_avr.o
+ .debug_info    0x00008920      0x534 RUM/mac.o
+ .debug_info    0x00008e54      0xd3b RUM/mac_associate.o
+ .debug_info    0x00009b8f      0x339 RUM/mac_beacon.o
+ .debug_info    0x00009ec8      0xa04 RUM/mac_data.o
+ .debug_info    0x0000a8cc      0x88d RUM/mac_event.o
+ .debug_info    0x0000b159      0x8d9 RUM/mac_route.o
+ .debug_info    0x0000ba32      0x8c8 RUM/mac_scan.o
+ .debug_info    0x0000c2fa      0x4aa Timer/avr_timer.o
+ .debug_info    0x0000c7a4      0x29d Timer/timer_enddevice.o
+ .debug_info    0x0000ca41      0xdc3 Application/machine.o
+ .debug_info    0x0000d804      0xaf0 UART/serial.o
+ .debug_info    0x0000e2f4     0x29f6 Application/application.o
+ .debug_info    0x00010cea       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
+ .debug_info    0x00010d9b       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
+ .debug_info    0x00010e4c       0xb1 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
+ .debug_info    0x00010efd       0xb0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
 
-.debug_abbrev   0x00000000     0x48e2
+.debug_abbrev   0x00000000     0x4801
  *(.debug_abbrev)
  .debug_abbrev  0x00000000     0x1072 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51/crtatmega128rfa1.o
  .debug_abbrev  0x00001072      0x39f Application/BowComm.o
- .debug_abbrev  0x00001411      0x151 Application/display.o
- .debug_abbrev  0x00001562      0x213 Application/reader.o
- .debug_abbrev  0x00001775      0x40c Application/SpeedQueen.o
- .debug_abbrev  0x00001b81      0x296 mifare/Mifare.o
- .debug_abbrev  0x00001e17      0x16c mifare/RegCtrl.o
- .debug_abbrev  0x00001f83       0xfb SPI/spi.o
- .debug_abbrev  0x0000207e      0x1d6 main.o
- .debug_abbrev  0x00002254       0xa6 Application/sleep.o
- .debug_abbrev  0x000022fa      0x464 Radio/radio.o
- .debug_abbrev  0x0000275e      0x1ef Radio/hal_avr.o
- .debug_abbrev  0x0000294d      0x1bd RUM/mac.o
- .debug_abbrev  0x00002b0a      0x2d6 RUM/mac_associate.o
- .debug_abbrev  0x00002de0      0x129 RUM/mac_beacon.o
- .debug_abbrev  0x00002f09      0x319 RUM/mac_data.o
- .debug_abbrev  0x00003222      0x22f RUM/mac_event.o
- .debug_abbrev  0x00003451      0x208 RUM/mac_route.o
- .debug_abbrev  0x00003659      0x2f2 RUM/mac_scan.o
- .debug_abbrev  0x0000394b      0x238 Timer/avr_timer.o
- .debug_abbrev  0x00003b83      0x164 Timer/timer_enddevice.o
- .debug_abbrev  0x00003ce7      0x2fc Application/machine.o
- .debug_abbrev  0x00003fe3      0x3b8 UART/serial.o
- .debug_abbrev  0x0000439b      0x4f7 Application/application.o
- .debug_abbrev  0x00004892       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
- .debug_abbrev  0x000048a6       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
- .debug_abbrev  0x000048ba       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
- .debug_abbrev  0x000048ce       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
+ .debug_abbrev  0x00001411      0x124 Application/display.o
+ .debug_abbrev  0x00001535      0x1e6 Application/reader.o
+ .debug_abbrev  0x0000171b      0x3df Application/SpeedQueen.o
+ .debug_abbrev  0x00001afa      0x296 mifare/Mifare.o
+ .debug_abbrev  0x00001d90      0x16c mifare/RegCtrl.o
+ .debug_abbrev  0x00001efc       0xfb SPI/spi.o
+ .debug_abbrev  0x00001ff7      0x1a9 main.o
+ .debug_abbrev  0x000021a0       0xa6 Application/sleep.o
+ .debug_abbrev  0x00002246      0x464 Radio/radio.o
+ .debug_abbrev  0x000026aa      0x1ef Radio/hal_avr.o
+ .debug_abbrev  0x00002899      0x1bd RUM/mac.o
+ .debug_abbrev  0x00002a56      0x2d6 RUM/mac_associate.o
+ .debug_abbrev  0x00002d2c      0x129 RUM/mac_beacon.o
+ .debug_abbrev  0x00002e55      0x319 RUM/mac_data.o
+ .debug_abbrev  0x0000316e      0x22f RUM/mac_event.o
+ .debug_abbrev  0x0000339d      0x208 RUM/mac_route.o
+ .debug_abbrev  0x000035a5      0x2f2 RUM/mac_scan.o
+ .debug_abbrev  0x00003897      0x238 Timer/avr_timer.o
+ .debug_abbrev  0x00003acf      0x164 Timer/timer_enddevice.o
+ .debug_abbrev  0x00003c33      0x2e0 Application/machine.o
+ .debug_abbrev  0x00003f13      0x3b8 UART/serial.o
+ .debug_abbrev  0x000042cb      0x4e6 Application/application.o
+ .debug_abbrev  0x000047b1       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
+ .debug_abbrev  0x000047c5       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
+ .debug_abbrev  0x000047d9       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
+ .debug_abbrev  0x000047ed       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
 
-.debug_line     0x00000000     0xad5d
+.debug_line     0x00000000     0xad5b
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x247 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51/crtatmega128rfa1.o
  .debug_line    0x00000247      0x907 Application/BowComm.o
@@ -4122,13 +4122,13 @@ END GROUP
  .debug_line    0x000076c9      0x5e0 RUM/mac_scan.o
  .debug_line    0x00007ca9      0x667 Timer/avr_timer.o
  .debug_line    0x00008310      0x571 Timer/timer_enddevice.o
- .debug_line    0x00008881      0x8ec Application/machine.o
- .debug_line    0x0000916d      0x855 UART/serial.o
- .debug_line    0x000099c2     0x111c Application/application.o
- .debug_line    0x0000aade       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
- .debug_line    0x0000ab89       0xb6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
- .debug_line    0x0000ac3f       0x80 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
- .debug_line    0x0000acbf       0x9e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
+ .debug_line    0x00008881      0x8ea Application/machine.o
+ .debug_line    0x0000916b      0x855 UART/serial.o
+ .debug_line    0x000099c0     0x111c Application/application.o
+ .debug_line    0x0000aadc       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eerd_block.o)
+ .debug_line    0x0000ab87       0xb6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eeupd_byte.o)
+ .debug_line    0x0000ac3d       0x80 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_block.o)
+ .debug_line    0x0000acbd       0x9e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51\libatmega128rfa1.a(eewr_byte.o)
 
 .debug_frame    0x00000000     0x1e04
  *(.debug_frame)
@@ -4156,55 +4156,55 @@ END GROUP
  .debug_frame   0x000017d8      0x268 UART/serial.o
  .debug_frame   0x00001a40      0x3c4 Application/application.o
 
-.debug_str      0x00000000    0x21b39
+.debug_str      0x00000000    0x21b28
  *(.debug_str)
  .debug_str     0x00000000      0x6de C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega128rfa1/avr51/crtatmega128rfa1.o
- .debug_str     0x000006de    0x19a39 Application/BowComm.o
-                              0x19cf6 (size before relaxing)
- .debug_str     0x0001a117     0x1184 Application/display.o
-                              0x17194 (size before relaxing)
- .debug_str     0x0001b29b       0x91 Application/reader.o
-                              0x17bf9 (size before relaxing)
- .debug_str     0x0001b32c      0x2dd Application/SpeedQueen.o
-                              0x1a718 (size before relaxing)
- .debug_str     0x0001b609     0x1fbc mifare/Mifare.o
+ .debug_str     0x000006de    0x19a28 Application/BowComm.o
+                              0x19ce5 (size before relaxing)
+ .debug_str     0x0001a106     0x1184 Application/display.o
+                              0x17183 (size before relaxing)
+ .debug_str     0x0001b28a       0x91 Application/reader.o
+                              0x17be8 (size before relaxing)
+ .debug_str     0x0001b31b      0x2dd Application/SpeedQueen.o
+                              0x1a707 (size before relaxing)
+ .debug_str     0x0001b5f8     0x1fbc mifare/Mifare.o
                                0x4ffd (size before relaxing)
- .debug_str     0x0001d5c5      0x140 mifare/RegCtrl.o
+ .debug_str     0x0001d5b4      0x140 mifare/RegCtrl.o
                                0xe488 (size before relaxing)
- .debug_str     0x0001d705       0x7c SPI/spi.o
+ .debug_str     0x0001d6f4       0x7c SPI/spi.o
                                0xd54d (size before relaxing)
- .debug_str     0x0001d781      0x2c8 main.o
-                              0x1c107 (size before relaxing)
- .debug_str     0x0001da49      0x26d Application/sleep.o
-                              0x18f7e (size before relaxing)
- .debug_str     0x0001dcb6      0x78f Radio/radio.o
+ .debug_str     0x0001d770      0x2c8 main.o
+                              0x1c0f6 (size before relaxing)
+ .debug_str     0x0001da38      0x26d Application/sleep.o
+                              0x18f6d (size before relaxing)
+ .debug_str     0x0001dca5      0x78f Radio/radio.o
                               0x16663 (size before relaxing)
- .debug_str     0x0001e445      0x20e Radio/hal_avr.o
+ .debug_str     0x0001e434      0x20e Radio/hal_avr.o
                               0x1617f (size before relaxing)
- .debug_str     0x0001e653       0x47 RUM/mac.o
+ .debug_str     0x0001e642       0x47 RUM/mac.o
                               0x16290 (size before relaxing)
- .debug_str     0x0001e69a      0x331 RUM/mac_associate.o
+ .debug_str     0x0001e689      0x331 RUM/mac_associate.o
                               0x163c3 (size before relaxing)
- .debug_str     0x0001e9cb       0x88 RUM/mac_beacon.o
+ .debug_str     0x0001e9ba       0x88 RUM/mac_beacon.o
                               0x16053 (size before relaxing)
- .debug_str     0x0001ea53      0x17e RUM/mac_data.o
+ .debug_str     0x0001ea42      0x17e RUM/mac_data.o
                               0x16247 (size before relaxing)
- .debug_str     0x0001ebd1      0x12f RUM/mac_event.o
+ .debug_str     0x0001ebc0      0x12f RUM/mac_event.o
                               0x163bb (size before relaxing)
- .debug_str     0x0001ed00       0x57 RUM/mac_route.o
+ .debug_str     0x0001ecef       0x57 RUM/mac_route.o
                               0x161b8 (size before relaxing)
- .debug_str     0x0001ed57      0x2c7 RUM/mac_scan.o
+ .debug_str     0x0001ed46      0x2c7 RUM/mac_scan.o
                               0x163a4 (size before relaxing)
- .debug_str     0x0001f01e      0x124 Timer/avr_timer.o
+ .debug_str     0x0001f00d      0x124 Timer/avr_timer.o
                               0x161fa (size before relaxing)
- .debug_str     0x0001f142      0x871 Timer/timer_enddevice.o
+ .debug_str     0x0001f131      0x871 Timer/timer_enddevice.o
                               0x18aea (size before relaxing)
- .debug_str     0x0001f9b3      0x101 Application/machine.o
-                              0x1b055 (size before relaxing)
- .debug_str     0x0001fab4      0x318 UART/serial.o
-                              0x18ed5 (size before relaxing)
- .debug_str     0x0001fdcc     0x1d6d Application/application.o
-                              0x1ef8e (size before relaxing)
+ .debug_str     0x0001f9a2      0x101 Application/machine.o
+                              0x1b044 (size before relaxing)
+ .debug_str     0x0001faa3      0x318 UART/serial.o
+                              0x18ec4 (size before relaxing)
+ .debug_str     0x0001fdbb     0x1d6d Application/application.o
+                              0x1ef7d (size before relaxing)
 
 .debug_loc      0x00000000     0x67f1
  *(.debug_loc)
@@ -4274,7 +4274,7 @@ END GROUP
  .debug_ranges  0x00000788       0xc8 UART/serial.o
  .debug_ranges  0x00000850      0x140 Application/application.o
 
-.debug_macro    0x00000000     0xc199
+.debug_macro    0x00000000     0xc188
  *(.debug_macro)
  .debug_macro   0x00000000      0x21c Application/BowComm.o
  .debug_macro   0x0000021c      0xb02 Application/BowComm.o
@@ -4309,75 +4309,75 @@ END GROUP
  .debug_macro   0x00007467       0x43 Application/BowComm.o
  .debug_macro   0x000074aa       0x83 Application/BowComm.o
  .debug_macro   0x0000752d      0x10e Application/BowComm.o
- .debug_macro   0x0000763b      0x194 Application/BowComm.o
- .debug_macro   0x000077cf       0xdc Application/BowComm.o
- .debug_macro   0x000078ab       0x4a Application/BowComm.o
- .debug_macro   0x000078f5       0x87 Application/BowComm.o
- .debug_macro   0x0000797c       0x10 Application/BowComm.o
- .debug_macro   0x0000798c      0x175 Application/BowComm.o
- .debug_macro   0x00007b01       0x4a Application/BowComm.o
- .debug_macro   0x00007b4b       0x28 Application/BowComm.o
- .debug_macro   0x00007b73       0x1c Application/BowComm.o
- .debug_macro   0x00007b8f       0x5a Application/BowComm.o
- .debug_macro   0x00007be9       0x68 Application/BowComm.o
- .debug_macro   0x00007c51       0x88 Application/BowComm.o
- .debug_macro   0x00007cd9      0x1a4 Application/display.o
- .debug_macro   0x00007e7d       0x1c Application/display.o
- .debug_macro   0x00007e99      0x112 Application/display.o
- .debug_macro   0x00007fab       0x4c Application/display.o
- .debug_macro   0x00007ff7      0x22f Application/display.o
- .debug_macro   0x00008226      0x1e5 Application/reader.o
- .debug_macro   0x0000840b      0x10e Application/reader.o
- .debug_macro   0x00008519       0x66 Application/reader.o
- .debug_macro   0x0000857f       0x20 Application/reader.o
- .debug_macro   0x0000859f       0x7f Application/reader.o
- .debug_macro   0x0000861e      0x1fb Application/SpeedQueen.o
- .debug_macro   0x00008819       0x5c mifare/Mifare.o
- .debug_macro   0x00008875      0x3d8 mifare/Mifare.o
- .debug_macro   0x00008c4d      0x269 mifare/Mifare.o
- .debug_macro   0x00008eb6       0xea mifare/Mifare.o
- .debug_macro   0x00008fa0       0xd6 mifare/Mifare.o
- .debug_macro   0x00009076       0xb2 mifare/RegCtrl.o
- .debug_macro   0x00009128      0x2fc mifare/RegCtrl.o
- .debug_macro   0x00009424       0x22 mifare/RegCtrl.o
- .debug_macro   0x00009446       0x96 SPI/spi.o
- .debug_macro   0x000094dc      0x2ad main.o
- .debug_macro   0x00009789       0xaa main.o
- .debug_macro   0x00009833       0x63 main.o
- .debug_macro   0x00009896       0x82 main.o
- .debug_macro   0x00009918       0x3b main.o
- .debug_macro   0x00009953       0x10 main.o
- .debug_macro   0x00009963       0x28 main.o
- .debug_macro   0x0000998b      0x1ce Application/sleep.o
- .debug_macro   0x00009b59       0x10 Application/sleep.o
- .debug_macro   0x00009b69       0x88 Application/sleep.o
- .debug_macro   0x00009bf1       0x3b Application/sleep.o
- .debug_macro   0x00009c2c      0x1c4 Radio/radio.o
- .debug_macro   0x00009df0      0x1da Radio/hal_avr.o
- .debug_macro   0x00009fca      0x1e0 RUM/mac.o
- .debug_macro   0x0000a1aa       0x43 RUM/mac.o
- .debug_macro   0x0000a1ed      0x1d4 RUM/mac_associate.o
- .debug_macro   0x0000a3c1      0x1be RUM/mac_beacon.o
- .debug_macro   0x0000a57f       0x16 RUM/mac_beacon.o
- .debug_macro   0x0000a595      0x1d7 RUM/mac_data.o
- .debug_macro   0x0000a76c      0x166 RUM/mac_data.o
- .debug_macro   0x0000a8d2       0x2e RUM/mac_data.o
- .debug_macro   0x0000a900      0x1ff RUM/mac_event.o
- .debug_macro   0x0000aaff      0x1cd RUM/mac_route.o
- .debug_macro   0x0000accc      0x1d9 RUM/mac_scan.o
- .debug_macro   0x0000aea5      0x1f8 Timer/avr_timer.o
- .debug_macro   0x0000b09d      0x1c2 Timer/timer_enddevice.o
- .debug_macro   0x0000b25f      0x175 Timer/timer_enddevice.o
- .debug_macro   0x0000b3d4       0x12 Timer/timer_enddevice.o
- .debug_macro   0x0000b3e6       0x34 Timer/timer_enddevice.o
- .debug_macro   0x0000b41a       0x16 Timer/timer_enddevice.o
- .debug_macro   0x0000b430      0x256 Application/machine.o
- .debug_macro   0x0000b686      0x183 Application/machine.o
- .debug_macro   0x0000b809      0x1e0 UART/serial.o
- .debug_macro   0x0000b9e9      0x17f UART/serial.o
- .debug_macro   0x0000bb68      0x32e Application/application.o
- .debug_macro   0x0000be96       0x97 Application/application.o
- .debug_macro   0x0000bf2d      0x10c Application/application.o
- .debug_macro   0x0000c039      0x160 Application/application.o
+ .debug_macro   0x0000763b      0x18e Application/BowComm.o
+ .debug_macro   0x000077c9       0xdc Application/BowComm.o
+ .debug_macro   0x000078a5       0x4a Application/BowComm.o
+ .debug_macro   0x000078ef       0x87 Application/BowComm.o
+ .debug_macro   0x00007976       0x10 Application/BowComm.o
+ .debug_macro   0x00007986      0x175 Application/BowComm.o
+ .debug_macro   0x00007afb       0x4a Application/BowComm.o
+ .debug_macro   0x00007b45       0x28 Application/BowComm.o
+ .debug_macro   0x00007b6d       0x1c Application/BowComm.o
+ .debug_macro   0x00007b89       0x5a Application/BowComm.o
+ .debug_macro   0x00007be3       0x68 Application/BowComm.o
+ .debug_macro   0x00007c4b       0x88 Application/BowComm.o
+ .debug_macro   0x00007cd3      0x1a4 Application/display.o
+ .debug_macro   0x00007e77       0x1c Application/display.o
+ .debug_macro   0x00007e93      0x112 Application/display.o
+ .debug_macro   0x00007fa5       0x4c Application/display.o
+ .debug_macro   0x00007ff1      0x22a Application/display.o
+ .debug_macro   0x0000821b      0x1e5 Application/reader.o
+ .debug_macro   0x00008400      0x10e Application/reader.o
+ .debug_macro   0x0000850e       0x66 Application/reader.o
+ .debug_macro   0x00008574       0x20 Application/reader.o
+ .debug_macro   0x00008594       0x7f Application/reader.o
+ .debug_macro   0x00008613      0x1fb Application/SpeedQueen.o
+ .debug_macro   0x0000880e       0x5c mifare/Mifare.o
+ .debug_macro   0x0000886a      0x3d8 mifare/Mifare.o
+ .debug_macro   0x00008c42      0x269 mifare/Mifare.o
+ .debug_macro   0x00008eab       0xea mifare/Mifare.o
+ .debug_macro   0x00008f95       0xd6 mifare/Mifare.o
+ .debug_macro   0x0000906b       0xb2 mifare/RegCtrl.o
+ .debug_macro   0x0000911d      0x2fc mifare/RegCtrl.o
+ .debug_macro   0x00009419       0x22 mifare/RegCtrl.o
+ .debug_macro   0x0000943b       0x96 SPI/spi.o
+ .debug_macro   0x000094d1      0x2ad main.o
+ .debug_macro   0x0000977e       0xaa main.o
+ .debug_macro   0x00009828       0x63 main.o
+ .debug_macro   0x0000988b       0x82 main.o
+ .debug_macro   0x0000990d       0x3b main.o
+ .debug_macro   0x00009948       0x10 main.o
+ .debug_macro   0x00009958       0x28 main.o
+ .debug_macro   0x00009980      0x1ce Application/sleep.o
+ .debug_macro   0x00009b4e       0x10 Application/sleep.o
+ .debug_macro   0x00009b5e       0x88 Application/sleep.o
+ .debug_macro   0x00009be6       0x3b Application/sleep.o
+ .debug_macro   0x00009c21      0x1c4 Radio/radio.o
+ .debug_macro   0x00009de5      0x1da Radio/hal_avr.o
+ .debug_macro   0x00009fbf      0x1e0 RUM/mac.o
+ .debug_macro   0x0000a19f       0x43 RUM/mac.o
+ .debug_macro   0x0000a1e2      0x1d4 RUM/mac_associate.o
+ .debug_macro   0x0000a3b6      0x1be RUM/mac_beacon.o
+ .debug_macro   0x0000a574       0x16 RUM/mac_beacon.o
+ .debug_macro   0x0000a58a      0x1d7 RUM/mac_data.o
+ .debug_macro   0x0000a761      0x166 RUM/mac_data.o
+ .debug_macro   0x0000a8c7       0x2e RUM/mac_data.o
+ .debug_macro   0x0000a8f5      0x1ff RUM/mac_event.o
+ .debug_macro   0x0000aaf4      0x1cd RUM/mac_route.o
+ .debug_macro   0x0000acc1      0x1d9 RUM/mac_scan.o
+ .debug_macro   0x0000ae9a      0x1f8 Timer/avr_timer.o
+ .debug_macro   0x0000b092      0x1c2 Timer/timer_enddevice.o
+ .debug_macro   0x0000b254      0x175 Timer/timer_enddevice.o
+ .debug_macro   0x0000b3c9       0x12 Timer/timer_enddevice.o
+ .debug_macro   0x0000b3db       0x34 Timer/timer_enddevice.o
+ .debug_macro   0x0000b40f       0x16 Timer/timer_enddevice.o
+ .debug_macro   0x0000b425      0x256 Application/machine.o
+ .debug_macro   0x0000b67b      0x183 Application/machine.o
+ .debug_macro   0x0000b7fe      0x1e0 UART/serial.o
+ .debug_macro   0x0000b9de      0x179 UART/serial.o
+ .debug_macro   0x0000bb57      0x32e Application/application.o
+ .debug_macro   0x0000be85       0x97 Application/application.o
+ .debug_macro   0x0000bf1c      0x10c Application/application.o
+ .debug_macro   0x0000c028      0x160 Application/application.o
 OUTPUT(RDR_MDC_20161115_V0.4.4.elf elf32-avr)
 LOAD linker stubs

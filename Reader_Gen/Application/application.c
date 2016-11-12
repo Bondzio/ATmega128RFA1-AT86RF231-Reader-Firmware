@@ -1013,7 +1013,7 @@ void appInit(void)
       
          }	 
          macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);
-        #elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
+        //#elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
            // sendMTStartMessage();
            // ucDeviceStateFlag = DEVICE_STATUS_NEEDED;        
 
@@ -1158,7 +1158,6 @@ void APP_TaskHandler(void)
 	ucSendDataSize = 0;
 	unsigned char tmp[16];
 
-
 	u8 ucTimerID=0xff;
 	char *uctempBuf;
 	char *ptr;    
@@ -1171,15 +1170,12 @@ void APP_TaskHandler(void)
 	u8  Setup[30]; 
 	u8 n = 0;
 
- 
-
 	
   #ifdef MACHINE_CONNECTED
 	#if (DEVICE_CONNECTED == MDC_MACHINE)
 	if(ucDeviceStateFlag == DEVICE_STATUS_NEEDED)	//do machine status communication every 1/2 second
 	{
-        DevicePoll();
-		
+        DevicePoll();	
 		
 		
 		if (ucDeviceStateFlag == DEVICE_STATUS_ONLINE)
@@ -1840,7 +1836,6 @@ void appResendPacket(void)
 	}
 }
 
-
 void CommTimeOut()
 {
 	TOFlag = true;
@@ -1955,7 +1950,8 @@ void SetDeviceState(void)
 
 void DevicePoll(void) 
 {
-    #if (DEVICE_CONNECTED == MDC_MACHINE || DEVICE_CONNECTED == MAYTAG_MACHINE)
+	 #if (DEVICE_CONNECTED == MDC_MACHINE)
+  //  #if (DEVICE_CONNECTED == MDC_MACHINE || DEVICE_CONNECTED == MAYTAG_MACHINE)
 
         MachineStatus();
 		macSetAlarm(DEVICE_POLL_PERIOD,SetDeviceState);

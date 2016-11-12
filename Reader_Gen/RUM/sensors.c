@@ -88,7 +88,7 @@
    can change the data interval or to calibrate the node.
 
    The mechanism for doing this is to use the @ref ftWake frame as a
-   signal to wake up.  When an end node is done tranmitting its data
+   signal to wake up.  When an end node is done transmitting its data
    frame, it remains awake for a short period (about 50mSec) to be
    able to receive a wakeup frame from its parent.  If no frame is
    received in that time, a timer expires and the node goes back to
@@ -239,7 +239,7 @@ static tCalData calData[1];
 #endif
 
 
-/// Is the cal process running?  This flad is used to suppress user menus during calibration.
+/// Is the cal process running?  This flag is used to suppress user menus during calibration.
 static u8 busyCal;
 
 static u8 sensorSentReading; // flag - have we sent a reading and are waiting for a response?

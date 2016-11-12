@@ -77,11 +77,8 @@ ReaderStateFlag.Busy = false;
 	else{
 		SetDefaultMachineSetup();
 	}
-	
-#elif (DEVICE_CONNECTED == MAYTAG_MACHINE)
-    DDRD = (DDRD | 0x08);
-    PORTD &= ~(1<<PD3);
-    UCSR1B &= ~(1 << TXEN1 );
+
+
 
 #endif
 }

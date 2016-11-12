@@ -86,7 +86,7 @@
 
 /*! \name System
    \ingroup opctl
-   Definitions for system settings like PuwerDown, Sensor activation, IRQ behaviour, Waterlevel settings.
+   Definitions for system settings like PowerDown, Sensor activation, IRQ behaviour, Waterlevel settings.
 */
 /*@{*/
 #define RCO_GROUP_SYSTEM               (0x03)    /*!< System group/settings. */

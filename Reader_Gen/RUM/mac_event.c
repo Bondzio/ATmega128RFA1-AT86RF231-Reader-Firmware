@@ -81,7 +81,6 @@ u8 mac_event_pending(void)
     return (head != event_queue.tail);
 }
 
-
 /**
     @brief Puts an event into the queue of events.
 
@@ -235,7 +234,7 @@ void macTask(void)
             }
             break;
         case MAC_EVENT_ASSOCIATION_RESPONSE:
-            // End device has recieved this response.
+            // End device has received this response.
             if (NODETYPE != COORD)
             {
                 //   if (*((u16*)(mac_buffer_rx+1)) == FCF_ASSOC_RESP_DIRECT) // Direct to MAC Addr?
