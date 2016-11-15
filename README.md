@@ -2,6 +2,7 @@
 Our startup company provides an advanced system for Operators in the Commercial Laundry Industry to replace coins and smart cards using an online solution to manage their business, primarily by automating the collection of revenue, reducing service cost and having a user create a prepaid laundry account. 
 A micro-controller, ATmega128RF including a radio chip AT86RF231 transmits the data that came from the RF card to identify the user. This data is used to access the user account to determine if there is sufficient funds to satisfy the vend.  The RF reader is attached to each laundry machine controller (or dryer) to enable users to operate the machine from a prepaid laundry account. Readers communicate to a secure wireless controller which in turn transmit each transaction to the Pinpoint application in the cloud.
 The reader firmware performs the following steps:
+
 1. It sends a command to the laundry machine controller to enquire what machine type it is?
   The machine will be either a washer 331 or dryer 411.
 2. Then through a coordinator the reader communicates with the server to get the setup string for the machine type.
