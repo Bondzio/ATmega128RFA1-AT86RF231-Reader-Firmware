@@ -11,7 +11,7 @@ The reader firmware performs the following steps:
 5. The reader sends out beacons to the coordinator asking: "I am here, are you still here? When there is no acknowledgment from the coordinator then you are in offline mode go to step 15.
 6. The reader is scanning for a card wave.
 7. Does the reader detects a card wave it parses out the serial number.
-8. The reader confirms to the coordinator, that it received a Serialnumber and asked the coordinator to send it on to the server
+8. The reader confirms to the coordinator, that it received a serial number and asked the coordinator to send it on to the server
 9. The reader is now waiting for the server's response, that there is enough money in the account.
 10. The reader sends a command to the washing machine to display the account balance.
 11. The reader is listening, that the user has pressed the Start button on the machine.
